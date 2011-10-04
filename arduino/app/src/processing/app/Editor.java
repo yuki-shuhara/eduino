@@ -489,7 +489,7 @@ public class Editor extends JFrame implements RunnerListener {
     JMenuItem item;
     fileMenu = new JMenu("File");
 
-    item = newJMenuItem("New", 'N');
+    item = newJMenuItem("新規", 'N');
     item.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e) {
           base.handleNew();
@@ -497,7 +497,7 @@ public class Editor extends JFrame implements RunnerListener {
       });
     fileMenu.add(item);
 
-    item = Editor.newJMenuItem("Open...", 'O');
+    item = Editor.newJMenuItem("開く...", 'O');
     item.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e) {
           base.handleOpenPrompt();
@@ -512,12 +512,12 @@ public class Editor extends JFrame implements RunnerListener {
     fileMenu.add(sketchbookMenu);
 
     if (examplesMenu == null) {
-      examplesMenu = new JMenu("Examples");
+      examplesMenu = new JMenu("スケッチ例");
       base.rebuildExamplesMenu(examplesMenu);
     }
     fileMenu.add(examplesMenu);
 
-    item = Editor.newJMenuItem("Close", 'W');
+    item = Editor.newJMenuItem("閉じる", 'W');
     item.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e) {
           base.handleClose(Editor.this);
@@ -525,7 +525,7 @@ public class Editor extends JFrame implements RunnerListener {
       });
     fileMenu.add(item);
 
-    saveMenuItem = newJMenuItem("Save", 'S');
+    saveMenuItem = newJMenuItem("保存", 'S');
     saveMenuItem.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e) {
           handleSave(false);
@@ -533,7 +533,7 @@ public class Editor extends JFrame implements RunnerListener {
       });
     fileMenu.add(saveMenuItem);
 
-    saveAsMenuItem = newJMenuItemShift("Save As...", 'S');
+    saveAsMenuItem = newJMenuItemShift("名前をつけて保存", 'S');
     saveAsMenuItem.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e) {
           handleSaveAs();
@@ -541,7 +541,7 @@ public class Editor extends JFrame implements RunnerListener {
       });
     fileMenu.add(saveAsMenuItem);
 
-    item = newJMenuItem("Upload", 'U');
+    item = newJMenuItem("ボードに書きこむ", 'U');
     item.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e) {
           handleExport(false);
@@ -559,7 +559,7 @@ public class Editor extends JFrame implements RunnerListener {
 
     fileMenu.addSeparator();
 
-    item = newJMenuItemShift("Page Setup", 'P');
+    item = newJMenuItemShift("プリンタの設定", 'P');
     item.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e) {
           handlePageSetup();
@@ -567,7 +567,7 @@ public class Editor extends JFrame implements RunnerListener {
       });
     fileMenu.add(item);
 
-    item = newJMenuItem("Print", 'P');
+    item = newJMenuItem("印刷...", 'P');
     item.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e) {
           handlePrint();
@@ -579,7 +579,7 @@ public class Editor extends JFrame implements RunnerListener {
     if (!Base.isMacOS()) {
       fileMenu.addSeparator();
 
-      item = newJMenuItem("Preferences", ',');
+      item = newJMenuItem("環境設定", ',');
       item.addActionListener(new ActionListener() {
           public void actionPerformed(ActionEvent e) {
             base.handlePrefs();
@@ -589,7 +589,7 @@ public class Editor extends JFrame implements RunnerListener {
 
       fileMenu.addSeparator();
 
-      item = newJMenuItem("Quit", 'Q');
+      item = newJMenuItem("終了", 'Q');
       item.addActionListener(new ActionListener() {
           public void actionPerformed(ActionEvent e) {
             base.handleQuit();
@@ -659,7 +659,7 @@ public class Editor extends JFrame implements RunnerListener {
 
 
   protected JMenu buildToolsMenu() {
-    toolsMenu = new JMenu("Tools");
+    toolsMenu = new JMenu("ツール");
     JMenu menu = toolsMenu;
     JMenuItem item;
 
@@ -1069,7 +1069,7 @@ public class Editor extends JFrame implements RunnerListener {
       });
     menu.add(item);
 
-    item = new JMenuItem("Reference");
+    item = new JMenuItem("リファレンス");
     item.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e) {
           Base.showReference();
@@ -1106,7 +1106,7 @@ public class Editor extends JFrame implements RunnerListener {
     // macosx already has its own about menu
     if (!Base.isMacOS()) {
       menu.addSeparator();
-      item = new JMenuItem("About Arduino");
+      item = new JMenuItem("Arduino について");
       item.addActionListener(new ActionListener() {
           public void actionPerformed(ActionEvent e) {
             base.handleAbout();
@@ -1122,7 +1122,7 @@ public class Editor extends JFrame implements RunnerListener {
   
 
   protected JMenu buildEditMenu() {
-    JMenu menu = new JMenu("�ҏW");
+    JMenu menu = new JMenu("編集");
     JMenuItem item;
 
     undoItem = newJMenuItem("Undo", 'Z');
