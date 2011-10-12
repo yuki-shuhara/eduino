@@ -37,13 +37,11 @@ public class EditorToolbar extends JComponent implements MouseInputListener, Key
 
   /** Rollover titles for each button. */
   static final String title[] = {
-    "Verify", "Upload", "New", "Open", "Save", "Serial Monitor"
-  };
+    "Verify", "Upload", "New", "Open", "Save"};//, "Serial Monitor"};////abcd////
 
   /** Titles for each button when the shift key is pressed. */ 
   static final String titleShift[] = {
-    "Verify", "Upload Using Programmer", "New Editor Window", "Open in Another Window", "Save", "Serial Monitor"
-  };
+    "Verify", "Upload Using Programmer", "New Editor Window", "Open in Another Window", "Save"};//abcd, "Serial Monitor"};
 
   static final int BUTTON_COUNT  = title.length;
   /** Width of each toolbar button. */
@@ -108,7 +106,8 @@ public class EditorToolbar extends JComponent implements MouseInputListener, Key
     which[buttonCount++] = NEW;
     which[buttonCount++] = OPEN;
     which[buttonCount++] = SAVE;
-    which[buttonCount++] = SERIAL;
+    ////////abcd//////////////////
+    //which[buttonCount++] = SERIAL;
 
     currentRollover = -1;
 
@@ -172,8 +171,8 @@ public class EditorToolbar extends JComponent implements MouseInputListener, Key
       }
       
       // Serial button must be on the right
-      x1[SERIAL] = width - BUTTON_WIDTH - 14;
-      x2[SERIAL] = width - 14;
+      //x1[SERIAL] = width - BUTTON_WIDTH - 14;
+      //x2[SERIAL] = width - 14;
     }
     Graphics g = offscreen.getGraphics();
     g.setColor(bgcolor); //getBackground());
@@ -201,7 +200,8 @@ public class EditorToolbar extends JComponent implements MouseInputListener, Key
       int statusY = (BUTTON_HEIGHT + g.getFontMetrics().getAscent()) / 2;
       String status = shiftPressed ? titleShift[currentRollover] : title[currentRollover];
       if (currentRollover != SERIAL)
-        g.drawString(status, (buttonCount-1) * BUTTON_WIDTH + 3 * BUTTON_GAP, statusY);
+        /////////////abcd(status, (buttoncount-1) * BUTTON_WIDTH~//////////////////
+        g.drawString(status, (buttonCount) * BUTTON_WIDTH + 3 * BUTTON_GAP, statusY);
       else {
         int statusX = x1[SERIAL] - BUTTON_GAP;
         statusX -= g.getFontMetrics().stringWidth(status);

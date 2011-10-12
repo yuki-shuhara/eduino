@@ -699,10 +699,15 @@ public class Base {
 //        }
 //      }
 //    }
-
+//
 //    System.err.println("  creating new editor");
-    Editor editor = new Editor(this, path, location);
+    
+//edus_111012 -exchange Editor -> CreatPanel
+    /*Editor editor = new Editor(this, path, location);*/
 //    Editor editor = null;
+    Editor editor = new CreatePanel(this, path, location);
+//edue
+    
 //    try {
 //      editor = new Editor(this, path, location);
 //    } catch (Exception e) {

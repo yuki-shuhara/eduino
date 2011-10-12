@@ -146,8 +146,14 @@ public class Editor extends JFrame implements RunnerListener {
   Runnable stopHandler;
   Runnable exportHandler;
   Runnable exportAppHandler;
-
-
+  
+//edus_111012 -added constractor
+  public Editor(){
+    super("Arduino");
+  
+  }
+//edue
+  
   public Editor(Base ibase, String path, int[] location) {
     super("Arduino");
     this.base = ibase;
@@ -158,11 +164,9 @@ public class Editor extends JFrame implements RunnerListener {
     resetHandlers();
 
     // add listener to handle window close box hit event
-    addWindowListener(new WindowAdapter() {
-        public void windowClosing(WindowEvent e) {
-          base.handleClose(Editor.this);
-        }
-      });
+    addWindowListener(new WindowAdapter() 
+    {public void windowClosing(WindowEvent e) {base.handleClose(Editor.this);}}
+    );
     // don't close the window when clicked, the app will take care
     // of that via the handleQuitInternal() methods
     // http://dev.processing.org/bugs/show_bug.cgi?id=440
@@ -237,12 +241,13 @@ public class Editor extends JFrame implements RunnerListener {
     console = new EditorConsole(this);
     // windows puts an ugly border on this guy
     console.setBorder(null);
+    
     consolePanel.add(console, BorderLayout.CENTER);
-
+    
     lineStatus = new EditorLineStatus(textarea);
+    
     consolePanel.add(lineStatus, BorderLayout.SOUTH);
-
-    upper.add(textarea);
+    
     splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
                                upper, consolePanel);
 
@@ -262,10 +267,10 @@ public class Editor extends JFrame implements RunnerListener {
     if (dividerSize != 0) {
       splitPane.setDividerSize(dividerSize);
     }
-
+////////////////////////////////////////////////////////
     splitPane.setMinimumSize(new Dimension(600, 400));
     box.add(splitPane);
-
+////////////////////////////////////////////////////////
     // hopefully these are no longer needed w/ swing
     // (har har har.. that was wishful thinking)
     listener = new EditorListener(this, textarea);
@@ -487,7 +492,7 @@ public class Editor extends JFrame implements RunnerListener {
 
   protected JMenu buildFileMenu() {
     JMenuItem item;
-    fileMenu = new JMenu("File");
+    fileMenu = new JMenu("ファイル");
 
     item = newJMenuItem("新規", 'N');
     item.addActionListener(new ActionListener() {
@@ -506,7 +511,7 @@ public class Editor extends JFrame implements RunnerListener {
     fileMenu.add(item);
 
     if (sketchbookMenu == null) {
-      sketchbookMenu = new JMenu("Sketchbook");
+      sketchbookMenu = new JMenu("スケッチブック");
       base.rebuildSketchbookMenu(sketchbookMenu);
     }
     fileMenu.add(sketchbookMenu);
@@ -603,7 +608,7 @@ public class Editor extends JFrame implements RunnerListener {
 
   protected JMenu buildSketchMenu() {
     JMenuItem item;
-    sketchMenu = new JMenu("Sketch");
+    sketchMenu = new JMenu("スケッチ");
 
     item = newJMenuItem("Verify / Compile", 'R');
     item.addActionListener(new ActionListener() {
@@ -664,7 +669,7 @@ public class Editor extends JFrame implements RunnerListener {
     JMenuItem item;
 
     addInternalTools(menu);
-    
+    //////////////////////////////////////////////////////////////
     item = newJMenuItemShift("Serial Monitor", 'M');
     item.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e) {
@@ -672,7 +677,7 @@ public class Editor extends JFrame implements RunnerListener {
         }
       });
     menu.add(item);
-    
+    ///////////////////////////////////////////////////////////////
     addTools(menu, Base.getToolsFolder());
     File sketchbookTools = new File(Base.getSketchbookFolder(), "tools");
     addTools(menu, sketchbookTools);
@@ -1006,7 +1011,7 @@ public class Editor extends JFrame implements RunnerListener {
   protected JMenu buildHelpMenu() {
     // To deal with a Mac OS X 10.5 bug, add an extra space after the name
     // so that the OS doesn't try to insert its slow help menu.
-    JMenu menu = new JMenu("Help ");
+    JMenu menu = new JMenu("ヘルプ");
     JMenuItem item;
 
     /*
