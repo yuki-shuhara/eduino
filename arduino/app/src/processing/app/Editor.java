@@ -149,7 +149,7 @@ public class Editor extends JFrame implements RunnerListener {
   
 //edus_111012 -added constractor
   public Editor(){
-    super("Arduino");
+    super("Eduino");
   
   }
 //edue

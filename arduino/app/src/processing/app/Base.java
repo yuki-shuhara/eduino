@@ -705,7 +705,7 @@ public class Base {
 //edus_111012 -exchange Editor -> CreatPanel
     /*Editor editor = new Editor(this, path, location);*/
 //    Editor editor = null;
-    Editor editor = new CreatePanel(this, path, location);
+    Editor editor = new Chest(this, path, location);
 //edue
     
 //    try {
