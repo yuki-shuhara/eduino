@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
+import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 import javax.swing.border.BevelBorder;
 
@@ -28,6 +29,8 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -56,22 +59,38 @@ public class CreatePanel extends JPanel implements ActionListener{
   private JLabel jLabel;
   /*ここまでラベル用*/
   
+  /*テキストボックス用*/
+  private JTextField text1;
+  
+  /*ここまでテキストボックス*/
   public CreatePanel(){
     factory(); //テスト用にfactoryを指定。本番は所定のパネル作成関数に振り分けるようにする
   }
   
   public void factory(){ //テスト用に内容は固定。本番は所定のパーツを乗せるように書き換える
   
-    panelInit();
-  /*パネル作成用フィールド
+   /*パネル作成用フィールド
    * ここで各パネルを作り出す
    * 引数を１つ追加して作成するパネルの種類を指定する？*/
-    Combobox();
-    basePanel();
+
 }
   
+   /*** Crate "OutputPanel" ***/
+  public void outPutPanel(){
+    panelInit();
+    comboBox();
+  }
+  
+   /*** Create "DelayPanel" ***/
+  public void delayPanel(){
+    panelInit();
+    textBox("1000");
+    Label(2);
+  }
+  
+  /*********************************************/
    /*** Create BasePanel ***/
-  public void basePanel(){
+  private void basePanel(){
     base = new JPanel();
     base.setPreferredSize(new Dimension(130,130));
     base.add(pane);
@@ -79,21 +98,39 @@ public class CreatePanel extends JPanel implements ActionListener{
   }
   
    /*** Create Panel ***/
-  public void panelInit(){
+  private void panelInit(){
     pane = new JPanel();
     pane.setPreferredSize(new Dimension(120, 50));
     pane.setBackground(Color.BLUE); 
     
+    MyMouseListener listener = new MyMouseListener(); //マウスイベントリスナーに登録
+    pane.addMouseListener(listener);
+    pane.addMouseMotionListener(listener);
+    
   }
   
+   /*** Create TextBox ***/
+  private void textBox(){
+    text1 = new JTextField();
+    text1.setColumns(4);
+    pane.add(text1);
+  }
+  private void textBox(String str){
+    text1 = new JTextField();
+    text1.setColumns(4);
+    text1.setText(str);
+    pane.add(text1);
+  }
+  
+  
    /*** Create Label ***/
-  public void Label(int select){
+  private void Label(int select){
     jLabel = new JLabel();
     
     switch(select){
     case 1: jLabel.setText("を");
             break;
-    case 2: jLabel.setText("に");
+    case 2: jLabel.setText("秒待つ");
             break;
     default:jLabel.setText("");
     }
@@ -102,7 +139,7 @@ public class CreatePanel extends JPanel implements ActionListener{
   }
    
    /*** Create ComboBox ***/
-   public void Combobox() {
+   private void comboBox() {
     com1= new DefaultComboBoxModel(combo1);
     com2= new DefaultComboBoxModel(combo2);
     com3= new DefaultComboBoxModel(combo3);
@@ -112,7 +149,7 @@ public class CreatePanel extends JPanel implements ActionListener{
     jComboBox2.setModel(com2);
 
     pane.add(jComboBox1);
-    Label(2);
+    Label(1);
     pane.add(jComboBox2);
 }
 
@@ -127,8 +164,8 @@ public class CreatePanel extends JPanel implements ActionListener{
     jComboBox2 = new JComboBox();
 
     //getContentPane().setLayout(null);
-
     /*setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);*/
+    
     jComboBox1.addActionListener(new ActionListener() {
     public void actionPerformed(ActionEvent evt) {
     jComboBox1ActionPerformed(evt);
@@ -170,7 +207,25 @@ public class CreatePanel extends JPanel implements ActionListener{
     public void actionPerformed(ActionEvent e) {
       // TODO Auto-generated method stub
     }
-
+    
+  //edus_111020 -added    
+    /***マウスのドラッグ＆ドロップのアクションリスナー***/
+    class MyMouseListener extends MouseAdapter{
+      private int dx;
+      private int dy;
+      
+      public void mouseDragged(MouseEvent e){
+        int x = e.getXOnScreen() - dx;
+        int y = e.getYOnScreen() - dy;
+        pane.setLocation(x, y);
+      }
+      
+      public void mousePressed(MouseEvent e){
+        dx = e.getXOnScreen() - pane.getX();
+        dy = e.getYOnScreen() - pane.getY();
+      }
+    //edue
+    }
 }
 //edus_11101X -added
   

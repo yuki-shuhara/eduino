@@ -7,6 +7,8 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -95,9 +97,10 @@ public class Chest extends Editor implements ActionListener {
 //edus_11101X -added
     
     JPanel field = new JPanel();
-    field.setLayout(new BorderLayout());
-    JPanel workspace = new JPanel();
-    workspace.setLayout(null);
+    //field.setLayout(new BorderLayout());
+    field.setLayout(null);
+    /*JPanel workspace = new JPanel();
+    workspace.setLayout(null);*/
     
     /*JPanel warehouse = new JPanel();
     warehouse.setLayout(null);
@@ -108,9 +111,10 @@ public class Chest extends Editor implements ActionListener {
     GridLayout layout = new GridLayout(count, 1);
     //layout.setHgap(20);
     layout.setVgap(30);
-    
 
-    CreatePanel panelA = new CreatePanel();
+
+    CreatePanel panelA = new CreatePanel(); //新しいパネルクラスを生成
+    /**　以降、このパネルクラスを用いてパネルを作成する。hoge.create()で戻り値がJPanel型の完成したパネルを得る　**/
     aaa.add(panelA.create());
     
     aaa.setLayout(layout);
@@ -127,6 +131,7 @@ public class Chest extends Editor implements ActionListener {
 
     
     JScrollPane warehouse = new JScrollPane(aaa);
+    warehouse.setBounds(0, 0, 200, 400);
     //warehouse.setLayout(null);
     //warehouse.setViewportView(aaa);
     //Panel(warehouse);
@@ -134,8 +139,8 @@ public class Chest extends Editor implements ActionListener {
     //validate();
     
     
-    field.add(warehouse, BorderLayout.WEST);
-    field.add(workspace, BorderLayout.CENTER);
+    field.add(warehouse);
+    //field.add(workspace, BorderLayout.CENTER);
     
 //edue
     
