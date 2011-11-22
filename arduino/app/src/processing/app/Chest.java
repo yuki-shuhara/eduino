@@ -28,8 +28,13 @@ import processing.app.syntax.JEditTextArea;
 import processing.app.syntax.PdeTextAreaDefaults;
 
 
+
 public class Chest extends Editor implements ActionListener {
+
+  public int PANEL_MAX = 1000; //最大パネル作成可能数
+  public int LINE = 280; //境界線
   
+  public JPanel[] basepane;
   public JPanel[] pane;
   public JPanel dummy;
   public JPanel creaPanel; //透明のパネル
@@ -138,21 +143,20 @@ public class Chest extends Editor implements ActionListener {
     /**　以降、このパネルクラスを用いてパネルを作成する。 **/
     CreatePanel factory = new CreatePanel();
     
-    pane = new JPanel[100]; //最大100回パネルの生成が可能？
-
+    basepane = new JPanel[10]; //10種類のパネルの生成が可能
+    pane = new JPanel[1000];
+    
 //edus111115_added
     for(int i=0; i < count; i++){
-      pane[i] = new JPanel();
-      pane[i].setBounds(20, y, 100, 50);
-      pane[i] = factory.create(pane[i], i); //パネル作成
-      pane[i].addMouseListener(mylistener); //リスナー登録
-      pane[i].addMouseMotionListener(mylistener);
-      scroll.add(pane[i]);
+      basepane[i] = new JPanel();
+      basepane[i].setBounds(20, y, 100, 50);
+      basepane[i] = factory.create(basepane[i], i); //パネル作成
+      basepane[i].addMouseListener(mylistener); //リスナー登録
+      basepane[i].addMouseMotionListener(mylistener);
+      scroll.add(basepane[i]);
       //pane[i].setLocation(20, y); //スクロールバーの中の表示位置をセット
-      y = y + panelHeight(pane[i]) + 20;
-      
+      y = y + panelHeight(basepane[i]) + 20; 
       //scroll.add(pane[i]);
-      panelcount++;
     }
     
 
@@ -179,10 +183,11 @@ public class Chest extends Editor implements ActionListener {
     warehouse = new JScrollPane(scroll);
     warehouse.setBounds(0, 0, 280, 400);
     warehouse.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-    
+
+    field.add(creaPanel);
     field.add(warehouse);
     //field.add(workspace);
-    field.add(creaPanel);
+
     
 //edue
     
@@ -318,20 +323,24 @@ public class Chest extends Editor implements ActionListener {
     return p.getHeight();
   }
   
+
   class MyMouseListener extends MouseAdapter{
     private int dx;
     private int dy;
+    private int x=0;
+    private int y=0;
     private int tx=0, ty=0;
 
  
     public void mouseDragged(MouseEvent e){
       //System.out.println("dragge");
-      int x = e.getXOnScreen() - dx;
-      int y = e.getYOnScreen() - dy;
+      x = e.getXOnScreen() - dx;
+      y = e.getYOnScreen() - dy;
       
       if(x != tx || y !=ty){
         repaint();
       }
+
         dummy.setLocation(x, y);
       tx = x;
       ty = y;
@@ -340,26 +349,42 @@ public class Chest extends Editor implements ActionListener {
     
      
     public void mousePressed(MouseEvent e){
-      dummy = (JPanel) e.getComponent();
+      dummy = (JPanel) e.getComponent(); 
       
-            //dummy = pane[1];
+      if(checkLine()){
+        field.remove((JPanel)e.getComponent());
+        repaint();
+      }
+      
+      //dummy = pane[1];
       //System.out.println("push");
       //pane[1].setBackground(Color.RED);
       //field.add(dummy);
-      creaPanel.add(dummy);
+
       //dummy.setBounds(e.getXOnScreen(), e.getYOnScreen(), dummy.WIDTH, dummy.HEIGHT);
       dx = e.getXOnScreen() - dummy.getX();
       dy = e.getYOnScreen() - dummy.getY();
+      creaPanel.add(dummy);
 
     }
     
     public void mouseReleased(MouseEvent e){
       //System.out.println("release");
       if(checkLine()){
-        field.add(dummy);
+        pane[panelcount] = dummy;
+        x = (x / 5) * 5;
+        y = (y / 5) * 5; //座標を微調整
+        pane[panelcount].setLocation(x, y);
+        field.add(pane[panelcount++]);
+        
+          if(panelcount>PANEL_MAX){
+             //もうパネル作れないよ、とエラー出す
+          }
         
       }
+      
       creaPanel.remove(dummy);
+      repaint();
     }
     
     public void  mouseMoved(MouseEvent e) {
@@ -377,7 +402,7 @@ public class Chest extends Editor implements ActionListener {
     }
     
     private boolean checkLine(){
-      if(dummy.getX()<200){
+      if(dummy.getX()<LINE){
         return false;
       }
       else{//ここなおす！
