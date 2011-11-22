@@ -1,6 +1,7 @@
 package processing.app;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -9,6 +10,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
+import java.awt.event.MouseMotionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -26,6 +29,16 @@ import processing.app.syntax.PdeTextAreaDefaults;
 
 
 public class Chest extends Editor implements ActionListener {
+  
+  public JPanel[] pane;
+  public JPanel dummy;
+  public JPanel creaPanel; //透明のパネル
+  public JPanel field; //Chestクラスの土台パネル
+  public JPanel workspace;
+  public JPanel scroll;
+  public JScrollPane warehouse;
+  private int panelcount;
+  
   
   Chest(Base ibase, String path, int[] location){
     //super();
@@ -96,51 +109,80 @@ public class Chest extends Editor implements ActionListener {
     
 //edus_11101X -added
     
-    JPanel field = new JPanel();
-    //field.setLayout(new BorderLayout());
-    field.setLayout(null);
-    /*JPanel workspace = new JPanel();
-    workspace.setLayout(null);*/
+    field = new JPanel();
+    workspace = new JPanel();
+    scroll = new JPanel(); //スクロールバーの枠内に表示するパネル
+    dummy = new JPanel();
+ 
+     
+    int count = 10; //パネル設置数
     
-    /*JPanel warehouse = new JPanel();
-    warehouse.setLayout(null);
-    */
+    field.setLayout(null); //土台パネル
+    //workspace.setLayout(null); //作業パネル　ALLクリア用に
     
-    JPanel aaa = new JPanel();
-    int count = 10;
     GridLayout layout = new GridLayout(count, 1);
-    //layout.setHgap(20);
     layout.setVgap(30);
+    scroll.setLayout(layout);
 
+//    scroll.setLayout(null); //とりあえずnull
+//    scroll.setPreferredSize(new Dimension(200, 300));
+//    scroll.setBounds(0, 0, 200, 400);
+  
+    MyMouseListener mylistener = new MyMouseListener();
+    dummy.addMouseListener(mylistener); //ダミーパネルを登録
+    panelcountinit(); //panelcount初期化
+    
+    
+    int y = 20;
+        
+    /**　以降、このパネルクラスを用いてパネルを作成する。 **/
+    CreatePanel factory = new CreatePanel();
+    
+    pane = new JPanel[100]; //最大100回パネルの生成が可能？
 
-    CreatePanel panelA = new CreatePanel(); //新しいパネルクラスを生成
-    /**　以降、このパネルクラスを用いてパネルを作成する。hoge.create()で戻り値がJPanel型の完成したパネルを得る　**/
-    aaa.add(panelA.create());
+//edus111115_added
+    for(int i=0; i < count; i++){
+      pane[i] = new JPanel();
+      pane[i].setBounds(20, y, 100, 50);
+      pane[i] = factory.create(pane[i], i); //パネル作成
+      pane[i].addMouseListener(mylistener); //リスナー登録
+      pane[i].addMouseMotionListener(mylistener);
+      scroll.add(pane[i]);
+      //pane[i].setLocation(20, y); //スクロールバーの中の表示位置をセット
+      y = y + panelHeight(pane[i]) + 20;
+      
+      //scroll.add(pane[i]);
+      panelcount++;
+    }
     
-    aaa.setLayout(layout);
-    
-    //edus_111019-edueここでパネルを作成する
 
-    //warehouse.setLayout(null);
+//    field.add(pane[0]);
+//    pane[0].setLocation(300,10);
+//edue
+    
+//    for(int i=0; i < count; i++){
+//      pane[i] = new JPanel();
+//      pane[i] = factory.create(pane[i], i);
+//      pane[i].addMouseListener(mylistener);
+//      scroll.add(pane[i]);
+//      panelcount++;
+//    }
 
-    //aaa.add(panelA.base);
+    creaPanel = new JPanel();
+    creaPanel.setLayout(null);
+    creaPanel.setOpaque(false);
+    //creaPanel.setBounds(0,0,field.getWidth(),field.getHeight());
+    creaPanel.setBounds(0, 0, 600, 600);
+    workspace.setBounds(280, 0, 400, 600);
     
-    //JScrollBar bar = new JScrollBar(JScrollBar.VERTICAL, 1, 100, 1, 200);
-   // warehouse.add(bar);
 
-
-    
-    JScrollPane warehouse = new JScrollPane(aaa);
-    warehouse.setBounds(0, 0, 200, 400);
-    //warehouse.setLayout(null);
-    //warehouse.setViewportView(aaa);
-    //Panel(warehouse);
-    
-    //validate();
-    
+    warehouse = new JScrollPane(scroll);
+    warehouse.setBounds(0, 0, 280, 400);
+    warehouse.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
     
     field.add(warehouse);
-    //field.add(workspace, BorderLayout.CENTER);
+    //field.add(workspace);
+    field.add(creaPanel);
     
 //edue
     
@@ -267,5 +309,82 @@ public class Chest extends Editor implements ActionListener {
     // TODO Auto-generated method stub
     
   }
+  
+  public void panelcountinit(){
+    panelcount = 0;
+  }
+  
+  public int panelHeight(JPanel p){
+    return p.getHeight();
+  }
+  
+  class MyMouseListener extends MouseAdapter{
+    private int dx;
+    private int dy;
+    private int tx=0, ty=0;
 
+ 
+    public void mouseDragged(MouseEvent e){
+      //System.out.println("dragge");
+      int x = e.getXOnScreen() - dx;
+      int y = e.getYOnScreen() - dy;
+      
+      if(x != tx || y !=ty){
+        repaint();
+      }
+        dummy.setLocation(x, y);
+      tx = x;
+      ty = y;
+      //clone.setLocation(x, y);
+    }
+    
+     
+    public void mousePressed(MouseEvent e){
+      dummy = (JPanel) e.getComponent();
+      
+            //dummy = pane[1];
+      //System.out.println("push");
+      //pane[1].setBackground(Color.RED);
+      //field.add(dummy);
+      creaPanel.add(dummy);
+      //dummy.setBounds(e.getXOnScreen(), e.getYOnScreen(), dummy.WIDTH, dummy.HEIGHT);
+      dx = e.getXOnScreen() - dummy.getX();
+      dy = e.getYOnScreen() - dummy.getY();
+
+    }
+    
+    public void mouseReleased(MouseEvent e){
+      //System.out.println("release");
+      if(checkLine()){
+        field.add(dummy);
+        
+      }
+      creaPanel.remove(dummy);
+    }
+    
+    public void  mouseMoved(MouseEvent e) {
+      //System.out.println("Move");
+    }
+    
+    public void mouseClicked(MouseEvent e){
+      //System.out.println("Click");
+    }
+     
+
+    
+    public void mouseEntered(MouseEvent e){
+      //System.out.println("Enter");
+    }
+    
+    private boolean checkLine(){
+      if(dummy.getX()<200){
+        return false;
+      }
+      else{//ここなおす！
+        return true;
+      }
+    }
+  }
 }
+  //edue
+//edus_11101X -added
