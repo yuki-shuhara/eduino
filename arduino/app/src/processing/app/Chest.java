@@ -17,6 +17,7 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.Box;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -31,8 +32,14 @@ import processing.app.syntax.PdeTextAreaDefaults;
 
 public class Chest extends Editor implements ActionListener {
 
+  public int count = 10; //倉庫パネル表示数
   public int PANEL_MAX = 1000; //最大パネル作成可能数
   public int LINE = 280; //境界線
+
+  
+  //public PanelState[] state; //構造体
+  public CreatePanel[] factory;
+  public MyMouseListener mylistener;
   
   public JPanel[] basepane;
   public JPanel[] pane;
@@ -119,46 +126,56 @@ public class Chest extends Editor implements ActionListener {
     scroll = new JPanel(); //スクロールバーの枠内に表示するパネル
     dummy = new JPanel();
  
-     
-    int count = 10; //パネル設置数
-    
     field.setLayout(null); //土台パネル
     //workspace.setLayout(null); //作業パネル　ALLクリア用に
     
-    GridLayout layout = new GridLayout(count, 1);
-    layout.setVgap(30);
-    scroll.setLayout(layout);
+//    GridLayout layout = new GridLayout(10, 1);
+//    layout.setVgap(30);
+//    scroll.setLayout(layout);
+    scroll.setLayout(null);
+    scroll.setPreferredSize(new Dimension(280, 600));
 
 //    scroll.setLayout(null); //とりあえずnull
 //    scroll.setPreferredSize(new Dimension(200, 300));
 //    scroll.setBounds(0, 0, 200, 400);
   
-    MyMouseListener mylistener = new MyMouseListener();
+    mylistener = new MyMouseListener();
+    dummy.setBounds(0, 0, 100, 100);
     dummy.addMouseListener(mylistener); //ダミーパネルを登録
+    dummy.addMouseMotionListener(mylistener);
     panelcountinit(); //panelcount初期化
     
-    
-    int y = 20;
-        
+
     /**　以降、このパネルクラスを用いてパネルを作成する。 **/
-    CreatePanel factory = new CreatePanel();
+    factory = new CreatePanel[1000];
+    factory[0] = new CreatePanel();
+    //state = new PanelState[100];
     
     basepane = new JPanel[10]; //10種類のパネルの生成が可能
     pane = new JPanel[1000];
-    
+    int y = 20;
 //edus111115_added
     for(int i=0; i < count; i++){
       basepane[i] = new JPanel();
+
+      /*
       basepane[i].setBounds(20, y, 100, 50);
       basepane[i] = factory.create(basepane[i], i); //パネル作成
+      */
+      basepane[i] = factory[0].create(i);
+      basepane[i].setLocation(20, y);
+      
       basepane[i].addMouseListener(mylistener); //リスナー登録
       basepane[i].addMouseMotionListener(mylistener);
       scroll.add(basepane[i]);
       //pane[i].setLocation(20, y); //スクロールバーの中の表示位置をセット
       y = y + panelHeight(basepane[i]) + 20; 
       //scroll.add(pane[i]);
+      
+      basepane[i].setName(Integer.toString(i));
     }
     
+
 
 //    field.add(pane[0]);
 //    pane[0].setLocation(300,10);
@@ -323,14 +340,53 @@ public class Chest extends Editor implements ActionListener {
     return p.getHeight();
   }
   
-
+//  public void panelRepaint(){
+//    int count=10;
+//    int y=20;
+//    
+//    for(int i=0; i < count; i++){
+//      if(basepane[i] == null){
+//        //エラーにする？
+//      }
+//      basepane[i].setLocation(20, y);
+//      y = y + panelHeight(basepane[i]) + 20; 
+//    }
+//    repaint();
+//  }
+  
+//  class PanelState{
+//    JPanel Panel;
+//    int ID;
+//    //private int panelcount;
+//    
+//    PanelState(){
+//      Panel = new JPanel();
+//      ID = 0;
+//    }
+//    
+//    PanelState(JPanel panel, int id){
+//      Panel = panel;
+//      id = ID;
+//    }
+//    
+//    public int getID(){
+//      return ID;
+//    }
+//    
+//    public JPanel getPanel(){
+//      return Panel;
+//    }
+//    
+//  }
+  
   class MyMouseListener extends MouseAdapter{
     private int dx;
     private int dy;
     private int x=0;
     private int y=0;
     private int tx=0, ty=0;
-
+    private boolean flag;
+ 
  
     public void mouseDragged(MouseEvent e){
       //System.out.println("dragge");
@@ -341,21 +397,47 @@ public class Chest extends Editor implements ActionListener {
         repaint();
       }
 
-        dummy.setLocation(x, y);
+      dummy.setLocation(x, y);
       tx = x;
       ty = y;
-      //clone.setLocation(x, y);
     }
     
      
     public void mousePressed(MouseEvent e){
-      dummy = (JPanel) e.getComponent(); 
+      flag = false;
+      dummy = new JPanel();
+      dummy.addMouseMotionListener(mylistener);
+      dummy.addMouseListener(mylistener);
       
-      if(checkLine()){
+      if(checkLine(e)){
+        dummy = (JPanel) e.getComponent();
         field.remove((JPanel)e.getComponent());
-        repaint();
+        creaPanel.add(dummy);
+       // System.out.println("press, panel");
       }
-      
+      else{
+        flag = true;
+        factory[0] = new CreatePanel();
+        dummy = factory[0].create(Integer.parseInt(((JPanel)e.getComponent()).getName()));
+        dummy.setLocation(((JPanel)e.getComponent()).getX(),((JPanel)e.getComponent()).getY());
+       // System.out.println("press, base");
+        creaPanel.add(dummy);
+        
+        dummy.setName(((JPanel)e.getComponent()).getName());
+//        
+//        dummy.repaint();
+//        field.repaint();
+//        creaPanel.repaint();
+//        
+//        JPanel ccc = new JPanel();
+//        ccc = factory[0].create(1);
+//        field.add(ccc);
+//        ccc.setLocation(300, 30);
+        
+      }
+
+      //System.out.println(((JPanel)e.getComponent()).getName());
+
       //dummy = pane[1];
       //System.out.println("push");
       //pane[1].setBackground(Color.RED);
@@ -364,27 +446,45 @@ public class Chest extends Editor implements ActionListener {
       //dummy.setBounds(e.getXOnScreen(), e.getYOnScreen(), dummy.WIDTH, dummy.HEIGHT);
       dx = e.getXOnScreen() - dummy.getX();
       dy = e.getYOnScreen() - dummy.getY();
-      creaPanel.add(dummy);
-
+//      System.out.println("ScreenX:" +e.getXOnScreen());
+//      System.out.println("ScreenY:" +e.getYOnScreen());
+//      System.out.println("dummyX:" +dummy.getX());
+//      System.out.println("dummyY:" +dummy.getY());
+      //repaint();
     }
     
     public void mouseReleased(MouseEvent e){
       //System.out.println("release");
       if(checkLine()){
-        pane[panelcount] = dummy;
+        //System.out.println("release");
         x = (x / 5) * 5;
         y = (y / 5) * 5; //座標を微調整
-        pane[panelcount].setLocation(x, y);
-        field.add(pane[panelcount++]);
+        dummy.setLocation(x, y);
         
-          if(panelcount>PANEL_MAX){
-             //もうパネル作れないよ、とエラー出す
-          }
+        if(panelcount>PANEL_MAX){
+           //もうパネル作れないよ、とエラー出す
+        }
         
+        if(flag){
+          pane[panelcount] = new JPanel();
+          factory[panelcount+1] = new CreatePanel();
+          pane[panelcount] = factory[panelcount+1].create(Integer.parseInt(dummy.getName()));
+          pane[panelcount].setLocation(dummy.getX(), dummy.getY());
+          pane[panelcount].addMouseListener(mylistener);
+          pane[panelcount].addMouseMotionListener(mylistener);
+          field.add(pane[panelcount]);
+          
+          panelcount++;
+          // System.out.println("in_");
+        }
+        else{
+          field.add(dummy);
+        }
       }
-      
+     
       creaPanel.remove(dummy);
       repaint();
+      //dummy.removeAll();
     }
     
     public void  mouseMoved(MouseEvent e) {
@@ -394,22 +494,28 @@ public class Chest extends Editor implements ActionListener {
     public void mouseClicked(MouseEvent e){
       //System.out.println("Click");
     }
-     
-
     
     public void mouseEntered(MouseEvent e){
       //System.out.println("Enter");
     }
     
-    private boolean checkLine(){
-      if(dummy.getX()<LINE){
+    private boolean checkLine(MouseEvent e){
+      if(((JPanel)e.getComponent()).getX()<LINE){
         return false;
       }
-      else{//ここなおす！
+      else{
         return true;
       }
     }
-  }
-}
-  //edue
-//edus_11101X -added
+    
+    private boolean checkLine(){
+      if(dummy.getX() < LINE){
+        return false;}
+      else{
+        return true;
+      }
+    }
+    
+  }//*** end MyMouseListener ***//
+}//*** end chest_class ***//
+

@@ -84,6 +84,11 @@ public class CreatePanel extends JPanel implements ActionListener{
       return pane; //作ったパネルをリターン
     }
     
+    public JPanel create(int x){
+      JPanel panel = new JPanel();
+      return create(panel, x);
+    }
+    
   /*ここまでテキストボックス*/
   /*public CreatePanel(){
     outPutPanel();
