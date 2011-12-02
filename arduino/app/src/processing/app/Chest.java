@@ -36,10 +36,8 @@ public class Chest extends Editor implements ActionListener {
   public int PANEL_MAX = 1000; //最大パネル作成可能数
   public int LINE = 280; //境界線
 
-  
-  //public PanelState[] state; //構造体
-  public CreatePanel[] factory;
-  public MyMouseListener mylistener;
+  public CreatePanel[] factory; //パネル作成クラス。ActionListenerも含まれている
+  public MyMouseListener mylistener; //Mouseイベント関連
   
   public JPanel[] basepane;
   public JPanel[] pane;
@@ -118,81 +116,58 @@ public class Chest extends Editor implements ActionListener {
 
     Box box = Box.createVerticalBox();
     Box upper = Box.createVerticalBox();
-    
-//edus_11101X -added
-    
+      
     field = new JPanel();
     workspace = new JPanel();
     scroll = new JPanel(); //スクロールバーの枠内に表示するパネル
-    dummy = new JPanel();
+    dummy = new JPanel(); //CreaPanel上でのみ動かされるパネル
  
     field.setLayout(null); //土台パネル
-    //workspace.setLayout(null); //作業パネル　ALLクリア用に
-    
-//    GridLayout layout = new GridLayout(10, 1);
-//    layout.setVgap(30);
-//    scroll.setLayout(layout);
     scroll.setLayout(null);
-    scroll.setPreferredSize(new Dimension(280, 600));
-
-//    scroll.setLayout(null); //とりあえずnull
-//    scroll.setPreferredSize(new Dimension(200, 300));
-//    scroll.setBounds(0, 0, 200, 400);
+    
+    /*** ↓これがないとスクロールバーが正常に表示されない↓ ***/
+    scroll.setPreferredSize(new Dimension(280, 600)); 
+    /*** setLayout=Nullではスクロールバーが使えないが、setPref～(new Dimension(x, y))を用いることで表示させることが可 ***/
   
     mylistener = new MyMouseListener();
-    dummy.setBounds(0, 0, 100, 100);
     dummy.addMouseListener(mylistener); //ダミーパネルを登録
     dummy.addMouseMotionListener(mylistener);
+    
     panelcountinit(); //panelcount初期化
-    
-
-    /**　以降、このパネルクラスを用いてパネルを作成する。 **/
-    factory = new CreatePanel[1000];
+   
+    factory = new CreatePanel[1000]; 
     factory[0] = new CreatePanel();
-    //state = new PanelState[100];
-    
+
     basepane = new JPanel[10]; //10種類のパネルの生成が可能
     pane = new JPanel[1000];
     int y = 20;
-//edus111115_added
+
+    /*** basepanel[]は画面左側のscrollに表示するためだけのパネル ***/
     for(int i=0; i < count; i++){
       basepane[i] = new JPanel();
-
-      /*
-      basepane[i].setBounds(20, y, 100, 50);
-      basepane[i] = factory.create(basepane[i], i); //パネル作成
-      */
       basepane[i] = factory[0].create(i);
       basepane[i].setLocation(20, y);
       
+      /*** リスナー登録はListenerとMotionListenerの２つが必要 ***/
       basepane[i].addMouseListener(mylistener); //リスナー登録
       basepane[i].addMouseMotionListener(mylistener);
       scroll.add(basepane[i]);
-      //pane[i].setLocation(20, y); //スクロールバーの中の表示位置をセット
       y = y + panelHeight(basepane[i]) + 20; 
-      //scroll.add(pane[i]);
+
+      /*** どのパネルか判別するためのint IDを記載 
+       * 1 = Loopパネル
+       * 2 = 出力パネル
+       * 3 = 遅延パネル
+       * 4～ defaultで遅延パネルが作成される***/
       
       basepane[i].setName(Integer.toString(i));
     }
-    
-
-
-//    field.add(pane[0]);
-//    pane[0].setLocation(300,10);
-//edue
-    
-//    for(int i=0; i < count; i++){
-//      pane[i] = new JPanel();
-//      pane[i] = factory.create(pane[i], i);
-//      pane[i].addMouseListener(mylistener);
-//      scroll.add(pane[i]);
-//      panelcount++;
-//    }
 
     creaPanel = new JPanel();
     creaPanel.setLayout(null);
+    /*** CreaPanelを透明化***/
     creaPanel.setOpaque(false);
-    //creaPanel.setBounds(0,0,field.getWidth(),field.getHeight());
+    
     creaPanel.setBounds(0, 0, 600, 600);
     workspace.setBounds(280, 0, 400, 600);
     
@@ -203,7 +178,7 @@ public class Chest extends Editor implements ActionListener {
 
     field.add(creaPanel);
     field.add(warehouse);
-    //field.add(workspace);
+   
 
     
 //edue
@@ -340,60 +315,23 @@ public class Chest extends Editor implements ActionListener {
     return p.getHeight();
   }
   
-//  public void panelRepaint(){
-//    int count=10;
-//    int y=20;
-//    
-//    for(int i=0; i < count; i++){
-//      if(basepane[i] == null){
-//        //エラーにする？
-//      }
-//      basepane[i].setLocation(20, y);
-//      y = y + panelHeight(basepane[i]) + 20; 
-//    }
-//    repaint();
-//  }
-  
-//  class PanelState{
-//    JPanel Panel;
-//    int ID;
-//    //private int panelcount;
-//    
-//    PanelState(){
-//      Panel = new JPanel();
-//      ID = 0;
-//    }
-//    
-//    PanelState(JPanel panel, int id){
-//      Panel = panel;
-//      id = ID;
-//    }
-//    
-//    public int getID(){
-//      return ID;
-//    }
-//    
-//    public JPanel getPanel(){
-//      return Panel;
-//    }
-//    
-//  }
+
   
   class MyMouseListener extends MouseAdapter{
     private int dx;
     private int dy;
-    private int x=0;
-    private int y=0;
-    private int tx=0, ty=0;
+    private int x=0; //パネルのｘ座標
+    private int y=0; //パネルのy座標
+    private int tx=0, ty=0; //記憶用の変数
     private boolean flag;
  
  
     public void mouseDragged(MouseEvent e){
-      //System.out.println("dragge");
       x = e.getXOnScreen() - dx;
       y = e.getYOnScreen() - dy;
       
       if(x != tx || y !=ty){
+        /*** 以前より動いていれば再描画を行う ***/
         repaint();
       }
 
@@ -404,59 +342,37 @@ public class Chest extends Editor implements ActionListener {
     
      
     public void mousePressed(MouseEvent e){
-      flag = false;
+      flag = false; //フラグの誤作動防止のためfalseをセット
       dummy = new JPanel();
-      dummy.addMouseMotionListener(mylistener);
-      dummy.addMouseListener(mylistener);
       
-      if(checkLine(e)){
+      if(checkLine(e)){ 
+        /*** fieldにおいて取得したパネルをそのまま動かす ***/
         dummy = (JPanel) e.getComponent();
         field.remove((JPanel)e.getComponent());
         creaPanel.add(dummy);
-       // System.out.println("press, panel");
       }
       else{
+        /*** scrollにおいてクリックされたパネルの複製を作成する ***/
         flag = true;
         factory[0] = new CreatePanel();
         dummy = factory[0].create(Integer.parseInt(((JPanel)e.getComponent()).getName()));
         dummy.setLocation(((JPanel)e.getComponent()).getX(),((JPanel)e.getComponent()).getY());
-       // System.out.println("press, base");
         creaPanel.add(dummy);
-        
-        dummy.setName(((JPanel)e.getComponent()).getName());
-//        
-//        dummy.repaint();
-//        field.repaint();
-//        creaPanel.repaint();
-//        
-//        JPanel ccc = new JPanel();
-//        ccc = factory[0].create(1);
-//        field.add(ccc);
-//        ccc.setLocation(300, 30);
-        
+        dummy.invalidate();
+        validate(); //再描画。repaint()ではできないためこちらを用いる
+        dummy.setName(((JPanel)e.getComponent()).getName());   //IDセット   
       }
 
-      //System.out.println(((JPanel)e.getComponent()).getName());
+         repaint();
 
-      //dummy = pane[1];
-      //System.out.println("push");
-      //pane[1].setBackground(Color.RED);
-      //field.add(dummy);
-
-      //dummy.setBounds(e.getXOnScreen(), e.getYOnScreen(), dummy.WIDTH, dummy.HEIGHT);
       dx = e.getXOnScreen() - dummy.getX();
       dy = e.getYOnScreen() - dummy.getY();
-//      System.out.println("ScreenX:" +e.getXOnScreen());
-//      System.out.println("ScreenY:" +e.getYOnScreen());
-//      System.out.println("dummyX:" +dummy.getX());
-//      System.out.println("dummyY:" +dummy.getY());
-      //repaint();
+
     }
     
     public void mouseReleased(MouseEvent e){
       //System.out.println("release");
       if(checkLine()){
-        //System.out.println("release");
         x = (x / 5) * 5;
         y = (y / 5) * 5; //座標を微調整
         dummy.setLocation(x, y);
@@ -466,6 +382,8 @@ public class Chest extends Editor implements ActionListener {
         }
         
         if(flag){
+          /*** flag=true のときはscrollから新たなパネルが生成されたことを意味する。
+           * よって、ここで新たに生成されたパネルを作業パネル用としてpane[]に登録する。***/
           pane[panelcount] = new JPanel();
           factory[panelcount+1] = new CreatePanel();
           pane[panelcount] = factory[panelcount+1].create(Integer.parseInt(dummy.getName()));
@@ -473,18 +391,18 @@ public class Chest extends Editor implements ActionListener {
           pane[panelcount].addMouseListener(mylistener);
           pane[panelcount].addMouseMotionListener(mylistener);
           field.add(pane[panelcount]);
-          
+          pane[panelcount].invalidate();
+          validate();
           panelcount++;
-          // System.out.println("in_");
         }
         else{
+          /*** flag=false　のときは既存のパネルが選択されて動かされていることを意味する。
+           * よって、選択されているパネルをfieldに追加するだけで処理を終える***/
           field.add(dummy);
         }
       }
-     
+      /*** パネル追加の処理があろうとなかろうと、CreaPanelは常に空の状態を保つ ***/
       creaPanel.remove(dummy);
-      repaint();
-      //dummy.removeAll();
     }
     
     public void  mouseMoved(MouseEvent e) {
