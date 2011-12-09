@@ -113,7 +113,7 @@ public class EditorToolbar extends JComponent implements MouseInputListener, Key
     which[buttonCount++] = NEW;
     which[buttonCount++] = OPEN;
     which[buttonCount++] = SAVE;
-//edus_111012 -comentout
+//edus_111012 -commentout
     //which[buttonCount++] = SERIAL;
 //edue
     currentRollover = -1;

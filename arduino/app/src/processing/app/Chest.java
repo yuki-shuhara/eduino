@@ -49,9 +49,9 @@ public class Chest extends Editor implements ActionListener {
   public JScrollPane warehouse;
   private int panelcount;
   
-  
+   
   Chest(Base ibase, String path, int[] location){
-    //super();
+    //super(ibase, path, location);
     this.base = ibase;
 
     Base.setIcon(this);
@@ -315,6 +315,16 @@ public class Chest extends Editor implements ActionListener {
     return p.getHeight();
   }
   
+  
+  public void compile() {
+    String str = new String();
+    str = "void setup() {pinMode(13, OUTPUT);}void loop() {digitalWrite(13, HIGH); delay(1000); igitalWrite(13, LOW);  delay(1000); }";
+    
+    super.textarea.setText(str);
+    
+//    editor.textarea = this.textarea;
+  }
+  
 
   
   class MyMouseListener extends MouseAdapter{
@@ -347,20 +357,19 @@ public class Chest extends Editor implements ActionListener {
       
       if(checkLine(e)){ 
         /*** fieldにおいて取得したパネルをそのまま動かす ***/
-        dummy = (JPanel) e.getComponent();
-        field.remove((JPanel)e.getComponent());
+        dummy = getJPanel(e);
+        field.remove(getJPanel(e));
         creaPanel.add(dummy);
       }
       else{
         /*** scrollにおいてクリックされたパネルの複製を作成する ***/
         flag = true;
         factory[0] = new CreatePanel();
-        dummy = factory[0].create(Integer.parseInt(((JPanel)e.getComponent()).getName()));
+        dummy = factory[0].create(getID(e));
         dummy.setLocation(((JPanel)e.getComponent()).getX(),((JPanel)e.getComponent()).getY());
         creaPanel.add(dummy);
-        dummy.invalidate();
-        validate(); //再描画。repaint()ではできないためこちらを用いる
-        dummy.setName(((JPanel)e.getComponent()).getName());   //IDセット   
+        panelRepaint(dummy);
+        dummy.setName(Integer.toString(getID(e)));   //IDセット   
       }
 
          repaint();
@@ -386,13 +395,12 @@ public class Chest extends Editor implements ActionListener {
            * よって、ここで新たに生成されたパネルを作業パネル用としてpane[]に登録する。***/
           pane[panelcount] = new JPanel();
           factory[panelcount+1] = new CreatePanel();
-          pane[panelcount] = factory[panelcount+1].create(Integer.parseInt(dummy.getName()));
+          pane[panelcount] = factory[panelcount+1].create(getID(dummy));
           pane[panelcount].setLocation(dummy.getX(), dummy.getY());
           pane[panelcount].addMouseListener(mylistener);
           pane[panelcount].addMouseMotionListener(mylistener);
           field.add(pane[panelcount]);
-          pane[panelcount].invalidate();
-          validate();
+          panelRepaint(pane[panelcount]);
           panelcount++;
         }
         else{
@@ -403,6 +411,7 @@ public class Chest extends Editor implements ActionListener {
       }
       /*** パネル追加の処理があろうとなかろうと、CreaPanelは常に空の状態を保つ ***/
       creaPanel.remove(dummy);
+      repaint();
     }
     
     public void  mouseMoved(MouseEvent e) {
@@ -432,6 +441,24 @@ public class Chest extends Editor implements ActionListener {
       else{
         return true;
       }
+    }
+    
+    /*** 再描画用の関数。JComponentのrepaint()とは違う ***/
+    private void panelRepaint(JPanel p){
+      p.invalidate();
+      validate();
+    }
+    
+    private int getID(MouseEvent e){
+      return Integer.parseInt((e.getComponent()).getName());
+    }
+    
+    private int getID(JPanel p){
+      return Integer.parseInt(p.getName());
+    }
+    
+    private JPanel getJPanel(MouseEvent e){
+      return (JPanel)e.getComponent();
     }
     
   }//*** end MyMouseListener ***//

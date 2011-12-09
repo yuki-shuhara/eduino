@@ -703,9 +703,7 @@ public class Base {
 //    System.err.println("  creating new editor");
     
 //edus_111012 -exchange Editor -> CreatPanel
-    /*Editor editor = new Editor(this, path, location);*/
-//    Editor editor = null;
-    Editor editor = new Chest(this, path, location);
+    Editor editor = new Editor(this, path, location);
 //edue
     
 //    try {
