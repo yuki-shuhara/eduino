@@ -23,13 +23,18 @@ console.output.color = #eeeeee
 console.error.color = #E34C00
 
 # GUI - BUTTONS
+
 buttons.bgcolor = #006468
+#↑↑↑ボタンの後ろ↑↑↑
+
 buttons.status.font = SansSerif,plain,12
 buttons.status.color = #ffffff
 
 # GUI - LINESTATUS   
 linestatus.color = #ffffff
+
 linestatus.bgcolor = #006468
+#↑↑↑フレーム下部の若干薄い部分↑↑↑
 
 # EDITOR - DETAILS
 
