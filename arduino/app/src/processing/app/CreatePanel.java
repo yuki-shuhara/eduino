@@ -41,7 +41,11 @@ public class CreatePanel extends JPanel implements ActionListener{
   
  
    public JPanel pane;
+   public int ID;
   
+   private boolean link;
+   private boolean toplevel;
+   
   /*コンボボックス用*/
    public JComboBox jComboBox1;
    public JComboBox jComboBox2;
@@ -63,14 +67,26 @@ public class CreatePanel extends JPanel implements ActionListener{
     public JTextField text1;
     
     CreatePanel(){
-      
+      pane = new JPanel();
+      link = false;
+      toplevel = false;
+      ID = 0;
     }
-    /*** 外部操作可能な部分 ***/
-    public JPanel create(JPanel p, int x){
+    
+    CreatePanel(int panelcount){
+      pane = new JPanel();
+      link = false;
+      toplevel = false;
+      ID = panelcount;
+      pane.setName(Integer.toString(ID));
+    }
+
+
+    /*** 外部操作可能な部分 
+     * @return ***/
+    public void create(int x){
       
-      //エラー文挿入予定
-      pane = p; //広域JPanelに引き継いだJPanelを設置
-      
+      //エラー文挿入予定      
       switch(x){
       case 0:loopPanel(); //ループパネルの作成
               break;
@@ -78,15 +94,67 @@ public class CreatePanel extends JPanel implements ActionListener{
               break;
       case 2:delayPanel();  //遅延パネルの作成
               break;
-      default:loopPanel();
+      case 3:startPanel();
+              break;
+      case 4:endPanel();
+              break;
+      default:delayPanel();
               break; //何もしない
       }
-      return pane; //作ったパネルをリターン
+     }
+    
+    public JPanel create(JPanel p, int x){
+      pane = p;
+      create(x);
+      return pane;
     }
     
-    public JPanel create(int x){
-      JPanel panel = new JPanel();
-      return create(panel, x);
+    public JPanel Panelreturn(){
+      return pane;
+    }
+    
+
+    
+    /*** 結合用Boolean変数 ***/
+    public boolean link(){
+      return link;
+    }
+    
+    public void changelink(boolean t){
+      link = t;
+    }
+    
+    public boolean toplevel(){
+      return toplevel;
+    }
+    
+    public void changetoplevel(boolean t){
+      toplevel = t;
+    }
+    
+    /***  JPanelのオーバーロード ***/
+    public int getX(){
+      return pane.getX();
+    }
+    
+    public int getY(){
+      return pane.getY();
+    }
+    
+    public int getWidth(){
+      return pane.getWidth();
+    }
+    
+    public int getHeight(){
+      return pane.getHeight();
+    }
+    
+    public void setLocation(int x, int y){
+      pane.setLocation(x, y);
+    }
+    
+    public void setSize(int w, int h){
+      pane.setSize(w, h);
     }
     
   /*ここまでテキストボックス*/
@@ -111,6 +179,19 @@ public class CreatePanel extends JPanel implements ActionListener{
      default:break; //何もしない
     }*/ //コンストラクタは削除予定
 
+   /*** Create "StartPanel"***/
+   public void startPanel(){
+     pane.setSize(150, 50);
+     Label("開始");
+     pane.setBackground(Color.ORANGE);
+   }
+   
+   public void endPanel(){
+     pane.setSize(150, 50);
+     Label("終了");
+     pane.setBackground(Color.ORANGE);
+   }
+   
   
    /*** Crate "OutputPanel" ***/
    public void outPutPanel(){
@@ -183,6 +264,11 @@ public class CreatePanel extends JPanel implements ActionListener{
     
     pane.add(jLabel);
   }
+   
+   public void Label(String str){
+     jLabel = new JLabel(str);
+     pane.add(jLabel);
+   }
    
    /*** Create ComboBox ***/
     public void comboBox() {
