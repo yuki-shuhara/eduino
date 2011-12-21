@@ -170,6 +170,7 @@ public class Editor extends JFrame implements RunnerListener {
   public JPanel shadow;
   public JScrollPane warehouse;
   private int panelcount;
+  public CreatePanel nextpanel;
 //edus_111012 -added constractor
   public Editor(){
     super("Eduino");
@@ -263,16 +264,16 @@ public class Editor extends JFrame implements RunnerListener {
       /*** ↓これがないとスクロールバーが正常に表示されない↓ ***/
       scroll.setPreferredSize(new Dimension(280, 600)); 
       /*** setLayout=Nullではスクロールバーが使えないが、setPref～(new Dimension(x, y))を用いることで表示させることが可 ***/
-    
-      mylistener = new MyMouseListener();
+      factory = new CreatePanel[1000]; 
+      createpanel = new CreatePanel();
+      mylistener = new MyMouseListener(factory);
+      
       dummy.addMouseListener(mylistener); //ダミーパネルを登録
       dummy.addMouseMotionListener(mylistener);
       dummy.setOpaque(false);
       
       panelcountinit(); //panelcount初期化
-     
-      factory = new CreatePanel[1000]; 
-      createpanel = new CreatePanel();
+
 
       basepane = new JPanel[10]; //10種類のパネルの生成が可能
       //pane = new JPanel[1000];
@@ -439,8 +440,8 @@ public class Editor extends JFrame implements RunnerListener {
     }
      
     public void panelcountinit(){
-      panelcount = 1;
-      /*** panelcount=0は共通で使うために ***/
+      panelcount = 0;
+      /*** ***/
     }
     
     public int panelHeight(JPanel p){
@@ -456,22 +457,6 @@ public class Editor extends JFrame implements RunnerListener {
       
     }
     
-    public void addedPanel(JPanel base, CreatePanel adv){
-      int x = base.getX();
-      int y = base.getY() + base.getHeight();
-      
-      
-              
-      if(base.getWidth() < adv.getWidth()){
-        base.setSize(adv.getWidth(), y + adv.getHeight()); 
-      }
-      else{
-        base.setSize(x, y + adv.getHeight());
-      }
-      
-      base.add(adv);
-      adv.setLocation(x, y);
-    }
 
     
     class MyMouseListener extends MouseAdapter{
@@ -487,6 +472,13 @@ public class Editor extends JFrame implements RunnerListener {
       private int a=0;
 
       private boolean setpanel = false;
+      CreatePanel[] CreatePanel;
+      CreatePanel createpanel;
+      
+      MyMouseListener(CreatePanel[] c){
+        CreatePanel = c;
+        createpanel = new CreatePanel();
+      }
    
       public void mouseDragged(MouseEvent e){
         x = e.getXOnScreen() - dx;
@@ -515,7 +507,6 @@ public class Editor extends JFrame implements RunnerListener {
           /*** fieldにおいて取得したパネルをそのまま動かす ***/
           field.remove(getJPanel(e));
           dummy = getJPanel(e);
-
           creaPanel.add(dummy);
          }
         else{
@@ -525,7 +516,7 @@ public class Editor extends JFrame implements RunnerListener {
           dummy.setLocation(((JPanel)e.getComponent()).getX(),((JPanel)e.getComponent()).getY());
           creaPanel.add(dummy);
           panelRepaint(dummy);
-          dummy.setName(Integer.toString(getID(e)));   //IDセット   
+          dummy.setName(getJPanel(e).getName());   //IDセット   
         }
 
           repaint();
@@ -539,7 +530,7 @@ public class Editor extends JFrame implements RunnerListener {
         clicked = false;
         if(setpanel){
           //dummy.setLocation(shadow.getX(), shadow.getY());
-          addedPanel(pracedpanel, dummy);
+          addedPanel(nextpanel, dummy);
           field.remove(shadow);
           setpanel=false;
         }
@@ -590,14 +581,20 @@ public class Editor extends JFrame implements RunnerListener {
       
       public void mouseEntered(MouseEvent e){
         //System.out.println("mouseEntered"+a++);
-        if(clicked && !setpanel){
+        if(clicked && !setpanel && (getclass(getJPanel(e)).ID!=0)){
           pracedpanel = getJPanel(e);
-          int logx = pracedpanel.getX();
-          int logy = pracedpanel.getY() + pracedpanel.getHeight();
-          field.add(shadow);
-          shadow.setLocation(logx, logy);
-          setpanel=true;
-          
+          createpanel = getclass(pracedpanel);
+          if(createpanel.link()){
+            nextpanel = createpanel;
+            int logx = createpanel.getX();
+            int logy = createpanel.getY() + createpanel.getHeight();
+            field.add(shadow);
+            shadow.setLocation(logx, logy);
+            setpanel=true;
+          }
+          else{
+            
+          }
         }
         else if(clicked){
           return;
@@ -616,20 +613,25 @@ public class Editor extends JFrame implements RunnerListener {
       
       }
       
-      public void addedPanel(CreatePanel base, JPanel adv){
-        int x = base.getX();
-        int y = base.getY() + base.getHeight();
+      public CreatePanel getclass(JPanel p){
+        return CreatePanel[getID(p)];
+      }
+      
+      public void addedPanel(CreatePanel base,JPanel  adv){
+        int y = base.getHeight()-1;
                 
         if(base.getWidth() < adv.getWidth()){
-          base.setSize(adv.getWidth(), y + adv.getHeight()); 
+          base.setSize(adv.getWidth(), y); 
         }
         else{
           base.setSize(x, y + adv.getHeight());
         }
         
-        base.add(adv);
-        adv.setLocation(x, y);
+        base.pane.add(adv);
+        adv.setLocation(0, y);
+        getclass(base).changelink(false);
       }
+
       
       private boolean checkLine(MouseEvent e){
         if(((JPanel)e.getComponent()).getX()<LINE){

@@ -41,7 +41,8 @@ public class CreatePanel extends JPanel implements ActionListener{
   
  
    public JPanel pane;
-   public int ID;
+   public final int ID;
+   private int type;
   
    private boolean link;
    private boolean toplevel;
@@ -68,15 +69,15 @@ public class CreatePanel extends JPanel implements ActionListener{
     
     CreatePanel(){
       pane = new JPanel();
-      link = false;
-      toplevel = false;
+      link = true;
+      toplevel = true;
       ID = 0;
     }
     
     CreatePanel(int panelcount){
       pane = new JPanel();
-      link = false;
-      toplevel = false;
+      link = true;
+      toplevel = true;
       ID = panelcount;
       pane.setName(Integer.toString(ID));
     }
@@ -85,22 +86,22 @@ public class CreatePanel extends JPanel implements ActionListener{
     /*** 外部操作可能な部分 
      * @return ***/
     public void create(int x){
-      
       //エラー文挿入予定      
       switch(x){
-      case 0:loopPanel(); //ループパネルの作成
+      case 1:loopPanel(); //ループパネルの作成
               break;
-      case 1:outPutPanel(); //出力パネルの作成
+      case 2:outPutPanel(); //出力パネルの作成
               break;
-      case 2:delayPanel();  //遅延パネルの作成
+      case 3:delayPanel();  //遅延パネルの作成
               break;
-      case 3:startPanel();
+      case 4:startPanel();
               break;
-      case 4:endPanel();
+      case 5:endPanel();
               break;
       default:delayPanel();
               break; //何もしない
       }
+      type = x;
      }
     
     public JPanel create(JPanel p, int x){
@@ -130,6 +131,18 @@ public class CreatePanel extends JPanel implements ActionListener{
     
     public void changetoplevel(boolean t){
       toplevel = t;
+    }
+    
+    public String getcode(String str){
+      switch(ID){
+      case 1: str = str + "void loop(){"; break;
+      case 2: str = str + ""; break;
+      case 3: str = str + ""; break;
+      case 4: str = str + ""; break;
+      case 5: str = str + ""; break;
+      default: break;
+      }
+      return str;
     }
     
     /***  JPanelのオーバーロード ***/
