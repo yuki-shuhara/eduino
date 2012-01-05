@@ -14,21 +14,20 @@ public class PanelMove extends MouseAdapter{
     private PanelTranslate dummy;
     
     public void mouseDragged(MouseEvent e){
-//      x = e.getXOnScreen() - dx;
-//      y = e.getYOnScreen() - dy;
-//      
-//      dummy.setLocation(x, y);
-//  
+      x = e.getXOnScreen() - dx;
+      y = e.getYOnScreen() - dy;
+      
+      dummy.setLocation(x, y);
+  
     }
     
      
     public void mousePressed(MouseEvent e){
-//      /*内包されているかのif文*/
-//      dummy = new JPanel();
-//      dummy = (JPanel)e.getComponent();
-//        
-//      dx = e.getXOnScreen() - dummy.getX();
-//      dy = e.getYOnScreen() - dummy.getY();
+      /*内包されているかのif文*/
+      dummy = (PanelTranslate)e.getComponent();
+        
+      dx = e.getXOnScreen() - dummy.getX();
+      dy = e.getYOnScreen() - dummy.getY();
     }
     
     public void mouseReleased(MouseEvent e){
