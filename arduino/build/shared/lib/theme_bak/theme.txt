@@ -1,8 +1,6 @@
 # GUI - STATUS
-status.notice.fgcolor = #000000
-#002325
-status.notice.bgcolor = #ae90d8
-#17A1A5
+status.notice.fgcolor = #002325
+status.notice.bgcolor = #17A1A5
 status.error.fgcolor = #FFFFFF
 status.error.bgcolor = #E34C00
 status.edit.fgcolor = #000000
@@ -12,8 +10,7 @@ status.font = SansSerif,plain,12
 # GUI - TABS
 # settings for the tabs at the top
 # (tab images are stored in the lib/theme folder)
-header.bgcolor = #8c5cd0
-#17A1A5
+header.bgcolor = #17A1A5
 header.text.selected.color = #005B5B
 header.text.unselected.color = #007e82
 header.text.font = SansSerif,plain,12
@@ -26,15 +23,18 @@ console.output.color = #eeeeee
 console.error.color = #E34C00
 
 # GUI - BUTTONS
-buttons.bgcolor = #683da4
-#006468
+
+buttons.bgcolor = #006468
+#↑↑↑ボタンの後ろ↑↑↑
+
 buttons.status.font = SansSerif,plain,12
 buttons.status.color = #ffffff
 
 # GUI - LINESTATUS   
 linestatus.color = #ffffff
-linestatus.bgcolor = #683da4
-#006468
+
+linestatus.bgcolor = #006468
+#↑↑↑フレーム下部の若干薄い部分↑↑↑
 
 # EDITOR - DETAILS
 
