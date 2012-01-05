@@ -1,11 +1,12 @@
 package processing.app;
 
 import java.awt.Button;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JPanel;
 
-public class CreateButton implements ActionListener{
+public class CreateButton extends Button implements ActionListener{
   final int LOOP = 0;
   final int SEG = 1;
   final int LED = 2;
@@ -13,6 +14,7 @@ public class CreateButton implements ActionListener{
   final int SWITCH = 4;
   
   JPanel field;
+  JPanel buttonField;
   CreatePanel CreatePanel;
   
 
@@ -29,7 +31,16 @@ public class CreateButton implements ActionListener{
   CreateButton(JPanel field){
     CreatePanel = new CreatePanel();
     this.field = field;
+    initPanel();
     setButton();
+    field.add(buttonField);
+  }
+  
+  void initPanel(){
+    buttonField = new JPanel();
+    buttonField.setLayout(null);
+    buttonField.setBounds(0,0, BUTTON_WIDTH+BUTTON_X*2, (BUTTON_HEIGHT+BUTTON_GAP)*BUTTON_COUNT+BUTTON_GAP);
+    buttonField.setBackground(Color.GRAY);
   }
   
 //  void setButton(){
@@ -48,14 +59,16 @@ public class CreateButton implements ActionListener{
       button[i].addActionListener(this);
       button[i].setActionCommand(buttonName[i]);
       button[i].setBounds(BUTTON_X, BUTTON_GAP*(i+1)+BUTTON_HEIGHT*i, BUTTON_WIDTH, BUTTON_HEIGHT);
-      field.add(button[i]);
+      buttonField.add(button[i]);
     }
   }
  
   @Override
   public void actionPerformed(ActionEvent push) {
-    field.add(CreatePanel.create(push.getActionCommand()));
+    PanelTranslate p = CreatePanel.create(push.getActionCommand());
+    field.add(p);
+    field.repaint();
+    //panelRepaint(p);
     //System.out.println(push.getActionCommand());
   }
-  
 }

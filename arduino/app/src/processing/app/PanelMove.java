@@ -11,27 +11,36 @@ public class PanelMove extends MouseAdapter{
     private int x=0; //パネルのｘ座標
     private int y=0; //パネルのy座標
     
-    private PanelTranslate dummy;
+    PanelTranslate PanelTranslate;
+    boolean press=false;
+    
+    PanelMove(PanelTranslate paneltranslate){
+      this.PanelTranslate = paneltranslate;
+    }
     
     public void mouseDragged(MouseEvent e){
-      x = e.getXOnScreen() - dx;
-      y = e.getYOnScreen() - dy;
+      if(press){
+        x = e.getXOnScreen() - dx;
+        y = e.getYOnScreen() - dy;
       
-      dummy.setLocation(x, y);
-  
+        PanelTranslate.setLocation(x, y);
+      }
     }
     
      
     public void mousePressed(MouseEvent e){
+//      System.out.println("pressed");
       /*内包されているかのif文*/
-      dummy = (PanelTranslate)e.getComponent();
-        
-      dx = e.getXOnScreen() - dummy.getX();
-      dy = e.getYOnScreen() - dummy.getY();
+        if(PanelTranslate.getContains(e.getX(), e.getY())){
+          press = true;
+          dx = e.getXOnScreen() - PanelTranslate.getX();
+          dy = e.getYOnScreen() - PanelTranslate.getY();
+        }
     }
     
     public void mouseReleased(MouseEvent e){
-      
+//      System.out.println("released");
+      press = false;
     }
     
     public void mouseMoved(MouseEvent e) {
@@ -45,9 +54,6 @@ public class PanelMove extends MouseAdapter{
     public void mouseEntered(MouseEvent e){
      
     }
-    
-  
-    
   
     public void mouseExited(MouseEvent e){
     

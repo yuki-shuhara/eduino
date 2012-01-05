@@ -17,7 +17,7 @@ public class CreatePanel{
       return new LoopPanel();
     }
     if(s.equals("Seg")){
-      //new SegPanel();
+      return new SegPanel();
     }
     if(s.equals("Led")){
       //new LedPanel();

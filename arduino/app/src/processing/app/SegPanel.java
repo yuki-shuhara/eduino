@@ -1,7 +1,5 @@
 package processing.app;
 
-
-
 import java.awt.Color;
 import java.awt.Graphics;
 
@@ -9,14 +7,14 @@ import java.awt.Polygon;
 
 import javax.swing.JLabel;
 
-public class LoopPanel extends PanelTranslate{
+public class SegPanel extends PanelTranslate{
   
-  static int HEIGHT = 180;
-  static int WIDTH = 150;
-  static int TOP_HEIGHT = 50;
-  static int BOTTOM_HEIGHT = 30;
+  static int HEIGHT = 100;
+  static int WIDTH = 130;
+  static int TOP_HEIGHT = 40;
+  static int BOTTOM_HEIGHT = 20;
   static int BAR_WIDTH = 20;
-//  static Color color = Color.orange;
+//  static Color color = Color.blue;
   static long blockid;
 
   
@@ -24,16 +22,16 @@ public class LoopPanel extends PanelTranslate{
 //    super(blockid);
 //    
 //  }
-  LoopPanel(){
-    super(HEIGHT, WIDTH, Color.orange);
+  SegPanel(){
+    super(HEIGHT, WIDTH, Color.blue);
     setPolygon();
   }
   
   protected void paintComponent(Graphics g){
     super.paintComponent(g);
    
-      JLabel label = new JLabel("繰り返す");
-      label.setBounds(WIDTH/3, TOP_HEIGHT/2-10, WIDTH/3, 20);
+      JLabel label = new JLabel("７セグメント表示");
+      label.setBounds(WIDTH/5, TOP_HEIGHT/2-10, WIDTH-WIDTH/5, 20);
       super.add(label);
  
   }
