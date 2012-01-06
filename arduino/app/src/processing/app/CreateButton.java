@@ -28,9 +28,9 @@ public class CreateButton extends Button implements ActionListener{
   static final int BUTTON_WIDTH= 200;
   
   
-  CreateButton(JPanel field){
-    CreatePanel = new CreatePanel();
+  CreateButton(JPanel field, CreatePanel CreatePanel){
     this.field = field;
+    this.CreatePanel = CreatePanel;
     initPanel();
     setButton();
     field.add(buttonField);
@@ -43,15 +43,6 @@ public class CreateButton extends Button implements ActionListener{
     buttonField.setBackground(Color.GRAY);
   }
   
-//  void setButton(){
-//    button[0] =  new Button("テスト");
-//    button[0].addActionListener(this);
-//    button[0].setActionCommand(buttonName[0]);
-//    button[0].setBounds(BUTTON_X, BUTTON_GAP+BUTTON_HEIGHT*0, BUTTON_WIDTH, BUTTON_HEIGHT);
-////    button[0].setBounds(10, 50, 200, 50);
-//    field.add(button[0]);
-//  }
-//  
   void setButton(){
     Button button[] = new Button[BUTTON_COUNT];
     for(int i = 0; i < BUTTON_COUNT; i++){

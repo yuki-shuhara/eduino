@@ -20,10 +20,10 @@ public class CreatePanel{
       return new SegPanel();
     }
     if(s.equals("Led")){
-      //new LedPanel();
+      return new LedPanel();
     }
     if(s.equals("Delay")){
-      //new DelayPanel();
+      return new DelayPanel();
     }
     if(s.equals("Switch")){
       //new SwitchPanel();

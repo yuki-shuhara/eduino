@@ -231,10 +231,8 @@ public class Editor extends JFrame implements RunnerListener {
       Box upper = Box.createVerticalBox();
         
 //edus
-      field = new JPanel();
-      field.setBackground(Color.white); 
-      field.setLayout(null); //土台パネル
-      new CreateButton(field);
+      Eduino eduino = new Eduino();
+      
 //edue      
       if (toolbarMenu == null) {
         toolbarMenu = new JMenu();
@@ -272,7 +270,7 @@ public class Editor extends JFrame implements RunnerListener {
   //edue
       
   //edus -testplay
-      upper.add(field);
+      upper.add(eduino.ret());
       //upper.add(textarea);
   //edue
    

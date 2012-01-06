@@ -9,6 +9,7 @@ import javax.swing.JLabel;
 
 public class SegPanel extends PanelTranslate{
   
+  static int x = 2, y = 2;
   static int HEIGHT = 100;
   static int WIDTH = 130;
   static int TOP_HEIGHT = 40;
@@ -17,23 +18,27 @@ public class SegPanel extends PanelTranslate{
 //  static Color color = Color.blue;
   static long blockid;
 
+  JLabel label;
   
 //  LoopPanel(){
 //    super(blockid);
 //    
 //  }
   SegPanel(){
-    super(HEIGHT, WIDTH, Color.blue);
+    super(WIDTH, HEIGHT, Color.blue, Color.cyan);
     setPolygon();
+    addedParts();
+  }
+  
+
+  void addedParts(){
+      label = new JLabel("７セグメント表示");
+      super.add(label);
   }
   
   protected void paintComponent(Graphics g){
     super.paintComponent(g);
-   
-      JLabel label = new JLabel("７セグメント表示");
-      label.setBounds(WIDTH/5, TOP_HEIGHT/2-10, WIDTH-WIDTH/5, 20);
-      super.add(label);
- 
+    label.setBounds(WIDTH/10, TOP_HEIGHT/2-10, WIDTH-WIDTH/5, 20);
   }
 
   public void setPolygon(){
