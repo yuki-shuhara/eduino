@@ -229,11 +229,7 @@ public class Editor extends JFrame implements RunnerListener {
 
       Box box = Box.createVerticalBox();
       Box upper = Box.createVerticalBox();
-        
-//edus
-      Eduino eduino = new Eduino();
-      
-//edue      
+            
       if (toolbarMenu == null) {
         toolbarMenu = new JMenu();
         base.rebuildToolbarMenu(toolbarMenu);
@@ -270,7 +266,7 @@ public class Editor extends JFrame implements RunnerListener {
   //edue
       
   //edus -testplay
-      upper.add(eduino.ret());
+      upper.add(new Eduino());
       //upper.add(textarea);
   //edue
    

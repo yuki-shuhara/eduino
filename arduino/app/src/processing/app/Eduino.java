@@ -1,23 +1,33 @@
 package processing.app;
 
 import java.awt.Color;
+import java.awt.Dimension;
 
+import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
 public class Eduino extends JPanel{
+  
+    public int BorderLine = 200;
 
-    JPanel Field;
+    WorkingSpace WorkingSpace;
     CreatePanel CreatePanel;
+    CreateButton CreateButton;
     
     Eduino(){
-      Field = new JPanel();
-      Field.setBackground(Color.white); 
-      Field.setLayout(null); //土台パネル
+      this.setBackground(Color.white); 
+      this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
       CreatePanel = new CreatePanel();
-      new CreateButton(Field, CreatePanel);
+      
+      WorkingSpace = new WorkingSpace();
+      CreateButton = new CreateButton(WorkingSpace, CreatePanel);
+      
+      CreateButton.setMaximumSize(new Dimension(BorderLine, Short.MAX_VALUE));
+      WorkingSpace.setMaximumSize(new Dimension(Short.MAX_VALUE, Short.MAX_VALUE));
+      
+      this.add(CreateButton);
+      this.add(WorkingSpace);
     }
  
-     public JPanel ret(){
-       return Field;
-     }
+
 }

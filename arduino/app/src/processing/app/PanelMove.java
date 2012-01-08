@@ -22,7 +22,8 @@ public class PanelMove extends MouseAdapter{
       if(press){
         x = e.getXOnScreen() - dx;
         y = e.getYOnScreen() - dy;
-      
+        
+
         PanelTranslate.setLocation(x, y);
       }
     }
@@ -35,6 +36,8 @@ public class PanelMove extends MouseAdapter{
           press = true;
           dx = e.getXOnScreen() - PanelTranslate.getX();
           dy = e.getYOnScreen() - PanelTranslate.getY();
+          
+          
         }
     }
     
