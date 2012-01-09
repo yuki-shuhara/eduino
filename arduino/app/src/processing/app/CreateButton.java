@@ -20,6 +20,7 @@ public class CreateButton extends JPanel implements ActionListener{
   
   WorkingSpace WorkingSpace;
   CreatePanel CreatePanel;
+  PanelMove PanelMove;
   
   String buttonLabel[] = {"繰り返しタイル作成", "７セグメント用タイル作成", "ＬＥＤ用タイル作成",
       "待機タイル作成", "スイッチ用タイル作成"};
@@ -31,9 +32,10 @@ public class CreateButton extends JPanel implements ActionListener{
   //static final Color BackColor = new Color(r, g, b);
   
   
-  CreateButton(WorkingSpace WorkingSpace, CreatePanel CreatePanel){
+  CreateButton(WorkingSpace WorkingSpace, CreatePanel CreatePanel, PanelMove PanelMove){
     this.WorkingSpace = WorkingSpace;
     this.CreatePanel = CreatePanel;
+    this.PanelMove = PanelMove;
     initPanel();
     setButton();
   }
@@ -60,6 +62,8 @@ public class CreateButton extends JPanel implements ActionListener{
   @Override
   public void actionPerformed(ActionEvent push) {
     PanelTranslate p = CreatePanel.create(push.getActionCommand());
+    p.addMouseListener(PanelMove);
+    p.addMouseMotionListener(PanelMove);
     WorkingSpace.add(p);
     WorkingSpace.repaint();
     //System.out.println(push.getActionCommand());

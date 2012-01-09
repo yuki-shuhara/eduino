@@ -1,16 +1,9 @@
 package processing.app;
 
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-
-import javax.swing.JPanel;
-
-
 public class CreatePanel{
-
   
   CreatePanel(){
-   
+
   }
   public PanelTranslate create(String s){
     if(s.equals("Loop")){

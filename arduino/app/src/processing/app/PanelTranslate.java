@@ -24,14 +24,14 @@ abstract class PanelTranslate extends JPanel {
   abstract void setPolygon();
   abstract void addedParts();
   
-  final int height;
-  final int width;
-  final int x=300;
-  final int y=30;
+  private int height;
+  private int width;
+  private int x=300;
+  private int y=30;
   private Color colorleft;
   private Color colorright;
   
-  public Component component[];
+  //public Component component[];
   
   PanelTranslate(int h, int w){
     height = h;
@@ -40,13 +40,10 @@ abstract class PanelTranslate extends JPanel {
   
   PanelTranslate(int w, int h, Color c, Color c2){
     //System.out.println("createPanelTranslate");
-    panelmove = new PanelMove(this);
     height = h;
     width = w;
     colorleft = c;
     colorright = c2;
-    this.addMouseListener(panelmove);
-    this.addMouseMotionListener(panelmove);
     this.setOpaque(false);
     this.setBounds(x, y, width, height);
   }

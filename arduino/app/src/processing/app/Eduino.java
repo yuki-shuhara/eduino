@@ -5,28 +5,36 @@ import java.awt.Dimension;
 
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
+import javax.swing.JSplitPane;
 
 public class Eduino extends JPanel{
-  
-    public int BorderLine = 200;
 
+    private int BorderLine = 200;
     WorkingSpace WorkingSpace;
+    PanelMove PanelMove;
     CreatePanel CreatePanel;
     CreateButton CreateButton;
+    JSplitPane splitpane;
     
     Eduino(){
       this.setBackground(Color.white); 
       this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-      CreatePanel = new CreatePanel();
-      
+      CreatePanel = new CreatePanel();     
       WorkingSpace = new WorkingSpace();
-      CreateButton = new CreateButton(WorkingSpace, CreatePanel);
+      PanelMove = new PanelMove(WorkingSpace, BorderLine);
+      
+      CreateButton = new CreateButton(WorkingSpace, CreatePanel, PanelMove);
       
       CreateButton.setMaximumSize(new Dimension(BorderLine, Short.MAX_VALUE));
+      WorkingSpace.setMinimumSize(new Dimension(200, 400));
       WorkingSpace.setMaximumSize(new Dimension(Short.MAX_VALUE, Short.MAX_VALUE));
       
-      this.add(CreateButton);
-      this.add(WorkingSpace);
+      splitpane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, CreateButton, WorkingSpace);
+      splitpane.setDividerSize(5);
+      splitpane.setDividerLocation(BorderLine);
+      splitpane.setContinuousLayout(true);
+      this.add(splitpane);
+
     }
  
 

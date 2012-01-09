@@ -2,50 +2,70 @@ package processing.app;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 
 import javax.swing.JPanel;
 
-public class PanelMove extends MouseAdapter{
+public class PanelMove implements MouseListener, MouseMotionListener{
     private int dx;
     private int dy;
     private int x=0; //パネルのｘ座標
     private int y=0; //パネルのy座標
     
-    PanelTranslate PanelTranslate;
-    boolean press=false;
+    WorkingSpace WorkingSpace;
+    PanelTranslate GettingPanel;
+    boolean remove=false;
+    public int BorderLine;
     
-    PanelMove(PanelTranslate paneltranslate){
-      this.PanelTranslate = paneltranslate;
+    PanelMove(WorkingSpace WorkingSpace, int BorderLine){
+      this.WorkingSpace = WorkingSpace;
+      this.BorderLine = BorderLine;
     }
     
     public void mouseDragged(MouseEvent e){
-      if(press){
         x = e.getXOnScreen() - dx;
         y = e.getYOnScreen() - dy;
         
-
-        PanelTranslate.setLocation(x, y);
-      }
+        GettingPanel.setLocation(x, y);
+        //System.out.println("x:"+x + "@y:"+y);
+      
     }
     
      
     public void mousePressed(MouseEvent e){
 //      System.out.println("pressed");
+      GettingPanel = (PanelTranslate)e.getComponent();
       /*内包されているかのif文*/
-        if(PanelTranslate.getContains(e.getX(), e.getY())){
-          press = true;
-          dx = e.getXOnScreen() - PanelTranslate.getX();
-          dy = e.getYOnScreen() - PanelTranslate.getY();
+        if(GettingPanel.getContains(e.getX(), e.getY())){
+          dx = e.getXOnScreen() - GettingPanel.getX();
+          dy = e.getYOnScreen() - GettingPanel.getY();
           
+          WorkingSpace.remove(GettingPanel);
+          WorkingSpace.CreaPanel.add(GettingPanel);
           
         }
     }
     
     public void mouseReleased(MouseEvent e){
 //      System.out.println("released");
-      press = false;
+      if(x < -50|| y < -50){
+        remove = true;
+      }
+      if(x < 0){
+        x = 1;
+      }
+      if(y < 0){
+        y = 1;
+      }
+      GettingPanel.setLocation(x, y);
+
+      WorkingSpace.CreaPanel.remove(GettingPanel);
+      if(remove){remove=false;}
+      else{WorkingSpace.add(GettingPanel);}
+      WorkingSpace.repaint();
+      
     }
-    
     public void mouseMoved(MouseEvent e) {
       //mouseEntered(e);
     }
