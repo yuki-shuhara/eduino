@@ -1,11 +1,8 @@
 package processing.app;
 
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-
-import javax.swing.JPanel;
 
 public class PanelMove implements MouseListener, MouseMotionListener{
     private int dx;
@@ -15,12 +12,10 @@ public class PanelMove implements MouseListener, MouseMotionListener{
     
     WorkingSpace WorkingSpace;
     PanelTranslate GettingPanel;
-    boolean remove=false;
-    public int BorderLine;
-    
-    PanelMove(WorkingSpace WorkingSpace, int BorderLine){
+    private boolean remove=false;
+  
+    PanelMove(WorkingSpace WorkingSpace){
       this.WorkingSpace = WorkingSpace;
-      this.BorderLine = BorderLine;
     }
     
     public void mouseDragged(MouseEvent e){

@@ -12,11 +12,11 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 public class CreateButton extends JPanel implements ActionListener{
-  final int LOOP = 0;
-  final int SEG = 1;
-  final int LED = 2;
-  final int DELAY = 3;
-  final int SWITCH = 4;
+//  final int LOOP = 0;
+//  final int SEG = 1;
+//  final int LED = 2;
+//  final int DELAY = 3;
+//  final int SWITCH = 4;
   
   WorkingSpace WorkingSpace;
   CreatePanel CreatePanel;

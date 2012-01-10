@@ -10,26 +10,26 @@ import javax.swing.JSplitPane;
 public class Eduino extends JPanel{
 
     private int BorderLine = 200;
-    WorkingSpace WorkingSpace;
-    PanelMove PanelMove;
-    CreatePanel CreatePanel;
-    CreateButton CreateButton;
-    JSplitPane splitpane;
+//    WorkingSpace WorkingSpace;
+//    PanelMove PanelMove;
+//    CreatePanel CreatePanel;
+//    CreateButton CreateButton;
+//    JSplitPane splitpane;
     
     Eduino(){
       this.setBackground(Color.white); 
       this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-      CreatePanel = new CreatePanel();     
-      WorkingSpace = new WorkingSpace();
-      PanelMove = new PanelMove(WorkingSpace, BorderLine);
+      CreatePanel CreatePanel = new CreatePanel();     
+      WorkingSpace WorkingSpace = new WorkingSpace();
+      PanelMove PanelMove = new PanelMove(WorkingSpace);
       
-      CreateButton = new CreateButton(WorkingSpace, CreatePanel, PanelMove);
+      CreateButton CreateButton = new CreateButton(WorkingSpace, CreatePanel, PanelMove);
       
       CreateButton.setMaximumSize(new Dimension(BorderLine, Short.MAX_VALUE));
       WorkingSpace.setMinimumSize(new Dimension(200, 400));
       WorkingSpace.setMaximumSize(new Dimension(Short.MAX_VALUE, Short.MAX_VALUE));
       
-      splitpane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, CreateButton, WorkingSpace);
+      JSplitPane splitpane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, CreateButton, WorkingSpace);
       splitpane.setDividerSize(5);
       splitpane.setDividerLocation(BorderLine);
       splitpane.setContinuousLayout(true);
