@@ -19,7 +19,7 @@ public class CreatePanel{
       return new DelayPanel();
     }
     if(s.equals("Switch")){
-      //new SwitchPanel();
+      return new SwitchPanel();
     }
 
     return new NonPanel();

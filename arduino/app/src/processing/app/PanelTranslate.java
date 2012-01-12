@@ -6,48 +6,114 @@ import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Polygon;
-
+import java.awt.geom.Rectangle2D;
 
 import javax.swing.JPanel;
 import javax.swing.border.EtchedBorder;
 
 abstract class PanelTranslate extends JPanel {
 
-//  final long id;
+  private long blockId;
   protected String code;
-  PanelMove panelmove;
+  //PanelMove panelmove;
   protected Polygon polygon;
+  private Polygon outLine;
   
   abstract String code();
   abstract void setPolygon();
   abstract void addedParts();
   
-  private int height;
-  private int width;
-  private int x=300;
-  private int y=30;
+  protected int height;
+  protected int width;
+  protected int x=300;
+  protected int y=30;
+  private  int setPositionX, setPositionY;
   private Color colorleft;
   private Color colorright;
+   
+  private PanelTranslate nextPanelTranslate;
   
   //public Component component[];
   
-  PanelTranslate(int h, int w){
-    height = h;
-    width = w;
+  PanelTranslate(){
+    setPositionX = 0;
+    setPositionY = 0;
   }
   
-  PanelTranslate(int w, int h, Color c, Color c2){
+  PanelTranslate(int w, int h, Color c, Color c2, int positionx, int positiony){
     //System.out.println("createPanelTranslate");
+    setPositionX = positionx;
+    setPositionY = positiony;
     height = h;
     width = w;
     colorleft = c;
     colorright = c2;
     this.setOpaque(false);
-    this.setBounds(x, y, width, height);
+    this.setBounds(x,y,w,h);
+    nextPanelTranslate = null;
   }
   
   public boolean getContains(int px, int py){
+    System.out.println("outLine"+outLine.xpoints[0]+":"+outLine.xpoints[1]);
+    return outLine.contains(px,py);
+  }
+  
+  public boolean inLine(int px, int py){
     return polygon.contains(px,py);
+  }
+  
+  public void setNextPanelTranslate(PanelTranslate nextPanel){
+    
+      if(nextPanel == null){
+        nextPanelTranslate = null;
+        return;
+      }
+    
+      if(nextPanelTranslate == null){//くっつける処理
+          nextPanelTranslate = nextPanel;
+        nextPanelTranslate.setLocation(x +setPositionX, y+setPositionY);
+      }
+      else{//割り込み処理
+        PanelTranslate tmp = nextPanelTranslate;
+        nextPanelTranslate = nextPanel;
+        nextPanel.setNextPanelTranslate(tmp.getNextPanelTranslate());
+        nextPanel.setLocation(tmp.getX(), tmp.getY());
+      }
+  }
+  
+  public PanelTranslate getNextPanelTranslate(){
+    return nextPanelTranslate;
+  }
+  
+  public void setId(long id){
+    blockId = id; 
+  }
+  
+  public long getId(){
+    return blockId;
+  }
+  
+  protected void setOutLine(){
+    int px, py;
+    outLine = new Polygon();
+    for(int i=0; i<polygon.npoints; i++){
+      px = polygon.xpoints[i];
+      py = polygon.ypoints[i];
+      outLine.addPoint(px+x, py+y);
+    }
+    //outLine = new Polygon(polygon.xpoints, polygon.ypoints, polygon.npoints);
+  }
+  
+
+  @Override
+  public void setLocation(int x, int y){
+    super.setLocation(x, y);
+    this.x=x;
+    this.y=y;
+    setOutLine();
+    if(nextPanelTranslate != null){
+      nextPanelTranslate.setLocation(x + setPositionX, y + setPositionX);
+    }
   }
   
   protected void paintComponent(Graphics g){
@@ -56,13 +122,14 @@ abstract class PanelTranslate extends JPanel {
     //polygon.setBorder(new EtchedBorder(EtchedBorder.LOWERED));
     
 //    BasicStroke bs = new BasicStroke(5.0f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
-    BasicStroke bs = new BasicStroke(2.0f);
+    BasicStroke bs = new BasicStroke(0.5f);
     g2.setStroke(bs);
     
     GradientPaint gp = new GradientPaint(0f, 0f, colorleft, (float)width, (float)height, colorright);
     g2.setPaint(gp);
     g2.fill(polygon);
     g2.dispose();
+    super.repaint();
   }
 
 }     

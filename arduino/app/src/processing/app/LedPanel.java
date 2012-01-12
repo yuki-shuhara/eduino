@@ -12,8 +12,6 @@ import javax.swing.JLabel;
 
 public class LedPanel extends PanelTranslate implements ActionListener{
 
-  
-  static int x = 2, y = 2;
   static int HEIGHT = 40;
   static int WIDTH = 120;
 //  static Color color = Color.orange;
@@ -25,7 +23,7 @@ public class LedPanel extends PanelTranslate implements ActionListener{
    JLabel label;
 
   LedPanel(){
-    super(WIDTH+x*2, HEIGHT+y*2, Color.green, new Color(0,0.3f,0));
+    super(WIDTH, HEIGHT, Color.green, new Color(0,0.3f,0), 0, HEIGHT);
     setPolygon();
     addedParts();
   }
@@ -51,10 +49,11 @@ public class LedPanel extends PanelTranslate implements ActionListener{
   
 
   public void setPolygon(){
-    int Xarray[] = {x, WIDTH, WIDTH, x};
-    int Yarray[] = {y, y, HEIGHT, HEIGHT};
+    int Xarray[] = {0, WIDTH, WIDTH, 0};
+    int Yarray[] = {0, 0, HEIGHT, HEIGHT};
     Polygon polygon = new Polygon(Xarray, Yarray, Xarray.length);
     super.polygon = polygon;
+    super.setOutLine();
   }
   
   public String code(){return "";/*仮設置*/}

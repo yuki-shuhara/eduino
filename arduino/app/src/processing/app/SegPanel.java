@@ -9,7 +9,6 @@ import javax.swing.JLabel;
 
 public class SegPanel extends PanelTranslate{
   
-  static int x = 2, y = 2;
   static int HEIGHT = 100;
   static int WIDTH = 130;
   static int TOP_HEIGHT = 40;
@@ -25,7 +24,7 @@ public class SegPanel extends PanelTranslate{
 //    
 //  }
   SegPanel(){
-    super(WIDTH, HEIGHT, Color.blue, Color.cyan);
+    super(WIDTH, HEIGHT, Color.blue, Color.cyan, BAR_WIDTH, TOP_HEIGHT);
     setPolygon();
     addedParts();
   }
@@ -46,6 +45,7 @@ public class SegPanel extends PanelTranslate{
     int Yarray[] = {0, 0, TOP_HEIGHT, TOP_HEIGHT, HEIGHT-BOTTOM_HEIGHT, HEIGHT-BOTTOM_HEIGHT, HEIGHT, HEIGHT};
     Polygon polygon = new Polygon(Xarray, Yarray, Xarray.length);
     super.polygon = polygon;
+    super.setOutLine();
   }
   
   public String code(){return "";/*仮設置*/};

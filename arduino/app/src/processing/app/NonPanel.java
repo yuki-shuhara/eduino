@@ -8,7 +8,7 @@ public class NonPanel extends PanelTranslate{
   static int WIDTH = 0;
   
   NonPanel(){
-    super(HEIGHT, WIDTH);
+    super();
   }
   @Override
   public String code() {
@@ -21,6 +21,11 @@ public class NonPanel extends PanelTranslate{
     int Yarray[] = {0, 0, 50, 50, HEIGHT-30, HEIGHT-30, HEIGHT, HEIGHT};
     Polygon polygon = new Polygon(Xarray, Yarray, Xarray.length);
     super.polygon = polygon;
+  }
+  @Override
+  void addedParts() {
+    // TODO Auto-generated method stub
+    
   }
   
 

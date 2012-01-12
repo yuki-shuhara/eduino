@@ -1,5 +1,6 @@
 package processing.app;
 
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Polygon;
@@ -9,38 +10,30 @@ import java.awt.event.ActionListener;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JTextField;
 
-public class DelayPanel extends PanelTranslate {
+public class SwitchPanel extends PanelTranslate implements ActionListener{
 
   static int HEIGHT = 40;
-  static int WIDTH = 100;
+  static int WIDTH = 120;
 //  static Color color = Color.orange;
   static long blockid;
-  
-  
-   JLabel label;
-   JTextField text;
 
-  DelayPanel(){
-    super(WIDTH, HEIGHT, Color.red, Color.magenta, 0, HEIGHT);
+   JLabel label;
+
+  SwitchPanel(){
+    super(WIDTH, HEIGHT, new Color(0.5f, 0.5f, 0.5f), new Color(0.3f, 0.3f, 0.3f), 0, HEIGHT);
     setPolygon();
     addedParts();
   }
   
   protected void paintComponent(Graphics g){
     super.paintComponent(g);
-    text.setBounds(10, HEIGHT/2-10, 30, 20);
-    label.setBounds(50, HEIGHT/2-10, 35, 20);
   }
   
 
    void addedParts(){
-     text = new JTextField("0.0");
-     text.setColumns(4);
-     super.add(text);
-     
-     label = new JLabel("秒待つ");
+     label = new JLabel();
+     //label.setIcon("");
      super.add(label);
    }
   
@@ -56,7 +49,11 @@ public class DelayPanel extends PanelTranslate {
   public String code(){return "";/*仮設置*/}
 
 
-
+  @Override
+  public void actionPerformed(ActionEvent list) {
+    // TODO Auto-generated method stub
+    
+  };
 //    
 //   String source = "void loop(){\n";
 //   

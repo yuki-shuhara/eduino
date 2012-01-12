@@ -10,57 +10,82 @@ public class PanelMove implements MouseListener, MouseMotionListener{
     private int x=0; //パネルのｘ座標
     private int y=0; //パネルのy座標
     
+    private int RemoveLine = -50;
+    private int checkLine = 0;
+    private boolean remove;  
+    private boolean press;
+    
     WorkingSpace WorkingSpace;
     PanelTranslate GettingPanel;
-    private boolean remove=false;
+    PanelTranslate PracedPanel;
+    
   
     PanelMove(WorkingSpace WorkingSpace){
       this.WorkingSpace = WorkingSpace;
+      remove = false;
+      press = false;
     }
     
     public void mouseDragged(MouseEvent e){
+      if(press){
         x = e.getXOnScreen() - dx;
         y = e.getYOnScreen() - dy;
         
         GettingPanel.setLocation(x, y);
         //System.out.println("x:"+x + "@y:"+y);
-      
+      }
     }
     
      
     public void mousePressed(MouseEvent e){
+
 //      System.out.println("pressed");
       GettingPanel = (PanelTranslate)e.getComponent();
+      System.out.println(GettingPanel);
       /*内包されているかのif文*/
-        if(GettingPanel.getContains(e.getX(), e.getY())){
+        if(GettingPanel.inLine(e.getX(), e.getY())){
+          press = true;
           dx = e.getXOnScreen() - GettingPanel.getX();
           dy = e.getYOnScreen() - GettingPanel.getY();
           
-          WorkingSpace.remove(GettingPanel);
-          WorkingSpace.CreaPanel.add(GettingPanel);
+          WorkingSpace.moveToFront(GettingPanel);
           
         }
     }
     
     public void mouseReleased(MouseEvent e){
+      press = false;
 //      System.out.println("released");
-      if(x < -50|| y < -50){
+      if(x < RemoveLine|| y < RemoveLine){
         remove = true;
       }
       if(x < 0){
         x = 1;
+        GettingPanel.setLocation(x, y);
       }
       if(y < 0){
         y = 1;
+        GettingPanel.setLocation(x, y);
       }
-      GettingPanel.setLocation(x, y);
 
-      WorkingSpace.CreaPanel.remove(GettingPanel);
-      if(remove){remove=false;}
-      else{WorkingSpace.add(GettingPanel);}
-      WorkingSpace.repaint();
-      
+        
+
+
+      if(remove){
+        remove=false;
+        WorkingSpace.removePanel(GettingPanel);
+      }
+      else{
+        PanelTranslate PT = WorkingSpace.checkOverlap(GettingPanel);
+        System.out.println(PT);
+        if(PT != null){
+          PT.setNextPanelTranslate(GettingPanel);
+        }
+
+      }
+        WorkingSpace.repaint();
     }
+    
     public void mouseMoved(MouseEvent e) {
       //mouseEntered(e);
     }
@@ -70,11 +95,11 @@ public class PanelMove implements MouseListener, MouseMotionListener{
     }
     
     public void mouseEntered(MouseEvent e){
-     
+     //System.out.println("enter");
     }
   
     public void mouseExited(MouseEvent e){
-    
+    //System.out.println("exit");
     }
    
 }

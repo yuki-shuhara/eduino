@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
 public class CreateButton extends JPanel implements ActionListener{
@@ -64,6 +65,9 @@ public class CreateButton extends JPanel implements ActionListener{
     PanelTranslate p = CreatePanel.create(push.getActionCommand());
     p.addMouseListener(PanelMove);
     p.addMouseMotionListener(PanelMove);
+    WorkingSpace.PlacedPanel(p);
+
+    WorkingSpace.moveToFront(p);
     WorkingSpace.add(p);
     WorkingSpace.repaint();
     //System.out.println(push.getActionCommand());

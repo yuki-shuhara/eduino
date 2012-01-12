@@ -11,7 +11,6 @@ import javax.swing.JLabel;
 
 public class LoopPanel extends PanelTranslate{
   
-  static int x = 2, y = 2;
   static int HEIGHT = 180;
   static int WIDTH = 150;
   static int TOP_HEIGHT = 50;
@@ -28,10 +27,11 @@ public class LoopPanel extends PanelTranslate{
 //    
 //  }
   LoopPanel(){
-    super(WIDTH+x*2, HEIGHT+y*2, Color.orange, Color.yellow);
+    super(WIDTH, HEIGHT, Color.orange, Color.yellow, BAR_WIDTH, TOP_HEIGHT);
     setPolygon();
     addedParts();
   }
+  
   
 
    void addedParts(){
@@ -46,10 +46,12 @@ public class LoopPanel extends PanelTranslate{
   
 
   public void setPolygon(){
-    int Xarray[] = {x, WIDTH, WIDTH, BAR_WIDTH, BAR_WIDTH, WIDTH, WIDTH, x};
-    int Yarray[] = {y, y, TOP_HEIGHT, TOP_HEIGHT, HEIGHT-BOTTOM_HEIGHT, HEIGHT-BOTTOM_HEIGHT, HEIGHT, HEIGHT};
+    int Xarray[] = {0, WIDTH, WIDTH, BAR_WIDTH, BAR_WIDTH, WIDTH, WIDTH, 0};
+    int Yarray[] = {0, 0, TOP_HEIGHT, TOP_HEIGHT, HEIGHT-BOTTOM_HEIGHT, HEIGHT-BOTTOM_HEIGHT, HEIGHT, HEIGHT};
     Polygon polygon = new Polygon(Xarray, Yarray, Xarray.length);
     super.polygon = polygon;
+    super.setOutLine();
+    
   }
   
   public String code(){return "";/*仮設置*/};
