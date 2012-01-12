@@ -36,11 +36,11 @@ public class DelayPanel extends PanelTranslate {
   
 
    void addedParts(){
-     text = new JTextField("0.0");
+     text = new JTextField("1000");
      text.setColumns(4);
      super.add(text);
      
-     label = new JLabel("秒待つ");
+     label = new JLabel("ミリ秒待つ");
      super.add(label);
    }
   
@@ -53,7 +53,7 @@ public class DelayPanel extends PanelTranslate {
     super.setOutLine();
   }
   
-  public String code(){return "";/*仮設置*/}
+  public String code(){return "delay("+text.getText()+");\n" ;}
 
 
 

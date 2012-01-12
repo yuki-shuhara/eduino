@@ -149,7 +149,7 @@ public class Editor extends JFrame implements RunnerListener {
   Runnable exportHandler;
   Runnable exportAppHandler;
   
-
+  Eduino Eduino;
 
   public JPanel field; //Chestクラスの土台パネル
   
@@ -266,7 +266,8 @@ public class Editor extends JFrame implements RunnerListener {
   //edue
       
   //edus -testplay
-      upper.add(new Eduino());
+      Eduino = new Eduino();
+      upper.add(Eduino);
       //upper.add(textarea);
   //edue
    
@@ -347,9 +348,8 @@ public class Editor extends JFrame implements RunnerListener {
      
 
     public void compile() {
-      String str = new String();
-      str = "void setup() {pinMode(13, OUTPUT);}void loop() {digitalWrite(13, HIGH); delay(1000); digitalWrite(13, LOW);  delay(1000); }";
-      
+      String str = "";
+      str = str + Eduino.compile();
       textarea.setText(str);
       
     }

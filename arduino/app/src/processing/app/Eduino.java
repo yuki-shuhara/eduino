@@ -10,7 +10,7 @@ import javax.swing.JSplitPane;
 public class Eduino extends JPanel{
 
     private int BorderLine = 200;
-//    WorkingSpace WorkingSpace;
+    WorkingSpace WorkingSpace;
 //    PanelMove PanelMove;
 //    CreatePanel CreatePanel;
 //    CreateButton CreateButton;
@@ -20,7 +20,7 @@ public class Eduino extends JPanel{
       this.setBackground(Color.white); 
       this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
       CreatePanel CreatePanel = new CreatePanel();     
-      WorkingSpace WorkingSpace = new WorkingSpace();
+      WorkingSpace = new WorkingSpace();
       PanelMove PanelMove = new PanelMove(WorkingSpace);
       
       CreateButton CreateButton = new CreateButton(WorkingSpace, CreatePanel, PanelMove);
@@ -35,6 +35,15 @@ public class Eduino extends JPanel{
       splitpane.setContinuousLayout(true);
       this.add(splitpane);
 
+    }
+    
+    public String compile(){
+      String source="";
+      
+      if(WorkingSpace.getLoop() != null){
+        source = source + WorkingSpace.getLoop().code();
+      }     
+      return source;
     }
  
 

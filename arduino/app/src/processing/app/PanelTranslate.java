@@ -25,19 +25,20 @@ abstract class PanelTranslate extends JPanel {
   
   protected int height;
   protected int width;
-  protected int x=300;
+  protected int x=100;
   protected int y=30;
   private  int setPositionX, setPositionY;
   private Color colorleft;
   private Color colorright;
    
   private PanelTranslate nextPanelTranslate;
+  private PanelTranslate beforePanelTranslate;
   
   //public Component component[];
   
   PanelTranslate(){
-    setPositionX = 0;
-    setPositionY = 0;
+//    setPositionX = 0;
+//    setPositionY = 0;
   }
   
   PanelTranslate(int w, int h, Color c, Color c2, int positionx, int positiony){
@@ -50,16 +51,27 @@ abstract class PanelTranslate extends JPanel {
     colorright = c2;
     this.setOpaque(false);
     this.setBounds(x,y,w,h);
+    beforePanelTranslate = null;
     nextPanelTranslate = null;
   }
   
   public boolean getContains(int px, int py){
-    System.out.println("outLine"+outLine.xpoints[0]+":"+outLine.xpoints[1]);
     return outLine.contains(px,py);
   }
   
   public boolean inLine(int px, int py){
     return polygon.contains(px,py);
+  }
+  
+  public void setbeforePanelTranslate(PanelTranslate beforePanel){
+    if(beforePanel==null){
+      if(beforePanelTranslate != null){
+        beforePanelTranslate.setNextPanelTranslate(null);
+        beforePanelTranslate = null;
+      }
+      return;
+    }
+    beforePanelTranslate = beforePanel;
   }
   
   public void setNextPanelTranslate(PanelTranslate nextPanel){
@@ -68,16 +80,16 @@ abstract class PanelTranslate extends JPanel {
         nextPanelTranslate = null;
         return;
       }
-    
+      nextPanel.setbeforePanelTranslate(this);
       if(nextPanelTranslate == null){//くっつける処理
-          nextPanelTranslate = nextPanel;
+        nextPanelTranslate = nextPanel;
         nextPanelTranslate.setLocation(x +setPositionX, y+setPositionY);
       }
       else{//割り込み処理
         PanelTranslate tmp = nextPanelTranslate;
         nextPanelTranslate = nextPanel;
-        nextPanel.setNextPanelTranslate(tmp.getNextPanelTranslate());
         nextPanel.setLocation(tmp.getX(), tmp.getY());
+        nextPanel.setNextPanelTranslate(tmp);
       }
   }
   
@@ -112,7 +124,7 @@ abstract class PanelTranslate extends JPanel {
     this.y=y;
     setOutLine();
     if(nextPanelTranslate != null){
-      nextPanelTranslate.setLocation(x + setPositionX, y + setPositionX);
+      nextPanelTranslate.setLocation(x + setPositionX, y + setPositionY);
     }
   }
   
@@ -122,14 +134,14 @@ abstract class PanelTranslate extends JPanel {
     //polygon.setBorder(new EtchedBorder(EtchedBorder.LOWERED));
     
 //    BasicStroke bs = new BasicStroke(5.0f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
-    BasicStroke bs = new BasicStroke(0.5f);
-    g2.setStroke(bs);
+//    BasicStroke bs = new BasicStroke(0.5f);
+//    g2.setStroke(bs);
     
     GradientPaint gp = new GradientPaint(0f, 0f, colorleft, (float)width, (float)height, colorright);
     g2.setPaint(gp);
     g2.fill(polygon);
     g2.dispose();
-    super.repaint();
+    //super.repaint();
   }
 
 }     

@@ -22,7 +22,8 @@ public class CreatePanel{
       return new SwitchPanel();
     }
 
-    return new NonPanel();
+//    return new NonPanel();
+    return null;
   }
   
  

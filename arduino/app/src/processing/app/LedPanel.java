@@ -16,6 +16,7 @@ public class LedPanel extends PanelTranslate implements ActionListener{
   static int WIDTH = 120;
 //  static Color color = Color.orange;
   static long blockid;
+  String select="HIGH";
 
    JComboBox ledCombo;
    DefaultComboBoxModel com;
@@ -56,22 +57,13 @@ public class LedPanel extends PanelTranslate implements ActionListener{
     super.setOutLine();
   }
   
-  public String code(){return "";/*仮設置*/}
+  public String code(){return "digitalWrite(LED," + select + ");";/*仮設置*/}
 
 
   @Override
   public void actionPerformed(ActionEvent list) {
-    // TODO Auto-generated method stub
-    
-  };
-//    
-//   String source = "void loop(){\n";
-//   
-//   while(/*次のパネルが見つからないまで*/){
-//     source = source + "Ｓｔｒｉｎｇのソースをくっつけていく";
-//   }
-//   
-//   return source;
-//  }
+    if(ledCombo.getSelectedItem().equals(combostr[0]))select = "HIGH";
+    if(ledCombo.getSelectedItem().equals(combostr[1]))select = "LOW";
+  }
 }
 

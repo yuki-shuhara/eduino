@@ -63,6 +63,7 @@ public class CreateButton extends JPanel implements ActionListener{
   @Override
   public void actionPerformed(ActionEvent push) {
     PanelTranslate p = CreatePanel.create(push.getActionCommand());
+    if(p==null){return;}
     p.addMouseListener(PanelMove);
     p.addMouseMotionListener(PanelMove);
     WorkingSpace.PlacedPanel(p);
