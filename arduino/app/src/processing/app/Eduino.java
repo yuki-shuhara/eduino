@@ -38,7 +38,11 @@ public class Eduino extends JPanel{
     }
     
     public String compile(){
-      String source="";
+      String source="#include <Arduino.h>\n" +
+      		"#define LED 13\n" +
+      		"void setup(){\n" +
+      		"pinMode(LED, OUTPUT);" +
+      		"\n}\n";
       
       if(WorkingSpace.getLoop() != null){
         source = source + WorkingSpace.getLoop().code();

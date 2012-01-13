@@ -32,7 +32,7 @@ public class PanelMove implements MouseListener, MouseMotionListener{
         y = e.getYOnScreen() - dy;
         
         GettingPanel.setLocation(x, y);
-        //System.out.println("x:"+x + "@y:"+y);
+        System.out.println("x:"+x + "@y:"+y);
       }
     }
     
@@ -41,7 +41,7 @@ public class PanelMove implements MouseListener, MouseMotionListener{
 
 //      System.out.println("pressed");
       GettingPanel = (PanelTranslate)e.getComponent();
-      System.out.println(GettingPanel.code());
+      //System.out.println(GettingPanel.code());
       /*内包されているかのif文*/
         if(GettingPanel.inLine(e.getX(), e.getY())){
           press = true;

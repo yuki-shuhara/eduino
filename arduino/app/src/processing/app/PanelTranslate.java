@@ -17,7 +17,7 @@ abstract class PanelTranslate extends JPanel {
   protected String code;
   //PanelMove panelmove;
   protected Polygon polygon;
-  private Polygon outLine;
+  protected Polygon outLine;
   
   abstract String code();
   abstract void setPolygon();
@@ -32,7 +32,7 @@ abstract class PanelTranslate extends JPanel {
   private Color colorright;
    
   private PanelTranslate nextPanelTranslate;
-  private PanelTranslate beforePanelTranslate;
+  protected PanelTranslate beforePanelTranslate;
   
   //public Component component[];
   

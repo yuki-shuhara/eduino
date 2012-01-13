@@ -20,6 +20,8 @@ public class LoopPanel extends PanelTranslate{
 //  static Color color = Color.orange;
   static long blockid;
   
+  
+  
   JLabel label;
 
   
@@ -44,17 +46,6 @@ public class LoopPanel extends PanelTranslate{
   public void setNextPanelTranslate(PanelTranslate nextPanel){
     super.setNextPanelTranslate(nextPanel);
     
-      int sum = 0;
-      PanelTranslate t = nextPanel;
-      while(t != null){
-        sum = sum + t.height;
-        t = t.getNextPanelTranslate();
-      }
-      if(sum < 50) sum = 50;
-    BAR_HEIGHT = sum;
-    setHeight();
-    super.setSize(WIDTH, HEIGHT);
-    this.setPolygon();
     
   }
   
@@ -66,6 +57,19 @@ public class LoopPanel extends PanelTranslate{
    
    protected void paintComponent(Graphics g){
      super.paintComponent(g);
+     
+     int sum = 0;
+     PanelTranslate t = super.getNextPanelTranslate();
+     while(t != null){
+       sum = sum + t.height;
+       t = t.getNextPanelTranslate();
+     }
+     if(sum < 50) sum = 50;
+   BAR_HEIGHT = sum;
+   setHeight();
+   super.setSize(WIDTH, HEIGHT);
+   this.setPolygon();
+   
      label.setBounds(WIDTH/3, TOP_HEIGHT/2-10, WIDTH/3, 20);
    }
   
@@ -81,7 +85,7 @@ public class LoopPanel extends PanelTranslate{
   
   public String code(){
     
-   String source = "void setup(){pinMode(13, OUTPUT);}void loop(){";
+   String source = "void loop(){\n";
    
    PanelTranslate panel = super.getNextPanelTranslate();
    while(panel != null){

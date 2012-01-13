@@ -57,7 +57,9 @@ public class LedPanel extends PanelTranslate implements ActionListener{
     super.setOutLine();
   }
   
-  public String code(){return "digitalWrite(LED," + select + ");";/*仮設置*/}
+  public String code(){
+    return "digitalWrite(LED," + select + ");\n";
+  }
 
 
   @Override
