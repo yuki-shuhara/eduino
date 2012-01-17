@@ -34,6 +34,11 @@ public class DelayPanel extends PanelTranslate {
     label.setBounds(50, HEIGHT/2-10, 35, 20);
   }
   
+  @Override
+  public void setLocation(int x, int y){
+    super.setLocation(x, y);
+  }
+  
 
    void addedParts(){
      text = new JTextField("1000");

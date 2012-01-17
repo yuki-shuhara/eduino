@@ -32,7 +32,6 @@ public class PanelMove implements MouseListener, MouseMotionListener{
         y = e.getYOnScreen() - dy;
         
         GettingPanel.setLocation(x, y);
-        System.out.println("x:"+x + "@y:"+y);
       }
     }
     
@@ -50,6 +49,14 @@ public class PanelMove implements MouseListener, MouseMotionListener{
           
           WorkingSpace.moveToFront(GettingPanel);
           GettingPanel.setbeforePanelTranslate(null);
+          
+          PanelTranslate t = GettingPanel;
+          int c=0;
+          while(t != null){
+            c++;
+            System.out.println(c+"\n" +t +"\n************************\n");
+            t = t.getNextPanelTranslate();
+          }
           
         }
     }

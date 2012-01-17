@@ -47,6 +47,10 @@ public class LedPanel extends PanelTranslate implements ActionListener{
       super.add(ledCombo);
      
    }
+   @Override
+   public void setLocation(int x, int y){
+     super.setLocation(x, y);
+   }
   
 
   public void setPolygon(){

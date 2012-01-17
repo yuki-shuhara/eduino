@@ -12,7 +12,7 @@ public class WorkingSpace extends JLayeredPane{
   
   private PanelTranslate placedPanel[];
   private int MAX_PANEL = 1000;
-  private int count=0;
+  private int count=1;
   private boolean full;
   
   WorkingSpace(){
@@ -26,9 +26,17 @@ public class WorkingSpace extends JLayeredPane{
   
   public void reset(){
     this.removeAll();
-    count = 0;
+    count = 1;
     placedPanel = new PanelTranslate[MAX_PANEL];
-    placedPanel[0] = null;
+  }
+  
+  public void setStartPanel(PanelTranslate startpanel, PanelMove move){
+    startpanel.addMouseListener(move);
+    startpanel.addMouseMotionListener(move);
+    
+    placedPanel[0] = startpanel;
+    placedPanel[0].setLocation(150,150);
+    this.add(placedPanel[0]);
   }
   
   public void PlacedPanel(PanelTranslate pane){
@@ -50,9 +58,8 @@ public class WorkingSpace extends JLayeredPane{
   
   public void removePanel(PanelTranslate pane){
     full = false;
-    this.remove(pane);
     for(int i=0; i < count; i++){
-      if(placedPanel[i].equals(pane)){
+      if(placedPanel[i] == pane){
         if(placedPanel[i].getNextPanelTranslate() != null){
           removePanel(placedPanel[i].getNextPanelTranslate());
         }
@@ -61,6 +68,7 @@ public class WorkingSpace extends JLayeredPane{
         }
       }
     }
+    this.remove(pane);
   }
   
   public PanelTranslate checkOverlap(PanelTranslate p){

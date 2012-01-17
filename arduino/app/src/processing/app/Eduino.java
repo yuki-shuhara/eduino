@@ -34,6 +34,8 @@ public class Eduino extends JPanel{
       splitpane.setDividerLocation(BorderLine);
       splitpane.setContinuousLayout(true);
       this.add(splitpane);
+      
+      WorkingSpace.setStartPanel(CreatePanel.create("Start"), PanelMove);
 
     }
     

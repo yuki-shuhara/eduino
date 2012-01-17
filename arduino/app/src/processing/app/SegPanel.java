@@ -54,6 +54,8 @@ public class SegPanel extends PanelTranslate{
     this.setOutLine();
   }
   
+
+  
   @Override
   public boolean getContains(int x, int y){
     boolean result;
@@ -133,7 +135,7 @@ public class SegPanel extends PanelTranslate{
        //outLine = new Polygon(polygon.xpoints, polygon.ypoints, polygon.npoints);
   }
   
-  @Override
+
   public void setLocation(int x, int y){
     super.setLocation(x, y);
     if(middlePanel != null){
@@ -152,4 +154,6 @@ public class SegPanel extends PanelTranslate{
    
    return source;
   }
+
+
 }

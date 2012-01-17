@@ -1,7 +1,5 @@
 package processing.app;
 
-
-
 import java.awt.Color;
 import java.awt.Graphics;
 
@@ -10,28 +8,22 @@ import java.awt.Polygon;
 import javax.swing.JLabel;
 
 
-public class LoopPanel extends PanelTranslate{
+public class StartPanel extends PanelTranslate{
   
   static int HEIGHT = 110; //=topheight+barheight+bottomheight
-  static int WIDTH = 150;
+  static int WIDTH = 180;
   static int TOP_HEIGHT = 50;
-  static int BAR_HEIGHT = 50;
+  static int BAR_HEIGHT = 60;
   static int BAR_WIDTH = 20;
-  static int BOTTOM_HEIGHT = 10;
+  static int BOTTOM_HEIGHT = 50;
 //  static Color color = Color.orange;
   static long blockid;
-  
-  
-  
-  JLabel label;
 
-  
-//  LoopPanel(){
-//    super(blockid);
-//    
-//  }
-  LoopPanel(){
-    super(WIDTH, HEIGHT, Color.orange, Color.yellow, BAR_WIDTH, TOP_HEIGHT);
+  JLabel start, end;
+
+
+  StartPanel(){
+    super(WIDTH, HEIGHT, Color.red, Color.red, BAR_WIDTH, TOP_HEIGHT);
     setPolygon();
     addedParts();
   }
@@ -40,7 +32,8 @@ public class LoopPanel extends PanelTranslate{
   }
   @Override
   public void setbeforePanelTranslate(PanelTranslate beforePanel){
-    super.setbeforePanelTranslate(beforePanel);
+    //super.setbeforePanelTranslate(beforePanel);
+    //開始・終了パネルの頭と後ろには何もくっつけさせないようにする
   }
   
   @Override
@@ -55,8 +48,10 @@ public class LoopPanel extends PanelTranslate{
   }
 
    void addedParts(){
-      label = new JLabel("ずっと繰り返す");
-      super.add(label);
+      start = new JLabel("プログラム開始");
+      end = new JLabel("プログラム終了");
+      super.add(start);
+      super.add(end);
    }
    
    protected void paintComponent(Graphics g){
@@ -68,13 +63,14 @@ public class LoopPanel extends PanelTranslate{
        sum = sum + t.height;
        t = t.getNextPanelTranslate();
      }
-     if(sum < 50) sum = 50;
+     if(sum < 1) sum = BAR_HEIGHT;
    BAR_HEIGHT = sum;
    setHeight();
    super.setSize(WIDTH, HEIGHT);
    this.setPolygon();
    
-     label.setBounds(WIDTH/3, TOP_HEIGHT/2-10, WIDTH/2, 20);
+     start.setBounds(WIDTH/4, TOP_HEIGHT/2-10, WIDTH/2, 20);
+     end.setBounds(WIDTH/4, TOP_HEIGHT+BAR_HEIGHT+BOTTOM_HEIGHT/2-10, WIDTH/2, 20);
    }
   
 
@@ -89,7 +85,7 @@ public class LoopPanel extends PanelTranslate{
   
   public String code(){
     
-   String source = "while(1){\n";
+   String source = "void loop(){\n";
    
    PanelTranslate panel = super.getNextPanelTranslate();
    while(panel != null){
@@ -98,7 +94,7 @@ public class LoopPanel extends PanelTranslate{
      panel = panel.getNextPanelTranslate();
    }
    
-     source = source + "}";
+     source = source + "exit()\n}";
    
    return source;
   }

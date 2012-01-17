@@ -6,6 +6,11 @@ public class CreatePanel{
 
   }
   public PanelTranslate create(String s){
+    
+    if(s.equals("Start")){
+      return new StartPanel();
+    }
+   
     if(s.equals("Loop")){
       return new LoopPanel();
     }

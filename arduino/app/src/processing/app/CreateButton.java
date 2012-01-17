@@ -23,10 +23,10 @@ public class CreateButton extends JPanel implements ActionListener{
   CreatePanel CreatePanel;
   PanelMove PanelMove;
   
-  String buttonLabel[] = {"繰り返しタイル作成", "７セグメント用タイル作成", "ＬＥＤ用タイル作成",
-      "待機タイル作成", "スイッチ用タイル作成"};
-  String buttonName[] = {"Loop", "Seg", "Led", "Delay", "Switch"};
-  final int BUTTON_COUNT  = 5;
+  String buttonLabel[] = {"開始・終了タイル", "繰り返し用タイル", "７セグメント用タイル", "ＬＥＤ用タイル",
+      "待機タイル", "スイッチ用タイル"};
+  String buttonName[] = {"Start", "Loop", "Seg", "Led", "Delay", "Switch"};
+  final int BUTTON_COUNT  = 6;
   final int BUTTON_GAP = 10;//ボタンの間隔
   final int BUTTON_HEIGHT = 30;
   final int FONT_SIZE = 20;
@@ -59,6 +59,7 @@ public class CreateButton extends JPanel implements ActionListener{
       this.add(button[i]);
     }
   }
+  
  
   @Override
   public void actionPerformed(ActionEvent push) {
@@ -67,7 +68,6 @@ public class CreateButton extends JPanel implements ActionListener{
     p.addMouseListener(PanelMove);
     p.addMouseMotionListener(PanelMove);
     WorkingSpace.PlacedPanel(p);
-
     WorkingSpace.moveToFront(p);
     WorkingSpace.add(p);
     WorkingSpace.repaint();

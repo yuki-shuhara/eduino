@@ -53,6 +53,7 @@ abstract class PanelTranslate extends JPanel {
     this.setBounds(x,y,w,h);
     beforePanelTranslate = null;
     nextPanelTranslate = null;
+    outLine = new Polygon();
   }
   
   public boolean getContains(int px, int py){
@@ -74,6 +75,8 @@ abstract class PanelTranslate extends JPanel {
     beforePanelTranslate = beforePanel;
   }
   
+  int a=0,b=0;
+  
   public void setNextPanelTranslate(PanelTranslate nextPanel){
     
       if(nextPanel == null){
@@ -83,11 +86,13 @@ abstract class PanelTranslate extends JPanel {
       nextPanel.setbeforePanelTranslate(this);
       if(nextPanelTranslate == null){//くっつける処理
         nextPanelTranslate = nextPanel;
+        System.out.println("next=null:"+a++);
         nextPanelTranslate.setLocation(x +setPositionX, y+setPositionY);
       }
       else{//割り込み処理
         PanelTranslate tmp = nextPanelTranslate;
         nextPanelTranslate = nextPanel;
+        System.out.println("next"+b++);
         nextPanel.setLocation(tmp.getX(), tmp.getY());
         nextPanel.setNextPanelTranslate(tmp);
       }
@@ -107,7 +112,7 @@ abstract class PanelTranslate extends JPanel {
   
   protected void setOutLine(){
     int px, py;
-    outLine = new Polygon();
+    outLine.reset();
     for(int i=0; i<polygon.npoints; i++){
       px = polygon.xpoints[i];
       py = polygon.ypoints[i];
@@ -119,13 +124,16 @@ abstract class PanelTranslate extends JPanel {
 
   @Override
   public void setLocation(int x, int y){
+
     super.setLocation(x, y);
     this.x=x;
     this.y=y;
     setOutLine();
-    if(nextPanelTranslate != null){
-      nextPanelTranslate.setLocation(x + setPositionX, y + setPositionY);
+    if(this.nextPanelTranslate != null){
+      this.nextPanelTranslate.setLocation(this.x + setPositionX, this.y + setPositionY);
+
     }
+    else{return;}
   }
   
   protected void paintComponent(Graphics g){
