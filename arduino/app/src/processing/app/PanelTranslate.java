@@ -67,15 +67,17 @@ abstract class PanelTranslate extends JPanel {
   public void setbeforePanelTranslate(PanelTranslate beforePanel){
     if(beforePanel==null){
       if(beforePanelTranslate != null){
-        beforePanelTranslate.setNextPanelTranslate(null);
-        beforePanelTranslate = null;
+        beforePanelTranslate.nextPanelTranslate = null;
+        this.beforePanelTranslate = null;
       }
+      
       return;
     }
     beforePanelTranslate = beforePanel;
   }
   
   int a=0,b=0;
+  int c=0;
   
   public void setNextPanelTranslate(PanelTranslate nextPanel){
     
@@ -83,19 +85,21 @@ abstract class PanelTranslate extends JPanel {
         nextPanelTranslate = null;
         return;
       }
-      nextPanel.setbeforePanelTranslate(this);
       if(nextPanelTranslate == null){//くっつける処理
+        nextPanel.beforePanelTranslate = this;
         nextPanelTranslate = nextPanel;
-        System.out.println("next=null:"+a++);
-        nextPanelTranslate.setLocation(x +setPositionX, y+setPositionY);
+        //System.out.println("next=null:"+a++);
       }
       else{//割り込み処理
-        PanelTranslate tmp = nextPanelTranslate;
-        nextPanelTranslate = nextPanel;
-        System.out.println("next"+b++);
-        nextPanel.setLocation(tmp.getX(), tmp.getY());
-        nextPanel.setNextPanelTranslate(tmp);
+        this.nextPanelTranslate.beforePanelTranslate = nextPanel;
+        nextPanel.nextPanelTranslate = nextPanelTranslate;
+        this.nextPanelTranslate = nextPanel;
+        nextPanel.beforePanelTranslate = this;
       }
+
+      System.out.println("setNextPanel:"+c++);
+      this.setLocation(x, y);
+      
   }
   
   public PanelTranslate getNextPanelTranslate(){
@@ -121,19 +125,23 @@ abstract class PanelTranslate extends JPanel {
     //outLine = new Polygon(polygon.xpoints, polygon.ypoints, polygon.npoints);
   }
   
-
+int d=0;
   @Override
   public void setLocation(int x, int y){
-
+    
     super.setLocation(x, y);
     this.x=x;
     this.y=y;
     setOutLine();
-    if(this.nextPanelTranslate != null){
-      this.nextPanelTranslate.setLocation(this.x + setPositionX, this.y + setPositionY);
-
+    if(nextPanelTranslate == null){
+      return;
     }
-    else{return;}
+    else{ 
+      System.out.println(this+"setLocation_null:"+d++);
+      nextPanelTranslate.setLocation(this.x + setPositionX, this.y + setPositionY);
+      return;
+    }
+    
   }
   
   protected void paintComponent(Graphics g){

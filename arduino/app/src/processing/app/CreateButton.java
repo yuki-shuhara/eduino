@@ -24,9 +24,9 @@ public class CreateButton extends JPanel implements ActionListener{
   PanelMove PanelMove;
   
   String buttonLabel[] = {"開始・終了タイル", "繰り返し用タイル", "７セグメント用タイル", "ＬＥＤ用タイル",
-      "待機タイル", "スイッチ用タイル"};
-  String buttonName[] = {"Start", "Loop", "Seg", "Led", "Delay", "Switch"};
-  final int BUTTON_COUNT  = 6;
+      "待機タイル", "スイッチ用タイル", "温度センサータイル", "光センサータイル"};
+  String buttonName[] = {"Start", "Loop", "Seg", "Led", "Delay", "Switch", "Temperature", "Lightsensor"};
+  final int BUTTON_COUNT  = 8;
   final int BUTTON_GAP = 10;//ボタンの間隔
   final int BUTTON_HEIGHT = 30;
   final int FONT_SIZE = 20;

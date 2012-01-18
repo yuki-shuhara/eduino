@@ -26,11 +26,13 @@ public class PanelMove implements MouseListener, MouseMotionListener{
       press = false;
     }
     
+    int a=0;
     public void mouseDragged(MouseEvent e){
       if(press){
         x = e.getXOnScreen() - dx;
         y = e.getYOnScreen() - dy;
         
+        System.out.println("MouseDragged:"+a++);
         GettingPanel.setLocation(x, y);
       }
     }
@@ -38,7 +40,7 @@ public class PanelMove implements MouseListener, MouseMotionListener{
      
     public void mousePressed(MouseEvent e){
 
-//      System.out.println("pressed");
+      System.out.println("pressed");
       GettingPanel = (PanelTranslate)e.getComponent();
       //System.out.println(GettingPanel.code());
       /*内包されているかのif文*/
@@ -55,6 +57,7 @@ public class PanelMove implements MouseListener, MouseMotionListener{
           while(t != null){
             c++;
             System.out.println(c+"\n" +t +"\n************************\n");
+            System.out.println("Next:"+t.getNextPanelTranslate()+"\nBefore:"+t.beforePanelTranslate+"\n");
             t = t.getNextPanelTranslate();
           }
           
@@ -85,7 +88,7 @@ public class PanelMove implements MouseListener, MouseMotionListener{
       }
       else{
         PanelTranslate PT = WorkingSpace.checkOverlap(GettingPanel);
-        System.out.println(PT);
+        System.out.println("HitPanel:"+PT);
         if(PT != null){
           PT.setNextPanelTranslate(GettingPanel);
         }

@@ -98,7 +98,7 @@ public class LoopPanel extends PanelTranslate{
      panel = panel.getNextPanelTranslate();
    }
    
-     source = source + "}";
+     source = source + "}\n";
    
    return source;
   }

@@ -94,7 +94,7 @@ public class StartPanel extends PanelTranslate{
      panel = panel.getNextPanelTranslate();
    }
    
-     source = source + "exit()\n}";
+     source = source + "exit(1);\n}";
    
    return source;
   }

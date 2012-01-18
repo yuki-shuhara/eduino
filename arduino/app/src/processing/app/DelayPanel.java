@@ -14,7 +14,7 @@ import javax.swing.JTextField;
 public class DelayPanel extends PanelTranslate {
 
   static int HEIGHT = 40;
-  static int WIDTH = 100;
+  static int WIDTH = 120;
 //  static Color color = Color.orange;
   static long blockid;
   
@@ -31,7 +31,7 @@ public class DelayPanel extends PanelTranslate {
   protected void paintComponent(Graphics g){
     super.paintComponent(g);
     text.setBounds(10, HEIGHT/2-10, 30, 20);
-    label.setBounds(50, HEIGHT/2-10, 35, 20);
+    label.setBounds(50, HEIGHT/2-10, 50, 20);
   }
   
   @Override
