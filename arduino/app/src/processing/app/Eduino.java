@@ -42,10 +42,10 @@ public class Eduino extends JPanel{
     public String compile(){
       String source="#include <Arduino.h>\n" +
       		"#define LED 13\n" +
-          //"#define TEMP ##\n" +
-      		//"#define LIGHT ##\n" +
-//          "int tmp=0;" +
-//      		"int light=0;" +
+          "#define TEMP ##\n" +
+      		"#define LIGHT ##\n" +
+      		"int tmp=0;" +
+      		"int light=0;" +
       		"void setup(){\n" +
       		"pinMode(LED, OUTPUT);" +
       		"\n}\n";
