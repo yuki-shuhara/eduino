@@ -14,13 +14,13 @@ public class StartPanel extends PanelTranslate{
   final static long blockId = 0;
   
   /*グラデーデション用に2色あるだけ*/
-  private Color colorright = new Color(0,0,0);
-  private Color colorleft = new Color(0,0,0);
+  private Color colorright = new Color(255,192,203);
+  private Color colorleft = new Color(255,192,203);
   
   int Xarray[] = {0, WIDTH, WIDTH, BAR_WIDTH, BAR_WIDTH, WIDTH, WIDTH, 0};
   int Yarray[] = {0, 0, TOP_HEIGHT, TOP_HEIGHT, TOP_HEIGHT+BAR_HEIGHT, TOP_HEIGHT+BAR_HEIGHT, HEIGHT, HEIGHT};
   
-  static int HEIGHT = 110; //=topheight+barheight+bottomheight
+  static int HEIGHT = 160; //=topheight+barheight+bottomheight
   static int WIDTH = 180;
   static int TOP_HEIGHT = 50;
   static int BAR_HEIGHT = 60;
@@ -49,8 +49,21 @@ public class StartPanel extends PanelTranslate{
     this.y = y;
     setPolygon();
     setOutLine();
+    super.setBounds(this.x, this.y, WIDTH, HEIGHT);
+  }
+  
+  @Override
+  public void uncouple(PanelTranslate p){
+    if(firstPanel == p){firstPanel = null;}
     
   }
+  
+  @Override
+  public void uncouple(){
+//
+  }
+  
+  
   
   private void setPolygon(){
     polygon = new Polygon(Xarray, Yarray, Xarray.length);
@@ -58,20 +71,29 @@ public class StartPanel extends PanelTranslate{
   
   private void setOutLine(){
 
+    //
      firstOutLine.reset();
-     
-     for(int i=0; i<4; i++){
-       firstOutLine.addPoint(this.x+, i)
+     for(int i=0; i<3; i++){
+       firstOutLine.addPoint(this.x+polygon.xpoints[i], this.y+polygon.ypoints[i]);
      }
+     firstOutLine.addPoint(this.x, this.y+TOP_HEIGHT);
     
+    //
+     
   }
   
 
   @Override
-  public void setPosition() {
+  public void setPosition(int x, int y) {
+    this.x = x;
+    this.y = y;
+    setOutLine();
+    
+    //
     if(firstPanel != null){
       firstPanel.setLocation(firstposition_x+x, firstposition_y+y);
     }
+    //
     return;
   }
 
@@ -81,6 +103,18 @@ public class StartPanel extends PanelTranslate{
     Graphics2D g2 = (Graphics2D)g.create();
     //polygon.setBorder(new EtchedBorder(EtchedBorder.LOWERED));
     
+    int sum = 0;
+    PanelTranslate t = super.getNextPanelTranslate();
+    while(t != null){
+      sum = sum + t.getHeight();
+      t = t.getNextPanelTranslate();
+    }
+    if(sum < 1) sum = BAR_HEIGHT;
+    BAR_HEIGHT = sum;
+    setHEIGHT();
+    super.setSize(WIDTH, HEIGHT);
+    //this.setPolygon();
+    
 //    BasicStroke bs = new BasicStroke(5.0f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
 //    BasicStroke bs = new BasicStroke(0.5f);
 //    g2.setStroke(bs);
@@ -89,7 +123,6 @@ public class StartPanel extends PanelTranslate{
     g2.setPaint(gp);
     g2.fill(polygon);
     g2.dispose();
-    //super.repaint();
   }
 
   
@@ -99,21 +132,24 @@ public class StartPanel extends PanelTranslate{
   }
   
   @Override
-  public boolean getContain(int x, int y){
-    if(firstOutLine.contains(x, y)) return true;
-    //if(
-    return false;
-  }
-
-  @Override
-  public PanelTranslate checkSetPosition(int x, int y) {
-    // TODO Auto-generated method stub
+  public PanelTranslate getContain(int x, int y){
+    if(firstOutLine.contains(x, y)){return firstPanel;}
+    //if(OutLine.contains(x, y)) return nextPanel;
+    
     return null;
   }
 
-  @Override
-  public void setPanelTranslate(PanelTranslate p) {
 
+  @Override
+  public void setPanelTranslate(int x, int y, PanelTranslate p) {
+    if(super.nextSetis){
+      PanelTranslate setPosition = getContain(x, y);
+      if(setPosition != null){
+        setPosition = p;
+        p.setBeforePanelTranslate(this);
+        super.setLocation(x, y);
+      }
+    }     
   }
   
   @Override

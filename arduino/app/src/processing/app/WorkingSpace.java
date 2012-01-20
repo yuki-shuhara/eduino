@@ -71,27 +71,30 @@ public class WorkingSpace extends JLayeredPane{
     this.remove(pane);
   }
   
-  public PanelTranslate checkOverlap(PanelTranslate p){
+  public void checkOverlap(PanelTranslate p){
     for(int i=0; i < count; i++){
       
-      //System.out.println("placedPanel["+i+"]"+placedPanel[i]);
+      System.out.println("placedPanel["+i+"]"+placedPanel[i]);
       
       if(placedPanel[i] != null){
         if(placedPanel[i] != p){
-          if(placedPanel[i].getContains(p.x, p.y)) return placedPanel[i];
+            placedPanel[i].setPanelTranslate(p.getX(), p.getY(), p);
+           // System.out.println("x:"+placedPanel[i].getX()+" y:"+placedPanel[i].getY());
+           // System.out.println("p.x:"+p.getX()+" p.y:"+p.getY());
         }
       }
     }
+
     for(int i=0; i < count; i++){
       if(placedPanel[i] != null){
         if(placedPanel[i] != p){
-          if(placedPanel[i].getContains(p.x, p.y + p.height)) return placedPanel[i];  
+          placedPanel[i].setPanelTranslate(p.getX(), p.getY()+p.getHeight(), p);
         }
       }
     }
 //  if(placedPanel[i].getContains(p.width+checkLine, p.y-checkLine)) return placedPanel[i];
 //  if(placedPanel[i].getContains(p.width+checkLine, p.height+checkLine)) return placedPanel[i];
-        return null;
+
   }
   
   protected PanelTranslate getLoop(){

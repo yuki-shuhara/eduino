@@ -32,7 +32,7 @@ public class PanelMove implements MouseListener, MouseMotionListener{
         x = e.getXOnScreen() - dx;
         y = e.getYOnScreen() - dy;
         
-        System.out.println("MouseDragged:"+a++);
+        System.out.println("GettingPanelPosition x:"+x+" y:"+y);
         GettingPanel.setLocation(x, y);
       }
     }
@@ -42,24 +42,26 @@ public class PanelMove implements MouseListener, MouseMotionListener{
 
       System.out.println("pressed");
       GettingPanel = (PanelTranslate)e.getComponent();
-      //System.out.println(GettingPanel.code());
+      System.out.println(GettingPanel);
       /*内包されているかのif文*/
-        if(GettingPanel.inLine(e.getX(), e.getY())){
+        if(GettingPanel.inline(e.getX(), e.getY())){
           press = true;
           dx = e.getXOnScreen() - GettingPanel.getX();
           dy = e.getYOnScreen() - GettingPanel.getY();
           
           WorkingSpace.moveToFront(GettingPanel);
-          GettingPanel.setbeforePanelTranslate(null);
+          GettingPanel.uncouple();
           
-          PanelTranslate t = GettingPanel;
-          int c=0;
-          while(t != null){
-            c++;
-            System.out.println(c+"\n" +t +"\n************************\n");
-            System.out.println("Next:"+t.getNextPanelTranslate()+"\nBefore:"+t.beforePanelTranslate+"\n");
-            t = t.getNextPanelTranslate();
-          }
+//          //デバッグ用↓
+//          PanelTranslate t = GettingPanel;
+//          int c=0;
+//          while(t != null){
+//            c++;
+//            System.out.println(c+"\n" +t +"\n************************\n");
+//            System.out.println("Next:"+t.getNextPanelTranslate()+"\nBefore:"+t.getBeforePanelTranslate()+"\n");
+//            t = t.getNextPanelTranslate();
+//          }
+//          //
           
         }
     }
@@ -87,13 +89,10 @@ public class PanelMove implements MouseListener, MouseMotionListener{
         WorkingSpace.removePanel(GettingPanel);
       }
       else{
-        PanelTranslate PT = WorkingSpace.checkOverlap(GettingPanel);
-        System.out.println("HitPanel:"+PT);
-        if(PT != null){
-          PT.setNextPanelTranslate(GettingPanel);
+       WorkingSpace.checkOverlap(GettingPanel);
         }
 
-      }
+      
         WorkingSpace.repaint();
     }
     
