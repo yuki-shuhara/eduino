@@ -42,12 +42,18 @@ public class Eduino extends JPanel{
     public String compile(){
       String source="#include <Arduino.h>\n" +
       		"#define LED 13\n" +
-          "#define TEMP ##\n" +
-      		"#define LIGHT ##\n" +
-      		"int tmp=0;" +
-      		"int light=0;" +
+          "#define TEMP 5\n" +
+      		"#define LIGHT 4\n" +
+      		"#define WhiteSw 7\n" +
+      		"#define RedSw 8\n" +
+      		"#define OrangeSw 9\n" +
+      		"int tmp=0;\n" +
+      		"int light=0;\n" +
       		"void setup(){\n" +
-      		"pinMode(LED, OUTPUT);" +
+      		"pinMode(LED, OUTPUT);\n" +
+      		"pinMode(WhiteSw, INPUT);\n" +
+          "pinMode(RedSw, INPUT);\n" +
+          "pinMode(OrangeSw, INPUT);\n" +
       		"\n}\n";
       
       if(WorkingSpace.getLoop() != null){

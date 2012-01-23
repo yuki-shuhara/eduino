@@ -29,7 +29,7 @@ public class CreatePanel{
       return new LoopPanel(x, y);
     }
     if(s.equals("Seg")){
-      return new SegPanel(x, y);
+      //return new SegPanel(x, y);
     }
     if(s.equals("Led")){
       return new LedPanel(x, y);
@@ -38,7 +38,7 @@ public class CreatePanel{
       return new DelayPanel(x, y);
     }
     if(s.equals("Switch")){
-      //return new SwitchPanel(x, y);
+      return new SwitchPanel(x, y);
     }
     if(s.equals("Temperature")){
       //return new TemperaturePanel(x, y);

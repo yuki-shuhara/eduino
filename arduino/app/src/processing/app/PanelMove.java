@@ -32,15 +32,15 @@ public class PanelMove implements MouseListener, MouseMotionListener{
         x = e.getXOnScreen() - dx;
         y = e.getYOnScreen() - dy;
         
-        System.out.println("GettingPanelPosition x:"+x+" y:"+y);
-        GettingPanel.setLocation(x, y);
+       // System.out.println("GettingPanelPosition x:"+x+" y:"+y);
+        GettingPanel.setPosition(x, y);
       }
     }
     
      
     public void mousePressed(MouseEvent e){
 
-      System.out.println("pressed");
+      //System.out.println("pressed");
       GettingPanel = (PanelTranslate)e.getComponent();
       System.out.println(GettingPanel);
       /*内包されているかのif文*/
@@ -50,6 +50,9 @@ public class PanelMove implements MouseListener, MouseMotionListener{
           dy = e.getYOnScreen() - GettingPanel.getY();
           
           WorkingSpace.moveToFront(GettingPanel);
+          
+          //System.out.println("Next"+GettingPanel.getNextPanelTranslate()+"\nbefore:"+GettingPanel.getBeforePanelTranslate());
+          
           GettingPanel.uncouple();
           
 //          //デバッグ用↓
@@ -74,16 +77,16 @@ public class PanelMove implements MouseListener, MouseMotionListener{
       }
       if(x < 0){
         x = 1;
-        GettingPanel.setLocation(x, y);
+        GettingPanel.setPosition(x, y);
       }
       if(y < 0){
         y = 1;
-        GettingPanel.setLocation(x, y);
+        GettingPanel.setPosition(x, y);
       }
 
-        
-
-
+      if(GettingPanel.getBlockId() == 0) WorkingSpace.moveToBack(GettingPanel);
+      if(GettingPanel.getBlockId() == 1) WorkingSpace.moveToBack(GettingPanel);
+      if(GettingPanel.getBlockId() == 6) WorkingSpace.moveToBack(GettingPanel);
       if(remove){
         remove=false;
         WorkingSpace.removePanel(GettingPanel);

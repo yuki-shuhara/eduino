@@ -35,31 +35,23 @@ public class WorkingSpace extends JLayeredPane{
     startpanel.addMouseMotionListener(move);
     
     placedPanel[0] = startpanel;
-    placedPanel[0].setLocation(150,150);
     this.add(placedPanel[0]);
   }
   
-  public void PlacedPanel(PanelTranslate pane){
-//    super.add(pane);
-    if(!full){
-      for(int i=0; i<count;i++){
-        if(placedPanel[i]==null){
-           placedPanel[i] = pane;
-           return;
-        }
-      }
-      full = true;
-    }
+  public void PlacedPanel(PanelTranslate pane){  
       placedPanel[count] = pane;
    // System.out.println("name:"+placedPanel[count]+"id:"+count);
-      count++;
-    
+      this.add(placedPanel[count++]);
   }
   
   public void removePanel(PanelTranslate pane){
-    full = false;
     for(int i=0; i < count; i++){
       if(placedPanel[i] == pane){
+        
+//        if(placedPanel[i].getBlockId() == 1 || placedPanel[i].getBlockId() == 2 || placedPanel[i].getBlockId() == 5){
+//          
+//        }
+        
         if(placedPanel[i].getNextPanelTranslate() != null){
           removePanel(placedPanel[i].getNextPanelTranslate());
         }
@@ -72,23 +64,20 @@ public class WorkingSpace extends JLayeredPane{
   }
   
   public void checkOverlap(PanelTranslate p){
-    for(int i=0; i < count; i++){
-      
-      System.out.println("placedPanel["+i+"]"+placedPanel[i]);
-      
-      if(placedPanel[i] != null){
-        if(placedPanel[i] != p){
-            placedPanel[i].setPanelTranslate(p.getX(), p.getY(), p);
-           // System.out.println("x:"+placedPanel[i].getX()+" y:"+placedPanel[i].getY());
-           // System.out.println("p.x:"+p.getX()+" p.y:"+p.getY());
+    for(int i=0; i < count; i++){     
+      if(placedPanel[i] != null && placedPanel[i] != p){
+        if(placedPanel[i].nextSetis && placedPanel[i].getContain(p.getX(), p.getY())){
+          placedPanel[i].setPanelTranslate(p);
+          return;
         }
       }
     }
-
-    for(int i=0; i < count; i++){
-      if(placedPanel[i] != null){
-        if(placedPanel[i] != p){
-          placedPanel[i].setPanelTranslate(p.getX(), p.getY()+p.getHeight(), p);
+    
+    for(int i=0; i < count; i++){     
+      if(placedPanel[i] != null && placedPanel[i] != p){
+        if(placedPanel[i].nextSetis && placedPanel[i].getContain(p.getX(), p.getY()+p.getHeight())){
+          placedPanel[i].setPanelTranslate(p);
+          return;
         }
       }
     }
@@ -98,6 +87,11 @@ public class WorkingSpace extends JLayeredPane{
   }
   
   protected PanelTranslate getLoop(){
+//    for(int i=0; i<count; i++){
+//      if(placedPanel[i].getBlockId == 0) return placedPanel[i];
+//    }
+//    return null;
+    
     return placedPanel[0];
     //本番はループタイルを探す
   }
