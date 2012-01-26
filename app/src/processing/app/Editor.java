@@ -261,7 +261,7 @@ public class Editor extends JFrame implements RunnerListener {
 
       
   //edus_111012 -comentout
-      consolePanel.add(console, BorderLayout.CENTER);
+//      consolePanel.add(console, BorderLayout.CENTER);
       consolePanel.add(lineStatus, BorderLayout.SOUTH);
   //edue
       

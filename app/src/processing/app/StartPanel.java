@@ -25,12 +25,12 @@ public class StartPanel extends PanelTranslate{
   private Color colorleft = new Color(255,192,203);
   
   /*タイルサイズ*/
-  private static int HEIGHT = 160; //=topheight+barheight+bottomheight
-  private static int WIDTH = 180;
-  private static int TOP_HEIGHT = 50;
-  private static int BAR_HEIGHT = 60;
-  private static int BAR_WIDTH = 20;
-  private static int BOTTOM_HEIGHT = 50;
+  private int HEIGHT = 160; //=topheight+barheight+bottomheight
+  private int WIDTH = 180;
+  private int TOP_HEIGHT = 50;
+  private int BAR_HEIGHT = 60;
+  private int BAR_WIDTH = 20;
+  private int BOTTOM_HEIGHT = 50;
   private int x, y;//このタイルの設置座標
 
   
@@ -54,9 +54,9 @@ public class StartPanel extends PanelTranslate{
   private JLabel startLabel;
   private JLabel endLabel;
   
-  private static int LABEL_X = 60;
-  private static int LABEL_WIDTH = 100;
-  private static int LABEL_HEIGHT = 20;
+  private int LABEL_X = 60;
+  private int LABEL_WIDTH = 100;
+  private int LABEL_HEIGHT = 20;
   
   
 

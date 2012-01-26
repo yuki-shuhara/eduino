@@ -25,12 +25,12 @@ public class LoopPanel extends PanelTranslate{
   private Color colorleft = new Color(250, 192, 143);
   
   /*タイルサイズ*/
-  private static int HEIGHT = 120; //=topheight+barheight+bottomheight
-  private static int WIDTH = 160;
-  private static int TOP_HEIGHT = 50;
-  private static int BAR_HEIGHT = 50;
-  private static int BAR_WIDTH = 20;
-  private static int BOTTOM_HEIGHT = 20;
+  private int HEIGHT = 120; //=topheight+barheight+bottomheight
+  private int WIDTH = 160;
+  private int TOP_HEIGHT = 50;
+  private int BAR_HEIGHT = 50;
+  private int BAR_WIDTH = 20;
+  private int BOTTOM_HEIGHT = 20;
   private int x, y;//このタイルの設置座標
 
   
@@ -54,9 +54,9 @@ public class LoopPanel extends PanelTranslate{
   /*表示用*/
   private JLabel loopLabel;
   
-  private static int LABEL_X = 60;
-  private static int LABEL_WIDTH = 100;
-  private static int LABEL_HEIGHT = 20;
+  private int LABEL_X = 60;
+  private int LABEL_WIDTH = 100;
+  private int LABEL_HEIGHT = 20;
   
   
 

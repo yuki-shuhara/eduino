@@ -11,13 +11,11 @@ public class PanelMove implements MouseListener, MouseMotionListener{
     private int y=0; //パネルのy座標
     
     private int RemoveLine = -50;
-    private int checkLine = 0;
     private boolean remove;  
     private boolean press;
     
     WorkingSpace WorkingSpace;
     PanelTranslate GettingPanel;
-    PanelTranslate PracedPanel;
     
   
     PanelMove(WorkingSpace WorkingSpace){

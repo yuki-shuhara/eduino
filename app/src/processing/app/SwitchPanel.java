@@ -30,13 +30,13 @@ public class SwitchPanel extends PanelTranslate implements ActionListener{
   private Color colorleft = new Color(149, 179, 215);
   
   /*タイルサイズ*/
-  private static int HEIGHT = 220; //=topheight*2+barheight1+barheight2++bottomheight
-  private static int WIDTH = 160;
-  private static int TOP_HEIGHT = 50;
-  private static int FIRST_BAR_HEIGHT = 50;
-  private static int SECOND_BAR_HEIGHT = 50;
-  private static int BAR_WIDTH = 20;
-  private static int BOTTOM_HEIGHT = 20;
+  private int HEIGHT = 220; //=topheight*2+barheight1+barheight2++bottomheight
+  private int WIDTH = 160;
+  private int TOP_HEIGHT = 50;
+  private int FIRST_BAR_HEIGHT = 50;
+  private int SECOND_BAR_HEIGHT = 50;
+  private int BAR_WIDTH = 20;
+  private int BOTTOM_HEIGHT = 20;
   private int x, y;//このタイルの設置座標
 
   
@@ -70,10 +70,9 @@ public class SwitchPanel extends PanelTranslate implements ActionListener{
   DefaultComboBoxModel com;
   public Object [] combostr ={"白スイッチ", "橙スイッチ", "赤スイッチ"};
   
-  private static int LABEL_X = 20;
-  private static int LABEL_WIDTH = 75;
-  private static int LABEL_HEIGHT = 20;
-  
+  private int LABEL_X = 20;
+  private int LABEL_WIDTH = 75;
+  private int LABEL_HEIGHT = 20;
   
 
   SwitchPanel(int x, int y) {
@@ -158,7 +157,6 @@ public class SwitchPanel extends PanelTranslate implements ActionListener{
   @Override
   public void paintComponent(Graphics g) {
     super.paintComponent(g);
-    Graphics2D g2 = (Graphics2D)g.create();
     //polygon.setBorder(new EtchedBorder(EtchedBorder.LOWERED));
     
     int firstSum = 0;
@@ -195,7 +193,7 @@ public class SwitchPanel extends PanelTranslate implements ActionListener{
     
     setPolygon();
     setOutLine();
-    
+    Graphics2D g2 = (Graphics2D)g.create();
     GradientPaint gp = new GradientPaint(0f, 0f, colorleft, (float)WIDTH, (float)HEIGHT, colorright);
     g2.setPaint(gp);
     g2.fill(this.polygon);

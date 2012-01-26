@@ -28,48 +28,48 @@ public class LedPanel extends PanelTranslate implements ActionListener{
   private PanelTranslate nextPanel;
   private PanelTranslate beforePanel;
   
-  /*間に挟まるパネルの付け根firstPanel, secondPanel...*/
+  /**間に挟まるパネルの付け根firstPanel, secondPanel...*/
   //private PanelTranslate firstPanel;
   
-  /*グラデーデション用に2色あるだけ*/
+  /**グラデーデション用に2色あるだけ*/
   private Color colorright = new Color(195, 214, 155);
   private Color colorleft = new Color(195, 214, 155);
   
-  /*タイルサイズ*/
-  private static int HEIGHT = 40; //=topheight+barheight+bottomheight
-  private static int WIDTH = 120;
+  /**タイルサイズ*/
+  private int HEIGHT = 40; //=topheight+barheight+bottomheight
+  private int WIDTH = 120;
 
   private int x, y;//このタイルの設置座標
 
   
-  /*NextPanel用のセットポジション*/
+  /**NextPanel用のセットポジション*/
   private int xposition = 0;
   private int yposition = HEIGHT;
   private Polygon outLine = new Polygon();
   
-  /*間に挟まるパネル用のセットポジション*/
+  /**間に挟まるパネル用のセットポジション*/
 //  private int firstposition_x =this.x + BAR_WIDTH;
 //  private int firstposition_y =this.y + TOP_HEIGHT;
 //  private Polygon firstOutLine = new Polygon();
   
-  /*タイル描画用*/
+  /**タイル描画用*/
   private int Xarray[] = {0, WIDTH, WIDTH, 0};
   private int Yarray[] = {0, 0, HEIGHT, HEIGHT};
   private Polygon polygon = new Polygon();
   
-  /*ソースコード格納用*/
+  /**ソースコード格納用*/
   private String source="";
   private String select="HIGH";
   
-  /*表示用*/
+  /**表示用*/
   JComboBox ledCombo;
   DefaultComboBoxModel com;
   public Object [] combostr ={"点灯", "消灯"};
   JLabel ledLabel;
   
-  private static int LABEL_X = 5;
-  private static int LABEL_WIDTH = 40;
-  private static int LABEL_HEIGHT = 20;
+  private int LABEL_X = 5;
+  private int LABEL_WIDTH = 40;
+  private int LABEL_HEIGHT = 20;
   
   
 

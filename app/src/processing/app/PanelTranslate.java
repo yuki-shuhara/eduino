@@ -40,10 +40,10 @@ abstract class PanelTranslate extends JPanel {
   }
   
   
-  @Override
-  public void paintComponent(Graphics g){
-    super.paintComponent(g);
-  }
+//  @Override
+//  public void paintComponent(Graphics g){
+//    super.paintComponent(g);
+//  }
   
 //  @Override
 //  public void setLocation(int x, int y){//外見処理用連結

@@ -36,8 +36,8 @@ public class DelayPanel extends PanelTranslate{
   private Color colorleft = new Color(217, 150, 148);
   
   /*タイルサイズ*/
-  private static int HEIGHT = 40; //=topheight+barheight+bottomheight
-  private static int WIDTH = 120;
+  private int HEIGHT = 40; //=topheight+barheight+bottomheight
+  private int WIDTH = 120;
 
   private int x, y;//このタイルの設置座標
 
@@ -64,9 +64,9 @@ public class DelayPanel extends PanelTranslate{
   JLabel delayLabel;
   JTextField text;
   
-  private static int LABEL_X = 5;
-  private static int LABEL_WIDTH = 35;
-  private static int LABEL_HEIGHT = 20;
+  private int LABEL_X = 5;
+  private int LABEL_WIDTH = 35;
+  private int LABEL_HEIGHT = 20;
   
   
 
