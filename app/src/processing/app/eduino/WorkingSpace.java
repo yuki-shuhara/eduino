@@ -14,12 +14,10 @@ public class WorkingSpace extends JLayeredPane{
   private PanelTranslate placedPanel[];
   private int MAX_PANEL = 1000;
   private int count=1;
-  private boolean full;
   
   WorkingSpace(){
     this.setLayout(null);
     reset();
-    full = true;
     //this.addMouseListener(new WorkingspaceListener());
 //    initCreaPanel();
 //    this.add(CreaPanel, JLayeredPane.DRAG_LAYER);

@@ -11,7 +11,7 @@ import javax.swing.JSplitPane;
 public class Eduino extends JPanel{
 
     private int BorderLine = 200;
-    WorkingSpace WorkingSpace;
+    private WorkingSpace WorkingSpace;
 //    PanelMove PanelMove;
 //    CreatePanel CreatePanel;
 //    CreateButton CreateButton;
@@ -36,7 +36,7 @@ public class Eduino extends JPanel{
       splitpane.setContinuousLayout(true);
       this.add(splitpane);
       
-      WorkingSpace.setStartPanel(CreatePanel.create("Start"), PanelMove);
+      WorkingSpace.setStartPanel(CreatePanel.create("Start", 200, 200), PanelMove);
 
     }
     
