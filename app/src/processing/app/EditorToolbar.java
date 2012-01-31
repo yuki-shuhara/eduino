@@ -22,6 +22,7 @@
 */
 
 package processing.app;
+import static processing.app.I18n._;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -37,18 +38,13 @@ public class EditorToolbar extends JComponent implements MouseInputListener, Key
 
   /** Rollover titles for each button. */
   static final String title[] = {
-    "Verify", "Upload", "New", "Open", "Save"};
-  
-//edus_111012 -comentout
-  /*"Serial Monitor"};*/
-//edue
-  
+    _("Verify"), _("Upload"), _("New"), _("Open"), _("Save"), _("Serial Monitor")
+  };
+
   /** Titles for each button when the shift key is pressed. */ 
   static final String titleShift[] = {
-    "Verify", "Upload Using Programmer", "New Editor Window", "Open in Another Window", "Save"};
-//edus_111012 -comentout
-  /*"Serial Monitor"};*/
-//edue
+    _("Verify"), _("Upload Using Programmer"), _("New Editor Window"), _("Open in Another Window"), _("Save"), _("Serial Monitor")
+  };
 
   static final int BUTTON_COUNT  = title.length;
   /** Width of each toolbar button. */
@@ -113,9 +109,8 @@ public class EditorToolbar extends JComponent implements MouseInputListener, Key
     which[buttonCount++] = NEW;
     which[buttonCount++] = OPEN;
     which[buttonCount++] = SAVE;
-//edus_111012 -commentout
-    //which[buttonCount++] = SERIAL;
-//edue
+    which[buttonCount++] = SERIAL;
+
     currentRollover = -1;
 
     bgcolor = Theme.getColor("buttons.bgcolor");
@@ -178,8 +173,8 @@ public class EditorToolbar extends JComponent implements MouseInputListener, Key
       }
       
       // Serial button must be on the right
-      //x1[SERIAL] = width - BUTTON_WIDTH - 14;
-      //x2[SERIAL] = width - 14;
+      x1[SERIAL] = width - BUTTON_WIDTH - 14;
+      x2[SERIAL] = width - 14;
     }
     Graphics g = offscreen.getGraphics();
     g.setColor(bgcolor); //getBackground());
@@ -207,12 +202,7 @@ public class EditorToolbar extends JComponent implements MouseInputListener, Key
       int statusY = (BUTTON_HEIGHT + g.getFontMetrics().getAscent()) / 2;
       String status = shiftPressed ? titleShift[currentRollover] : title[currentRollover];
       if (currentRollover != SERIAL)
-        
-//edus_111012 -comentout
-        /*(status, (buttoncount-1) * BUTTON_WIDTH~*/
-//edue_111012
-        
-        g.drawString(status, (buttonCount) * BUTTON_WIDTH + 3 * BUTTON_GAP, statusY);
+        g.drawString(status, (buttonCount-1) * BUTTON_WIDTH + 3 * BUTTON_GAP, statusY);
       else {
         int statusX = x1[SERIAL] - BUTTON_GAP;
         statusX -= g.getFontMetrics().stringWidth(status);
