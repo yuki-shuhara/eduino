@@ -13,9 +13,7 @@ import javax.swing.border.EtchedBorder;
 
 abstract class PanelTranslate extends JPanel {
 
-  
-  public boolean nextSetis = true;
-    
+  abstract public boolean getnextSetis(); 
   abstract String code(); //スケッチコード
   abstract public long getBlockId(); 
   

@@ -9,7 +9,6 @@ import javax.swing.JPanel;
 
 public class WorkingSpace extends JLayeredPane{
   
-  //public JPanel CreaPanel;
   
   private PanelTranslate placedPanel[];
   private int MAX_PANEL = 1000;
@@ -18,9 +17,6 @@ public class WorkingSpace extends JLayeredPane{
   WorkingSpace(){
     this.setLayout(null);
     reset();
-    //this.addMouseListener(new WorkingspaceListener());
-//    initCreaPanel();
-//    this.add(CreaPanel, JLayeredPane.DRAG_LAYER);
   }
   
   public void reset(){
@@ -37,7 +33,11 @@ public class WorkingSpace extends JLayeredPane{
     this.add(placedPanel[0]);
   }
   
-  public void PlacedPanel(PanelTranslate pane){  
+  public void PlacedPanel(PanelTranslate pane){
+    if(count>MAX_PANEL-1){
+      System.out.println("これ以上タイルを生成できません。ウィンドウを閉じて新しくやり直してください。");
+      return;
+    }
       placedPanel[count] = pane;
    // System.out.println("name:"+placedPanel[count]+"id:"+count);
       this.add(placedPanel[count++]);
@@ -63,9 +63,11 @@ public class WorkingSpace extends JLayeredPane{
   }
   
   public void checkOverlap(PanelTranslate p){
+    if(p.getBlockId() == 0) return;//StartPanelは他のパネルに組み込まれてはならない
+    
     for(int i=0; i < count; i++){     
       if(placedPanel[i] != null && placedPanel[i] != p){
-        if(placedPanel[i].nextSetis && placedPanel[i].getContain(p.getX(), p.getY())){
+        if(placedPanel[i].getnextSetis() && placedPanel[i].getContain(p.getX(), p.getY())){
           placedPanel[i].setPanelTranslate(p);
           return;
         }
@@ -74,7 +76,7 @@ public class WorkingSpace extends JLayeredPane{
     
     for(int i=0; i < count; i++){     
       if(placedPanel[i] != null && placedPanel[i] != p){
-        if(placedPanel[i].nextSetis && placedPanel[i].getContain(p.getX(), p.getY()+p.getHeight())){
+        if(placedPanel[i].getnextSetis() && placedPanel[i].getContain(p.getX(), p.getY()+p.getHeight())){
           placedPanel[i].setPanelTranslate(p);
           return;
         }
@@ -85,21 +87,22 @@ public class WorkingSpace extends JLayeredPane{
 
   }
   
-  protected PanelTranslate getLoop(){
-//    for(int i=0; i<count; i++){
-//      if(placedPanel[i].getBlockId == 0) return placedPanel[i];
-//    }
-//    return null;
-    
-    return placedPanel[0];
-    //本番はループタイルを探す
+  protected boolean checkSPanel(){
+    for(int i=0; i<count; i++){
+      if(placedPanel[i] != null){
+        if(placedPanel[i].getBlockId() == 0) return true;
+      }
+    }
+    return false;
   }
   
-//  private void initCreaPanel(){
-//    CreaPanel = new JPanel();
-//    CreaPanel.setOpaque(false);
-//    CreaPanel.setLayout(null);
-//    CreaPanel.setBounds(0,0, Short.MAX_VALUE, Short.MAX_VALUE);
-//
-//  }
+  protected PanelTranslate getLoop(){
+    for(int i=0; i<count; i++){
+      if(placedPanel[i] != null){
+        if(placedPanel[i].getBlockId() == 0) return placedPanel[i];
+      }
+    }
+    return null;
+  }
+
 }

@@ -14,18 +14,19 @@ import javax.swing.JLabel;
 public class LoopPanel extends PanelTranslate{
   final static long blockId = 1;
 
-
+  private boolean nextSetis; 
+  
   private PanelTranslate nextPanel;
   private PanelTranslate beforePanel;
   
-  /*間に挟まるパネルの付け根firstPanel, secondPanel...*/
+  /**間に挟まるパネルの付け根firstPanel, secondPanel...*/
   private PanelTranslate firstPanel;
   
-  /*グラデーデション用に2色あるだけ*/
+  /**グラデーデション用に2色あるだけ*/
   private Color colorright = new Color(250, 192, 143);
   private Color colorleft = new Color(250, 192, 143);
   
-  /*タイルサイズ*/
+  /**タイルサイズ*/
   private int HEIGHT = 120; //=topheight+barheight+bottomheight
   private int WIDTH = 160;
   private int TOP_HEIGHT = 50;
@@ -36,23 +37,23 @@ public class LoopPanel extends PanelTranslate{
 
   
   
-  /*NextPanel用のセットポジション*/
+  /**NextPanel用のセットポジション*/
   private int xposition = 0;
   private int yposition = HEIGHT;
   private Polygon outLine = new Polygon();
   
-  /*間に挟まるパネル用のセットポジション*/
+  /**間に挟まるパネル用のセットポジション*/
   private int firstposition_x =BAR_WIDTH;
   private int firstposition_y =TOP_HEIGHT;
   private Polygon firstOutLine = new Polygon();
   
-  /*タイル描画用*/
+  /**タイル描画用*/
   private Polygon polygon = new Polygon();
   
-  /*ソースコード格納用*/
+  /**ソースコード格納用*/
   private String source="";
   
-  /*表示用*/
+  /**表示用*/
   private JLabel loopLabel;
   
   private int LABEL_X = 60;
@@ -67,11 +68,18 @@ public class LoopPanel extends PanelTranslate{
     this.y = y;
     nextPanel = null;
     beforePanel = null;
+    nextSetis=true;
     setPolygon();
     setOutLine();
     addedParts();
     super.setBounds(this.x, this.y, WIDTH, HEIGHT);
   }
+  
+  @Override
+  public boolean getnextSetis(){
+    return nextSetis;
+  }
+  
   @Override
   public long getBlockId(){
     return blockId;
@@ -190,7 +198,7 @@ public class LoopPanel extends PanelTranslate{
         p.setBeforePanelTranslate(this);
         setPosition(this.x, this.y);
       }
-      else{//割りこみ処理        
+      else{        
         PanelTranslate lastPanel = p;
         while(lastPanel.getNextPanelTranslate() != null){
           lastPanel = lastPanel.getNextPanelTranslate();
@@ -211,7 +219,7 @@ public class LoopPanel extends PanelTranslate{
         p.setBeforePanelTranslate(this);
         setPosition(this.x, this.y);
       }
-      else{//割りこみ処理        
+      else{        
         PanelTranslate lastPanel = p;
         while(lastPanel.getNextPanelTranslate() != null){
           lastPanel = lastPanel.getNextPanelTranslate();

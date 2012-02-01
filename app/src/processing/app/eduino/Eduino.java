@@ -56,10 +56,14 @@ public class Eduino extends JPanel{
       		"pinMode(RedSw, INPUT);\n" +
       		"pinMode(OrangeSw, INPUT);\n" +
       		"\n}\n";
-      
-      if(WorkingSpace.getLoop() != null){
-        source = source + WorkingSpace.getLoop().code();
-      }     
+      PanelTranslate loop = WorkingSpace.getLoop();
+      if(loop != null){
+        source = source + loop.code();
+      }
+      else{
+        System.out.println("開始・終了タイルが見つかりません");
+        
+      }
       return source;
     }
  

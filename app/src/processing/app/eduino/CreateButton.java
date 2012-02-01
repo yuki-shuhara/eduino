@@ -69,6 +69,10 @@ public class CreateButton extends JPanel implements ActionListener{
   public void actionPerformed(ActionEvent push) {
     PanelTranslate p = CreatePanel.create(push.getActionCommand());
     if(p==null){return;/*エラー処理入れる？*/}
+    
+    /**開始・終了タイルは２つ以上作らせない*/
+    if(p.getBlockId() == 0 && WorkingSpace.checkSPanel()) return;
+    
     p.addMouseListener(PanelMove);
     p.addMouseMotionListener(PanelMove);
     WorkingSpace.PlacedPanel(p);

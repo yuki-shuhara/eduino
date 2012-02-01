@@ -26,6 +26,8 @@ import javax.swing.JLabel;
 public class LedPanel extends PanelTranslate implements ActionListener{
   final static long blockId = 4;
   
+  private boolean nextSetis;
+  
   private PanelTranslate nextPanel;
   private PanelTranslate beforePanel;
   
@@ -79,10 +81,16 @@ public class LedPanel extends PanelTranslate implements ActionListener{
     this.y = y;
     nextPanel = null;
     beforePanel = null;
+    nextSetis=true;
     setPolygon();
     setOutLine();
     addedParts();
     super.setBounds(this.x, this.y, WIDTH, HEIGHT);
+  }
+  
+  @Override
+  public boolean getnextSetis(){
+    return nextSetis;
   }
   
   @Override
@@ -184,7 +192,7 @@ public class LedPanel extends PanelTranslate implements ActionListener{
         p.setBeforePanelTranslate(this);
         setPosition(this.x, this.y);
       }
-      else{//割りこみ処理        
+      else{      
         PanelTranslate lastPanel = p;
         while(lastPanel.getNextPanelTranslate() != null){
           lastPanel = lastPanel.getNextPanelTranslate();

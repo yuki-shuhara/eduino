@@ -18,19 +18,20 @@ import javax.swing.JLabel;
 public class SwitchPanel extends PanelTranslate implements ActionListener{
   final static long blockId = 6;
 
+  private boolean nextSetis;
 
   private PanelTranslate nextPanel;
   private PanelTranslate beforePanel;
   
-  /*間に挟まるパネルの付け根firstPanel, secondPanel...*/
+  /**間に挟まるパネルの付け根firstPanel, secondPanel...*/
   private PanelTranslate firstPanel;
   private PanelTranslate secondPanel;
   
-  /*グラデーデション用に2色あるだけ*/
+  /**グラデーデション用に2色あるだけ*/
   private Color colorright = new Color(149, 179, 215);
   private Color colorleft = new Color(149, 179, 215);
   
-  /*タイルサイズ*/
+  /**タイルサイズ*/
   private int HEIGHT = 220; //=topheight*2+barheight1+barheight2++bottomheight
   private int WIDTH = 160;
   private int TOP_HEIGHT = 50;
@@ -42,28 +43,27 @@ public class SwitchPanel extends PanelTranslate implements ActionListener{
 
   
   
-  /*NextPanel用のセットポジション*/
+  /**NextPanel用のセットポジション*/
   private int xposition = 0;
   private int yposition = HEIGHT;
   private Polygon outLine = new Polygon();
   
-  /*間に挟まるパネル用のセットポジション*/
+  /**間に挟まるパネル用のセットポジション*/
   private int firstposition_x =BAR_WIDTH;
   private int firstposition_y =TOP_HEIGHT;
   private Polygon firstOutLine = new Polygon();
-  
   private int secondposition_x =BAR_WIDTH;
   private int secondposition_y =TOP_HEIGHT*2+FIRST_BAR_HEIGHT;
   private Polygon secondOutLine = new Polygon();
   
-  /*タイル描画用*/
+  /**タイル描画用*/
   private Polygon polygon = new Polygon();
   
-  /*ソースコード格納用*/
+  /**ソースコード格納用*/
   private String source="";
   private String select="WhiteSw";
   
-  /*表示用*/
+  /**表示用*/
   private JLabel ifLabel;
   private JLabel elseLabel;
   
@@ -83,11 +83,18 @@ public class SwitchPanel extends PanelTranslate implements ActionListener{
     this.y = y;
     nextPanel = null;
     beforePanel = null;
+    nextSetis=true;
     setPolygon();
     setOutLine();
     addedParts();
     super.setBounds(this.x, this.y, WIDTH, HEIGHT);
   }
+  
+  @Override
+  public boolean getnextSetis(){
+    return nextSetis;
+  }
+  
   @Override
   public long getBlockId(){
     return blockId;
@@ -227,7 +234,7 @@ public class SwitchPanel extends PanelTranslate implements ActionListener{
         p.setBeforePanelTranslate(this);
         setPosition(this.x, this.y);
       }
-      else{//割りこみ処理        
+      else{        
         PanelTranslate flastPanel = p;
         while(flastPanel.getNextPanelTranslate() != null){
           flastPanel = flastPanel.getNextPanelTranslate();
@@ -248,7 +255,7 @@ public class SwitchPanel extends PanelTranslate implements ActionListener{
         p.setBeforePanelTranslate(this);
         setPosition(this.x, this.y);
       }
-      else{//割りこみ処理        
+      else{        
         PanelTranslate slastPanel = p;
         while(slastPanel.getNextPanelTranslate() != null){
           slastPanel = slastPanel.getNextPanelTranslate();
