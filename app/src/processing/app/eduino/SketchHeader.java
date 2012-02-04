@@ -128,7 +128,7 @@ public class SketchHeader {
         if(blockidArg[i] == Setseg){
           if(digitis) header = header + "int digit[4] = {0, 0, 0, 0};\n";
           
-          setup = setup + "setdigit(8888);\n";
+          if(digitis) setup = setup + "setdigit(8888);\n";
           
           method = method + "void setdigit(int n) {\n" +
                             "for (int i = 0; i < 4; i++) {\n" +

@@ -300,7 +300,7 @@ public class SetSegmentPanel extends PanelTranslate{
        outLine.reset();
        outLine.addPoint(this.x, this.y+TOP_HEIGHT+BAR_HEIGHT);
        for(int i=0; i<3; i++){
-         outLine.addPoint(this.x+polygon.xpoints[i+5], this.y+polygon.ypoints[i+5]);
+         outLine.addPoint(this.x+polygon.xpoints[i+8], this.y+polygon.ypoints[i+8]);
        }
     }
 
