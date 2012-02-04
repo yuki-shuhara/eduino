@@ -319,7 +319,7 @@ public class SwitchPanel extends PanelTranslate implements ActionListener{
   
   @Override
   public String code(){
-     source = "if(digitalRead(" +select+ ")==HIGH){\n";
+     source = "if(digitalRead(" +select+ ")==LOW){\n";
     PanelTranslate fpanel = firstPanel;
     while(fpanel != null){
       source = source + fpanel.code();

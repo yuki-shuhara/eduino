@@ -8,7 +8,8 @@ public class SketchHeader {
   final int Led = 4;
   final int Delay = 5;
   final int Switch = 6;
-  final int Seg = 7;
+  final int Setseg = 7;
+  final int Seg = 8;
   final int Temperature = 20;
   final int Lightsensor = 21;
 
@@ -17,11 +18,14 @@ public class SketchHeader {
   String setup;
   String method;
   
+  private boolean digitis;
+  
   SketchHeader(WorkingSpace WorkingSpace){
     this.workingspace = WorkingSpace;
   }
   
   protected String getSetup(){
+    digitis = true;
     /**don't change blockidArg[0]*/
     long blockidArg[] = new long[workingspace.MAX_PANEL];
     header = "#include <Arduino.h>\n";
@@ -55,7 +59,8 @@ public class SketchHeader {
           break;
         }
       }
-        
+
+           
       for(int i = 1; i < blockidArg[0]; i++){
         if(blockidArg[i] == Seg){
           header = header + "#define SEG1 3\n" +
@@ -68,6 +73,7 @@ public class SketchHeader {
                             "#define SEG7 12\n" +
                             "#define SEG8 13\n" +
                             "int digit[4] = {0, 0, 0, 0};\n" +
+                            
                             "boolean numArray[10][4] = {{0, 0, 0, 0} //0\n" +
                           ",{0, 0, 0, 1} //1\n" +
                           ",{0, 0, 1, 0} //2\n" +
@@ -78,6 +84,7 @@ public class SketchHeader {
                           ",{0, 1, 1, 1} //7\n" +
                           ",{1, 0, 0, 0} //8\n" +
                           ",{1, 0, 0, 1} //9\n};\n";
+                          ;
           
           setup = setup + "pinMode(SEG1, OUTPUT);\n" +
                           "pinMode(SEG2, OUTPUT);\n" +
@@ -88,9 +95,11 @@ public class SketchHeader {
                           "pinMode(SEG7, OUTPUT);\n" +
                           "pinMode(SEG8, OUTPUT);\n" +
                           "setdigit(8888);\n";
+      
           
-          method = method + "void displaynum() {\n" +
+          method = method + "void displaynum(boolean x) {\n" +
                             "int low = 1;  int com = 6;\n" + 
+                            "if (x) {" +
                             "for (int i = 0; i < 4; i++) {\n" +
                             "setnum(digit[i]);\n" +
                             "for (int j = 4; j > 0; j--) {\n" +
@@ -101,12 +110,8 @@ public class SketchHeader {
                             "}\ncom--;\n}\n" +
                             "delay(5);\n" +
                             "low++;\ncom = 6;\n}\n}\n"+ 
-                            //
-                            "void setdigit(int n) {\n" +
-                            "for (int i = 0; i < 4; i++) {\n" +
-                            "digit[i] = n % 10;\n" +
-                            "n = n / 10;\n" +
-                            "Serial.print(n);\n}\n}\n" + 
+                            "else{\nfor (int j = 4; j > 0; j--) {\n" +
+                            "digitalWrite(com, LOW);\ncom--;\n}\n}\n}" +
                             //
                             "void setnum(int n) {\n" +
                             "for (int i = 4; i >= 0; i--) {\n" +
@@ -114,6 +119,23 @@ public class SketchHeader {
                             "digitalWrite(SEG8 - i, LOW);\n" +
                             "}\nelse {\n" +
                             "digitalWrite(SEG8 - i, HIGH);\n}\n}\n}\n";
+          digitis = false;
+          break;
+        }
+      }
+      
+      for(int i = 1; i < blockidArg[0]; i++){
+        if(blockidArg[i] == Setseg){
+          if(digitis) header = header + "int digit[4] = {0, 0, 0, 0};\n";
+          
+          setup = setup + "setdigit(8888);\n";
+          
+          method = method + "void setdigit(int n) {\n" +
+                            "for (int i = 0; i < 4; i++) {\n" +
+                            "digit[i] = n % 10;\n" +
+                            "n = n / 10;\n" +
+                            "}\n}\n"; 
+                            
           break;
         }
       }

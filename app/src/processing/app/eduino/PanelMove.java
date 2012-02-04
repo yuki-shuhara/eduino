@@ -85,6 +85,7 @@ public class PanelMove implements MouseListener, MouseMotionListener{
 
       if(GettingPanel.getBlockId() == 0) WorkingSpace.moveToBack(GettingPanel);
       if(GettingPanel.getBlockId() == 1) WorkingSpace.moveToBack(GettingPanel);
+      if(GettingPanel.getBlockId() == 2) WorkingSpace.moveToBack(GettingPanel);
       if(GettingPanel.getBlockId() == 6) WorkingSpace.moveToBack(GettingPanel);
       if(GettingPanel.getBlockId() == 7) WorkingSpace.moveToBack(GettingPanel);
       if(remove){

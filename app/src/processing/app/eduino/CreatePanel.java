@@ -14,12 +14,11 @@ public class CreatePanel{
 	      if(s.equals("Start")){
 	        return new StartPanel(x, y);
 	      }
-	     
 	      if(s.equals("Loop")){
 	        return new LoopPanel(x, y);
 	      }
-	      if(s.equals("Seg")){
-	        return new SegmentPanel(x, y);
+	      if(s.equals("Setseg")){
+	        return new SetSegmentPanel(x, y);
 	      }
 	      if(s.equals("Led")){
 	        return new LedPanel(x, y);
@@ -39,7 +38,9 @@ public class CreatePanel{
 	      if(s.equals("For")){
 	        return new ForPanel(x, y);
 	      }
-
+	      if(s.equals("Seg")){
+	        return new SegmentPanel(x, y);
+	      }
 	      return null;
 	    }
   

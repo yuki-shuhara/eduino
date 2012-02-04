@@ -19,9 +19,10 @@ public class CreateButton extends JPanel implements ActionListener{
   CreatePanel CreatePanel;
   PanelMove PanelMove;
   
-  String buttonLabel[] = {"開始・終了タイル", "ずっと繰り返すタイル", "繰り返しタイル", "ＬＥＤ用タイル",
-      "待機タイル", "スイッチ用タイル", "温度センサータイル", "光センサータイル", "７セグメント表示"};
-  String buttonName[] = {"Start", "Loop", "For", "Led", "Delay", "Switch", "Temperature", "Lightsensor", "Seg"};
+  String buttonLabel[] = {"開始・終了タイル", "ずっと繰り返すタイル", "数回繰り返すタイル", "ＬＥＤ用タイル", "文字盤点灯タイル", "文字盤セットタイル", 
+      "待機タイル", "スイッチ用タイル", "温度センサータイル", "光センサータイル"};
+  
+  String buttonName[] = {"Start", "Loop", "For", "Led", "Seg", "Setseg", "Delay", "Switch", "Temperature", "Lightsensor"};
   final int BUTTON_COUNT  = buttonLabel.length;
   final int BUTTON_GAP = 10;//ボタンの間隔
   final int BUTTON_HEIGHT = 30;
