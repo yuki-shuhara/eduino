@@ -62,6 +62,11 @@ public class SketchHeader {
                             "#define SEG2 4\n" +
                             "#define SEG3 5\n" +
                             "#define SEG4 6\n" +
+                            
+                            "#define SEG5 10\n" +
+                            "#define SEG6 11\n" +
+                            "#define SEG7 12\n" +
+                            "#define SEG8 13\n" +
                             "int digit[4] = {0, 0, 0, 0};\n" +
                             "boolean numArray[10][4] = {{0, 0, 0, 0} //0\n" +
                           ",{0, 0, 0, 1} //1\n" +
@@ -78,6 +83,10 @@ public class SketchHeader {
                           "pinMode(SEG2, OUTPUT);\n" +
                           "pinMode(SEG3, OUTPUT);\n" +
                           "pinMode(SEG4, OUTPUT);\n" +
+                          "pinMode(SEG5, OUTPUT);\n" +
+                          "pinMode(SEG6, OUTPUT);\n" +
+                          "pinMode(SEG7, OUTPUT);\n" +
+                          "pinMode(SEG8, OUTPUT);\n" +
                           "setdigit(8888);\n";
           
           method = method + "void displaynum() {\n" +
@@ -91,25 +100,27 @@ public class SketchHeader {
                             "digitalWrite(com, HIGH);" +
                             "}\ncom--;\n}\n" +
                             "delay(5);\n" +
-                            "low++;\ncom = 6;\n}\n}"+ 
+                            "low++;\ncom = 6;\n}\n}\n"+ 
+                            //
                             "void setdigit(int n) {\n" +
                             "for (int i = 0; i < 4; i++) {\n" +
                             "digit[i] = n % 10;\n" +
                             "n = n / 10;\n" +
                             "Serial.print(n);\n}\n}\n" + 
+                            //
                             "void setnum(int n) {\n" +
                             "for (int i = 4; i >= 0; i--) {\n" +
                             "if (numArray[n][i] == 0) {\n" +
-                            "digitalWrite(SEG4 - i, LOW);\n" +
+                            "digitalWrite(SEG8 - i, LOW);\n" +
                             "}\nelse {\n" +
-                            "digitalWrite(SEG4 - i, HIGH);\n}\n}\n}\n";
+                            "digitalWrite(SEG8 - i, HIGH);\n}\n}\n}\n";
           break;
         }
       }
       
       for(int i = 1; i < blockidArg[0]; i++){
         if(blockidArg[i] == Temperature){
-          header = header + "#define TEMP 5\n";
+          header = header + "#define templPin 4\n";
           setup = setup + "analogReference(INTERNAL);\n";
           
           method = method + "int gettempl(){\n" +
@@ -125,7 +136,7 @@ public class SketchHeader {
   
       for(int i = 1; i < blockidArg[0]; i++){
         if(blockidArg[i] == Lightsensor){
-          header = header + "#define LIGHT 4\n";
+          header = header + "#define LIGHT 5\n";
           break;
         }
       }

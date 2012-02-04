@@ -31,10 +31,10 @@ public class CreatePanel{
 	        return new SwitchPanel(x, y);
 	      }
 	      if(s.equals("Temperature")){
-	        //return new TemperaturePanel(x, y);
+	        return new TemperaturePanel(x, y);
 	      }
 	      if(s.equals("Lightsensor")){
-	        //return new LightsensorPanel(x, y);
+	        return new LightsensorPanel(x, y);
 	      }
 	      if(s.equals("For")){
 	        return new ForPanel(x, y);

@@ -23,7 +23,7 @@ import java.awt.Polygon;
 import javax.swing.JLabel;
 
 public class TemperaturePanel extends PanelTranslate{
-  final long blockId = 4;
+  final long blockId = 20;
   
   private boolean nextSetis;
   
@@ -65,8 +65,8 @@ public class TemperaturePanel extends PanelTranslate{
   /**表示用*/
   JLabel templLabel;
   
-  private int LABEL_X = 5;
-  private int LABEL_WIDTH = 40;
+  private int LABEL_X = 20;
+  private int LABEL_WIDTH = 80;
   private int LABEL_HEIGHT = 20;
   
   
@@ -182,7 +182,7 @@ public class TemperaturePanel extends PanelTranslate{
   
   @Override
   public boolean getContain(PanelTranslate p){
-    if(outLine.contains(p.getX(), p.getY())){return true;}
+    //if(outLine.contains(p.getX(), p.getY())){return true;}
     //if(OutLine.contains(x, y)) return nextPanel;
     
     return false;
@@ -216,12 +216,12 @@ public class TemperaturePanel extends PanelTranslate{
   
   @Override
   public String code(){
-    source = "gettempl();\n";
+    source = "gettempl()";
     return source;
   }
   
  private void addedParts(){
-   templLabel = new JLabel("現在の温度");
+   templLabel = new JLabel("温度");
    this.add(templLabel);
    
  }
@@ -234,14 +234,14 @@ public class TemperaturePanel extends PanelTranslate{
   private void setOutLine(){
     //
      outLine.reset();
-     for(int i=0; i<4; i++){
-       outLine.addPoint(this.x+polygon.xpoints[i], this.y+polygon.ypoints[i]);
-     }
-    //
+     outLine.addPoint(0, 10);
+     outLine.addPoint(WIDTH, 10);
+     outLine.addPoint(WIDTH, HEIGHT);
+     outLine.addPoint(WIDTH, HEIGHT); 
      
   }
   public int getHeight(){
-    return HEIGHT;
+    return this.HEIGHT;
   }
   
  
