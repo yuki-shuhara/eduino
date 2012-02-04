@@ -268,7 +268,7 @@ public class SetSegmentPanel extends PanelTranslate{
         catch(NullPointerException e){
           source = source + "0";
         }
-      source = source + ");";
+      source = source + ");\n";
         
       return source;
     }
