@@ -19,7 +19,7 @@ public class CreatePanel{
 	        return new LoopPanel(x, y);
 	      }
 	      if(s.equals("Seg")){
-	        //return new SegPanel(x, y);
+	        return new SegmentPanel(x, y);
 	      }
 	      if(s.equals("Led")){
 	        return new LedPanel(x, y);
@@ -35,6 +35,9 @@ public class CreatePanel{
 	      }
 	      if(s.equals("Lightsensor")){
 	        //return new LightsensorPanel(x, y);
+	      }
+	      if(s.equals("For")){
+	        return new ForPanel(x, y);
 	      }
 
 	      return null;
@@ -54,6 +57,6 @@ public class CreatePanel{
 	      
 	      px += 20;
 	      
-	      return this.create(s, px, py);
+	  return this.create(s, px, py);
   }
 }

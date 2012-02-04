@@ -1,5 +1,7 @@
 package processing.app.eduino;
 
+
+
 import java.awt.Color;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
@@ -10,7 +12,6 @@ import java.awt.event.ActionListener;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JTextField;
 
 import java.awt.Color;
 import java.awt.GradientPaint;
@@ -21,9 +22,8 @@ import java.awt.Polygon;
 
 import javax.swing.JLabel;
 
-
-public class DelayPanel extends PanelTranslate{
-  final long blockId = 5;
+public class TemperaturePanel extends PanelTranslate{
+  final long blockId = 4;
   
   private boolean nextSetis;
   
@@ -34,12 +34,12 @@ public class DelayPanel extends PanelTranslate{
   //private PanelTranslate firstPanel;
   
   /**グラデーデション用に2色あるだけ*/
-  private Color colorright = new Color(217, 150, 148);
-  private Color colorleft = new Color(217, 150, 148);
+  private Color colorright = new Color(191, 191, 191);
+  private Color colorleft = new Color(191, 191, 191);
   
   /**タイルサイズ*/
-  private int HEIGHT = 40; //=topheight+barheight+bottomheight
-  private int WIDTH = 120;
+  private int HEIGHT = 50;
+  private int WIDTH = 100;
 
   private int x, y;//このタイルの設置座標
 
@@ -55,29 +55,28 @@ public class DelayPanel extends PanelTranslate{
 //  private Polygon firstOutLine = new Polygon();
   
   /**タイル描画用*/
-  private int Xarray[] = {0, WIDTH, WIDTH, 0};
-  private int Yarray[] = {0, 0, HEIGHT, HEIGHT};
+  private int Xarray[] = {0, 10, 10, WIDTH, WIDTH, 0};
+  private int Yarray[] = {0, 0, 10, 10, HEIGHT, HEIGHT};
   private Polygon polygon = new Polygon();
   
   /**ソースコード格納用*/
   private String source="";
   
   /**表示用*/
-  JLabel delayLabel;
-  JTextField text;
+  JLabel templLabel;
   
   private int LABEL_X = 5;
-  private int LABEL_WIDTH = 35;
+  private int LABEL_WIDTH = 40;
   private int LABEL_HEIGHT = 20;
   
   
 
-  DelayPanel(int x, int y) {
+  TemperaturePanel(int x, int y) {
     this.x = x;
     this.y = y;
-    nextSetis=true;
     nextPanel = null;
     beforePanel = null;
+    nextSetis=true;
     setPolygon();
     setOutLine();
     addedParts();
@@ -167,8 +166,7 @@ public class DelayPanel extends PanelTranslate{
 //    BasicStroke bs = new BasicStroke(0.5f);
 //    g2.setStroke(bs);
     
-    text.setBounds(LABEL_X, HEIGHT/2-10, LABEL_WIDTH, LABEL_HEIGHT);
-    delayLabel.setBounds(LABEL_X+LABEL_WIDTH+5, HEIGHT/2-10, 55, LABEL_HEIGHT);
+    templLabel.setBounds(LABEL_X, HEIGHT/2-10, LABEL_WIDTH, LABEL_HEIGHT);
     
     GradientPaint gp = new GradientPaint(0f, 0f, colorleft, (float)WIDTH, (float)HEIGHT, colorright);
     g2.setPaint(gp);
@@ -199,7 +197,7 @@ public class DelayPanel extends PanelTranslate{
         p.setBeforePanelTranslate(this);
         setPosition(this.x, this.y);
       }
-      else{       
+      else{      
         PanelTranslate lastPanel = p;
         while(lastPanel.getNextPanelTranslate() != null){
           lastPanel = lastPanel.getNextPanelTranslate();
@@ -209,27 +207,22 @@ public class DelayPanel extends PanelTranslate{
         
         setNextPanelTranslate(p);
         p.setBeforePanelTranslate(this);
-        setPosition(this.x, this.y);
+       setPosition(this.x, this.y);
       }
     }
+    
     return;
   }
   
   @Override
   public String code(){
-    source = "delay("+text.getText()+");\n";
+    source = "gettempl();\n";
     return source;
   }
   
  private void addedParts(){
-   text = new JTextField("1000");
-   text.setColumns(4);
-   super.add(text);
-   
-   delayLabel = new JLabel("ﾐﾘ秒待つ");
-   this.add(delayLabel);
-   
-
+   templLabel = new JLabel("現在の温度");
+   this.add(templLabel);
    
  }
   
@@ -247,10 +240,10 @@ public class DelayPanel extends PanelTranslate{
     //
      
   }
-  
   public int getHeight(){
     return HEIGHT;
   }
+  
  
 }
- 
+

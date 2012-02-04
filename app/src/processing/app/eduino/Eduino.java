@@ -41,29 +41,19 @@ public class Eduino extends JPanel{
     }
     
     public String compile(){
-      String source="#include <Arduino.h>\n" +
-      		"#define LED 13\n" +
-      		"#define TEMP 5\n" +
-      		"#define LIGHT 4\n" +
-      		"#define WhiteSw 7\n" +
-      		"#define RedSw 8\n" +
-      		"#define OrangeSw 9\n" +
-      		"int tmp=0;\n" +
-      		"int light=0;\n" +
-      		"void setup(){\n" +
-      		"pinMode(LED, OUTPUT);\n" +
-      		"pinMode(WhiteSw, INPUT);\n" +
-      		"pinMode(RedSw, INPUT);\n" +
-      		"pinMode(OrangeSw, INPUT);\n" +
-      		"\n}\n";
-      PanelTranslate loop = WorkingSpace.getLoop();
-      if(loop != null){
-        source = source + loop.code();
+      String source ="";
+      SketchHeader sh = new SketchHeader(WorkingSpace);
+      sh = new SketchHeader(WorkingSpace);
+      
+      try{
+        source = (WorkingSpace.getLoop()).code();
+        source = sh.getSetup() + source ;
       }
-      else{
-        System.out.println("開始・終了タイルが見つかりません");
-        
+      catch(NullPointerException e){
+        System.out.println("開始・終了タイルが見つかりません");  
       }
+      
+      System.out.println(source);
       return source;
     }
  

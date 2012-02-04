@@ -16,7 +16,7 @@ import javax.swing.JLabel;
 
 
 public class SwitchPanel extends PanelTranslate implements ActionListener{
-  final static long blockId = 6;
+  final long blockId = 6;
 
   private boolean nextSetis;
 
@@ -96,8 +96,31 @@ public class SwitchPanel extends PanelTranslate implements ActionListener{
   }
   
   @Override
+  protected void setnextSetis(boolean tf){
+    this.nextSetis = tf;
+  }
+  
+  @Override
   public long getBlockId(){
     return blockId;
+  }
+  
+  @Override
+  protected long[] getBlockId(long blockidArg[]){
+    blockidArg[(int)blockidArg[0]++] = this.getBlockId();
+    PanelTranslate p1 = firstPanel;
+    while(p1 != null){
+      blockidArg = p1.getBlockId(blockidArg);
+      p1 = p1.getNextPanelTranslate();
+    }
+    
+    PanelTranslate p2 = secondPanel;
+    while(p2 != null){
+      blockidArg = p2.getBlockId(blockidArg);
+      p2 = p2.getNextPanelTranslate();
+    }
+    
+    return blockidArg;
   }
   
   @Override
@@ -216,10 +239,10 @@ public class SwitchPanel extends PanelTranslate implements ActionListener{
   }
   
   @Override
-  public boolean getContain(int px, int py){
-    if(firstOutLine.contains(px, py)){return true;}
-    if(secondOutLine.contains(px, py)){return true;}
-    if(outLine.contains(px, py)){return true;}
+  public boolean getContain(PanelTranslate p){
+    if(firstOutLine.contains(p.getX(), p.getY())){return true;}
+    if(secondOutLine.contains(p.getX(), p.getY())){return true;}
+    if(outLine.contains(p.getX(), p.getY())){return true;}
     
     return false;
   }

@@ -14,22 +14,14 @@ import javax.swing.JPanel;
 
 
 public class CreateButton extends JPanel implements ActionListener{
-//  final int StartPanel = 0;
-//  final int LoopPanel = 1;
-//  final int SegPanel = 2;
-//  final int LedPanel = 3;
-//  final int DelayPanel = 4;
-//  final int SwitchPanel = 5;
-//  final int TemperaturePanel = 6;
-//  final int LightsensorPanel = 7;
   
   WorkingSpace WorkingSpace;
   CreatePanel CreatePanel;
   PanelMove PanelMove;
   
-  String buttonLabel[] = {"開始・終了タイル", "繰り返し用タイル", "７セグメント用タイル", "ＬＥＤ用タイル",
-      "待機タイル", "スイッチ用タイル", "温度センサータイル", "光センサータイル"};
-  String buttonName[] = {"Start", "Loop", "Seg", "Led", "Delay", "Switch", "Temperature", "Lightsensor"};
+  String buttonLabel[] = {"開始・終了タイル", "ずっと繰り返すタイル", "繰り返しタイル", "ＬＥＤ用タイル",
+      "待機タイル", "スイッチ用タイル", "温度センサータイル", "光センサータイル", "７セグメント表示"};
+  String buttonName[] = {"Start", "Loop", "For", "Led", "Delay", "Switch", "Temperature", "Lightsensor", "Seg"};
   final int BUTTON_COUNT  = buttonLabel.length;
   final int BUTTON_GAP = 10;//ボタンの間隔
   final int BUTTON_HEIGHT = 30;

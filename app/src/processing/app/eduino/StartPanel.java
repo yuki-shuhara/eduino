@@ -12,7 +12,7 @@ import javax.swing.JLabel;
 
 
 public class StartPanel extends PanelTranslate{
-  final static long blockId = 0;
+  final long blockId = 0;
   
   private final boolean nextSetis;
   
@@ -82,8 +82,24 @@ public class StartPanel extends PanelTranslate{
   }
   
   @Override
+  protected void setnextSetis(boolean tf){
+    //this.nextSetis = tf;
+  }
+  
+  @Override
   public long getBlockId(){
     return blockId;
+  }
+  
+  @Override
+  protected long[] getBlockId(long blockidArg[]){
+    blockidArg[(int)blockidArg[0]++] = this.getBlockId();
+    PanelTranslate p = firstPanel;
+    while(p != null){
+      blockidArg = p.getBlockId(blockidArg);
+      p = p.getNextPanelTranslate();
+    }
+    return blockidArg;
   }
   
   @Override
@@ -174,8 +190,8 @@ public class StartPanel extends PanelTranslate{
   }
   
   @Override
-  public boolean getContain(int px, int py){
-    if(firstOutLine.contains(px, py)){return true;}
+  public boolean getContain(PanelTranslate p){
+    if(firstOutLine.contains(p.getX(), p.getY())){return true;}
     //if(OutLine.contains(x, y)) return nextPanel;
     
     return false;

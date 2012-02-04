@@ -12,7 +12,7 @@ import javax.swing.JLabel;
 
 
 public class LoopPanel extends PanelTranslate{
-  final static long blockId = 1;
+  final long blockId = 1;
 
   private boolean nextSetis; 
   
@@ -81,8 +81,24 @@ public class LoopPanel extends PanelTranslate{
   }
   
   @Override
+  protected void setnextSetis(boolean tf){
+    this.nextSetis = tf;
+  }
+  
+  @Override
   public long getBlockId(){
     return blockId;
+  }
+  
+  @Override
+  protected long[] getBlockId(long blockidArg[]){
+    blockidArg[(int)blockidArg[0]++] = this.getBlockId();
+    PanelTranslate p = firstPanel;
+    while(p != null){
+      blockidArg = p.getBlockId(blockidArg);
+      p = p.getNextPanelTranslate();
+    }
+    return blockidArg;
   }
   
   @Override
@@ -181,9 +197,9 @@ public class LoopPanel extends PanelTranslate{
   }
   
   @Override
-  public boolean getContain(int px, int py){
-    if(firstOutLine.contains(px, py)){return true;}
-    if(outLine.contains(px, py)){return true;}
+  public boolean getContain(PanelTranslate p){
+    if(firstOutLine.contains(p.getX(), p.getY())){return true;}
+    if(outLine.contains(p.getX(), p.getY())){return true;}
     //if(OutLine.contains(x, y)) return nextPanel;
     
     return false;
@@ -255,6 +271,7 @@ public class LoopPanel extends PanelTranslate{
    this.add(loopLabel);
 
  }
+ 
   
   
   private void setPolygon(){

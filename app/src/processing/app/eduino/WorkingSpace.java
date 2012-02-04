@@ -11,7 +11,7 @@ public class WorkingSpace extends JLayeredPane{
   
   
   private PanelTranslate placedPanel[];
-  private int MAX_PANEL = 1000;
+  protected int MAX_PANEL = 1000;
   private int count=1;
   
   WorkingSpace(){
@@ -67,7 +67,7 @@ public class WorkingSpace extends JLayeredPane{
     
     for(int i=0; i < count; i++){     
       if(placedPanel[i] != null && placedPanel[i] != p){
-        if(placedPanel[i].getnextSetis() && placedPanel[i].getContain(p.getX(), p.getY())){
+        if(placedPanel[i].getnextSetis() && placedPanel[i].getContain(p)){
           placedPanel[i].setPanelTranslate(p);
           return;
         }
@@ -76,7 +76,7 @@ public class WorkingSpace extends JLayeredPane{
     
     for(int i=0; i < count; i++){     
       if(placedPanel[i] != null && placedPanel[i] != p){
-        if(placedPanel[i].getnextSetis() && placedPanel[i].getContain(p.getX(), p.getY()+p.getHeight())){
+        if(placedPanel[i].getnextSetis() && placedPanel[i].getContain(p)){
           placedPanel[i].setPanelTranslate(p);
           return;
         }

@@ -14,11 +14,14 @@ import javax.swing.border.EtchedBorder;
 abstract class PanelTranslate extends JPanel {
 
   abstract public boolean getnextSetis(); 
+  abstract protected void setnextSetis(boolean tf);
   abstract String code(); //スケッチコード
+  abstract protected long[] getBlockId(long blockidArg[]);
+  
   abstract public long getBlockId(); 
   
   abstract public boolean inline(int x, int y); //クリック時のポリゴン内外の判定用 true=in false=out
-  abstract public boolean getContain(int x, int y);
+  abstract public boolean getContain(PanelTranslate p);
   
   abstract public void setPanelTranslate(PanelTranslate p); //内部処理用連結 return→ firstPosition, secondPosition, nextPanel, beforePanel
   abstract public void setPosition(int x, int y);//くっついてるタイルの移動処理用
@@ -33,27 +36,10 @@ abstract class PanelTranslate extends JPanel {
   
   abstract public int getHeight();
   
+  
   PanelTranslate(){
     this.setOpaque(false);
   }
-  
-  
-//  @Override
-//  public void paintComponent(Graphics g){
-//    super.paintComponent(g);
-//  }
-  
-//  @Override
-//  public void setLocation(int x, int y){//外見処理用連結
-//    this.setLocation(x, y);
-//
-//    setPosition(x, y);
-////    if(this.nextPanel != null){
-////      System.out.println("nextPanel"+nextPanel);
-////      nextPanel.setLocation(x, y);
-////    }
-//  }
-
 
 }     
 

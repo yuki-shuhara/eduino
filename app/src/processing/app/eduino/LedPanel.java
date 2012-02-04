@@ -24,7 +24,7 @@ import javax.swing.JLabel;
 
 
 public class LedPanel extends PanelTranslate implements ActionListener{
-  final static long blockId = 4;
+  final long blockId = 4;
   
   private boolean nextSetis;
   
@@ -94,8 +94,19 @@ public class LedPanel extends PanelTranslate implements ActionListener{
   }
   
   @Override
+  protected void setnextSetis(boolean tf){
+    this.nextSetis = tf;
+  }
+  
+  @Override
   public long getBlockId(){
     return blockId;
+  }
+  
+  @Override
+  protected long[] getBlockId(long blockidArg[]){
+    blockidArg[(int)blockidArg[0]++] = this.getBlockId();
+    return blockidArg;
   }
   
   @Override
@@ -176,8 +187,8 @@ public class LedPanel extends PanelTranslate implements ActionListener{
   }
   
   @Override
-  public boolean getContain(int px, int py){
-    if(outLine.contains(px, py)){return true;}
+  public boolean getContain(PanelTranslate p){
+    if(outLine.contains(p.getX(), p.getY())){return true;}
     //if(OutLine.contains(x, y)) return nextPanel;
     
     return false;
