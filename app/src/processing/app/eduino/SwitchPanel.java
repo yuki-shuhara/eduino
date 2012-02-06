@@ -167,7 +167,8 @@ public class SwitchPanel extends PanelTranslate implements ActionListener{
     setHEIGHT();
     setOutLine();
 
-    super.setLocation(x, y);
+    this.setLocation(x, y);
+    revalidate();
     
     //
     if(firstPanel != null){

@@ -5,6 +5,7 @@ import java.awt.Dimension;
 
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 
 
@@ -29,8 +30,14 @@ public class Eduino extends JPanel{
       CreateButton.setMaximumSize(new Dimension(BorderLine, Short.MAX_VALUE));
       WorkingSpace.setMinimumSize(new Dimension(200, 400));
       WorkingSpace.setMaximumSize(new Dimension(Short.MAX_VALUE, Short.MAX_VALUE));
+      WorkingSpace.setPreferredSize(new Dimension(2000, 2000));
       
-      JSplitPane splitpane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, CreateButton, WorkingSpace);
+      JScrollPane scroll = new JScrollPane(WorkingSpace);
+      scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+      scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+     
+      
+      JSplitPane splitpane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, CreateButton, scroll);
       splitpane.setDividerSize(5);
       splitpane.setDividerLocation(BorderLine);
       splitpane.setContinuousLayout(true);
@@ -55,6 +62,11 @@ public class Eduino extends JPanel{
       
       System.out.println(source);
       return source;
+    }
+    
+    public void resetWorkingSpace(){
+      WorkingSpace.reset();
+      WorkingSpace.repaint();
     }
  
 

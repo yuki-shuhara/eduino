@@ -329,8 +329,9 @@ public class EditorToolbar extends JComponent implements MouseInputListener, Key
 //      break;
 //
     case OPEN:
-      popup = menu.getPopupMenu();
-      popup.show(EditorToolbar.this, x, y);
+//      popup = menu.getPopupMenu();
+//      popup.show(EditorToolbar.this, x, y);
+      editor.Eduino.resetWorkingSpace();
       break;
 
     case NEW:
